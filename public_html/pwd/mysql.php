@@ -16,6 +16,6 @@ $sqlDatabase = "passman";
 // page from any prying eyes if
 // nginx has error and doesn't
 // hide this directory:
-http_response_code(404);// stop silly bots from indexing this page
-include "/usr/share/nginx/html/index.html";// adds HTML to page, shoudl be change this to 404 error later to hide this page
+//http_response_code(404);// stop silly bots from indexing this page
+//include "/usr/share/nginx/html/index.html";// adds HTML to page, shoudl be change this to 404 error later to hide this page
 ?>
