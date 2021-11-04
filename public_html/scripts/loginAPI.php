@@ -12,7 +12,7 @@ $statement = $sqlConn->prepare($sql);
 $statement->bindParam(':username', $username, PDO::PARAM_STR);
 $statement->execute();
 $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-$passwordhash = password_hash($password, $username);
+$passwordhash = password_hash($password, PASSWORD_DEFAULT);
 if (count($rows) == 1)
 {
 	if (
