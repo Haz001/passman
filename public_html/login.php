@@ -22,6 +22,7 @@ if($state == 0){
 	$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 }elseif($state == 1){
 	$username = strtoLower($_POST["username"]);
+	echo $username;
 	require "pwd/mysql.php";
 	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
 	$sqlConn = new PDO($dsn, $sqlUsername, $sqlPassword);
@@ -30,6 +31,7 @@ if($state == 0){
 	$statement->bindParam(':username', $username, PDO::PARAM_STR);
 	$statement->execute();
 	$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+	print_r($rows);
 	if (count($rows) == 1)
 	{
 		$page.="<span class=\"title\">Welcome Back</span>";
