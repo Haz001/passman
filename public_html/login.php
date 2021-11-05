@@ -21,8 +21,7 @@ if($state == 0){
 	$page+="<span class=\"label\">Username:</span>";
 	$page+="<input type=\"text\" name=\"username\" placeholder=\"Username\"/>";
 	$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
-}
-elseif($state == 1){
+}elseif($state == 1){
 	$username = strtoLower($_POST["username"]);
 	require "../pwd/mysql.php";
 	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
@@ -51,7 +50,7 @@ elseif($state == 1){
 		<div>
 			<img src="logo.png"/> <span>PassMan</span>
 		</div>
-		<?php print($page);?>
+		<?php echo($page);?>
 	</form>
 </div>
 <?php require "footer.php"; ?>
