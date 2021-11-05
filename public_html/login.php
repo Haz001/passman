@@ -51,4 +51,5 @@ elseif($state == 1){
 		<?php print($page);?>
 	</form>
 </div>
-<?php require_once "footer.php";?>
+<?php require "footer.php";
+?>
