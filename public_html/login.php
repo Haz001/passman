@@ -7,16 +7,21 @@ if($_SERVER['REQUEST_METHOD'] == "GET"){
 }
 elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 {
-
+	if(isset($_POST['username'])){
+		$state = 1;
+	}
+	else{
+		$state = 0;
+	}
 }
-$page = [];
-if($state == 0){
-	$page["title"] -> "Sign In";
-	$page["subTitle"] ->"Use your PassMan Account";
-	$page["label"] ->"Username";
-	$page["inputType"] -> "text";
-	$page["inputName"] -> "username"
-}
+// $page = [];
+// if($state == 0){
+// 	$page["title"] -> "Sign In";
+// 	$page["subTitle"] ->"Use your PassMan Account";
+// 	$page["label"] ->"Username";
+// 	$page["inputType"] -> "text";
+// 	$page["inputName"] -> "username"
+// }
  ?>
 <div>
 
