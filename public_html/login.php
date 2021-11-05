@@ -11,11 +11,11 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 }
 $page = [];
 if($state == 0){
-	$page["title"] => "Sign In";
-	$page["subTitle"] =>"Use your PassMan Account";
-	$page["label"] =>"Username";
-	$page["inputType"] => "text";
-	$page["inputName"] => "username"
+	$page["title"] -> "Sign In";
+	$page["subTitle"] ->"Use your PassMan Account";
+	$page["label"] ->"Username";
+	$page["inputType"] -> "text";
+	$page["inputName"] -> "username"
 }
  ?>
 <div>
