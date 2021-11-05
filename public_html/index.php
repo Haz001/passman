@@ -2,7 +2,7 @@
 
 <h1>Pass Man</h1>
 <p>
-	The De Facto password manager!
+	The De Facto password manager
 
 <ul>
 	<li><a href="login.php">Login</a></li>
