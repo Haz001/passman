@@ -14,14 +14,33 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 		$state = 0;
 	}
 }
-// $page = [];
-// if($state == 0){
-// 	$page["title"] -> "Sign In";
-// 	$page["subTitle"] ->"Use your PassMan Account";
-// 	$page["label"] ->"Username";
-// 	$page["inputType"] -> "text";
-// 	$page["inputName"] -> "username"
-// }
+$page = "";
+if($state == 0){
+	$page+="<span class=\"title\">Sign In</span>";
+	$page+="<span class=\"subTitle\">Use your PassMan Account</span>";
+	$page+="<span class=\"label\">Username:</span>";
+	$page+="<input type=\"text\" name=\"username\" placeholder=\"Username\"/>";
+	$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
+}
+elseif($state == 1){
+
+	require "../pwd/mysql.php";
+	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
+	$sqlConn = new PDO($dsn, $sqlUsername, $sqlPassword);
+	$sql = "SELECT first_name, last_name FROM users WHERE username = :username";
+	$statement = $sqlConn->prepare($sql);
+	$statement->bindParam(':username', $username, PDO::PARAM_STR);
+	$statement->execute();
+	$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+	if (count($rows) == 1)
+	{
+
+		$page+="<span class=\"title\">Welcome Back</span>";
+		$page+="<span class=\"subTitle\">".$rows[0]["first_name"]." ".$rows[0]["last_name"]."</span>";
+		$page+="<span class=\"label\">Password:</span>";
+		$page+="<input type=\"password\" name=\"password\" placeholder=\"Password\"/>";
+		$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
+	}
  ?>
 <div>
 
@@ -29,9 +48,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 		<div>
 			<img src="logo.png"/> <span>PassMan</span>
 		</div>
-		<span class="titel"><?php print($title)?></span>
-		<span class="subTitle"><?php print($subtitle)?></span>
-
+		<?php print($page);?>
 	</form>
 </div>
 <?php require_once "footer.php";?>
