@@ -94,8 +94,9 @@ function encryptData($data, $key, $iv)
     if (in_array($cipher, openssl_get_cipher_methods())) { //checks if cipher is valid
         $ciphertext = openssl_encrypt($data, $cipher, $key, $options = 0, $iv); //encrypts 
         return $ciphertext;
+    } else {
+        return -1;
     }
-    return -1;
 }
 
 function decryptData($ciphertext, $key, $iv)
@@ -104,6 +105,7 @@ function decryptData($ciphertext, $key, $iv)
     if (in_array($cipher, openssl_get_cipher_methods())) { //checks if cipher is valid
         $plaintext = openssl_decrypt($ciphertext, $cipher, $key, $options = 0, $iv); //decrypts
         return $plaintext;
+    } else {
+        return -1;
     }
-    return -1;
 }
