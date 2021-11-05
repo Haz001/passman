@@ -102,7 +102,7 @@ function decryptData($ciphertext, $key, $iv)
 {
     $cipher = "aes-256-cbc"; //define cipher to use
     if (in_array($cipher, openssl_get_cipher_methods())) { //checks if cipher is valid
-        $plaintext = openssl_encrypt($ciphertext, $cipher, $key, $options = 0, $iv); //encrypts 
+        $plaintext = openssl_decrypt($ciphertext, $cipher, $key, $options = 0, $iv); //decrypts
         return $plaintext;
     }
     return -1;
