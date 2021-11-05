@@ -41,6 +41,7 @@ elseif($state == 1){
 		$page+="<input type=\"password\" name=\"password\" placeholder=\"Password\"/>";
 		$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 	}
+	$sqlConn = null;
  ?>
 <div>
 
@@ -51,5 +52,3 @@ elseif($state == 1){
 		<?php print($page);?>
 	</form>
 </div>
-<?php require "footer.php";
-?>
