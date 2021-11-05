@@ -42,7 +42,9 @@ elseif($state == 1){
 		$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 	}
 	$sqlConn = null;
+}
  ?>
+
 <div>
 
 	<form action="login.php">
@@ -52,3 +54,4 @@ elseif($state == 1){
 		<?php print($page);?>
 	</form>
 </div>
+<?php require "footer.php"; ?>
