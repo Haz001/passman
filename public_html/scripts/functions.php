@@ -49,6 +49,8 @@ function loginUser($conn, $pD)
         $_SESSION["username"] = $userInfo["username"];
         $_SESSION["email"] = $userInfo["email"];
         $_SESSION["password"] = $userInfo["password"];
+
+        $_SESSION["iv"] = $userInfo["iv"];
         header("location:../index.php?error=success");
         exit();
     } else {
@@ -59,7 +61,7 @@ function loginUser($conn, $pD)
 
 function signUp($conn, $pD)
 {
-    $sql = "INSERT INTO user (first_name, last_name, username, email, password) VALUES (?,?,?,?,?);"; //starts to
+    $sql = "INSERT INTO user (first_name, last_name, username, email, password, dob, mobile, iv) VALUES (?,?,?,?,?,?,?,?);"; //starts to
     // prepare the sql statement
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -68,8 +70,8 @@ function signUp($conn, $pD)
     }
     $pswdHash = password_hash($pD["password"], PASSWORD_DEFAULT); //hashes the users password before it is stored
 
-    mysqli_stmt_bind_param($stmt, "sssss", $pD["first_name"], $pD["last_name"], $pD["username"], $pD["email"], $pswdHash);
-
+    mysqli_stmt_bind_param($stmt, "ssssssss", $pD["first_name"], $pD["last_name"], $pD["username"], $pD["email"], $pswdHash, $pD["dob"], $pD["mobile"], generateIV());
+    //bind parameters to statement
     if (!mysqli_stmt_execute($stmt)) { //executes the INSERT statement
         header("location:../signup.php?error=stmtfailed");
         exit();
