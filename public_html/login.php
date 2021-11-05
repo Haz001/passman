@@ -1,4 +1,55 @@
 <?php require_once "header.php";?>
+<style>
+
+.title {
+  /*! display: block; */
+  font-size: larger;
+}
+span {
+  display: block;
+  /*! align-content: center; */
+  text-align: center;
+  width: 100%;
+}
+form {
+  display: block;
+  overflow: hidden;
+  width: 20rem;
+  background: white;
+  margin: auto;
+  border-radius: 1rem;
+  height: 30rem;
+  margin-top: calc(50vh - 15rem);
+  box-shadow: 1rem 1rem 0.5rem grey;
+  border-style: solid;
+  padding: 0.5rem;
+}
+.label {
+  /*! width: auto; */
+  /*! overflow: visible; */
+  /*! display: inline-block; */
+  text-align: left;
+}
+input {
+}
+input[type="submit"] {
+  /*! color: red; */
+  right: 1rem;
+  bottom: 1rem;
+  /*! position: ; */
+  font-size: 1.25rem;
+  background: #0050EF;
+  color: white;
+  border-style: solid;
+  border-color: #0050EF;
+  border-width: 0.5rem;
+  border-radius: 0.5rem;
+}
+input[type="password"] {
+  font-size: 1.25rem;
+}
+</style>
+
 <?php
 $state = 0;
 if($_SERVER['REQUEST_METHOD'] == "GET"){
