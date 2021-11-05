@@ -81,20 +81,29 @@ function signUp($conn, $pD)
 }
 function generateIV()
 {
-    $cipher = "aes-128-gcm";
-    $ivlen = openssl_cipher_iv_length($cipher);
-    $iv = openssl_random_pseudo_bytes($ivlen);
+    $cipher = "aes-256-cbc"; //define cipher to use
+    $ivlen = openssl_cipher_iv_length($cipher); //defines iv's length
+    $iv = openssl_random_pseudo_bytes($ivlen); //creates iv using random bytes
 
     return $iv;
 }
 
 function encryptData($data, $key, $iv)
 {
-    $cipher = "aes-128-gcm";
-    if (in_array($cipher, openssl_get_cipher_methods())) {
-        $ciphertext = openssl_encrypt($data, $cipher, $key, $options = 0, $iv, $tag);
-        echo $ciphertext . "<br>";
-        $original_plaintext = openssl_decrypt($ciphertext, $cipher, $key, $options = 0, $iv, $tag);
-        echo $original_plaintext;
+    $cipher = "aes-256-cbc"; //define cipher to use
+    if (in_array($cipher, openssl_get_cipher_methods())) { //checks if cipher is valid
+        $ciphertext = openssl_encrypt($data, $cipher, $key, $options = 0, $iv); //encrypts 
+        return $ciphertext;
     }
+    return -1;
+}
+
+function decryptData($ciphertext, $key, $iv)
+{
+    $cipher = "aes-256-cbc"; //define cipher to use
+    if (in_array($cipher, openssl_get_cipher_methods())) { //checks if cipher is valid
+        $plaintext = openssl_encrypt($ciphertext, $cipher, $key, $options = 0, $iv); //encrypts 
+        return $plaintext;
+    }
+    return -1;
 }
