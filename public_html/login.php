@@ -16,11 +16,11 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 }
 $page = "";
 if($state == 0){
-	$page+="<span class=\"title\">Sign In</span>";
-	$page+="<span class=\"subTitle\">Use your PassMan Account</span>";
-	$page+="<span class=\"label\">Username:</span>";
-	$page+="<input type=\"text\" name=\"username\" placeholder=\"Username\"/>";
-	$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
+	$page.="<span class=\"title\">Sign In</span>";
+	$page.="<span class=\"subTitle\">Use your PassMan Account</span>";
+	$page.="<span class=\"label\">Username:</span>";
+	$page.="<input type=\"text\" name=\"username\" placeholder=\"Username\"/>";
+	$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 }elseif($state == 1){
 	$username = strtoLower($_POST["username"]);
 	require "../pwd/mysql.php";
@@ -34,11 +34,11 @@ if($state == 0){
 	if (count($rows) == 1)
 	{
 
-		$page+="<span class=\"title\">Welcome Back</span>";
-		$page+="<span class=\"subTitle\">".$rows[0]["first_name"]." ".$rows[0]["last_name"]."</span>";
-		$page+="<span class=\"label\">Password:</span>";
-		$page+="<input type=\"password\" name=\"password\" placeholder=\"Password\"/>";
-		$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
+		$page.="<span class=\"title\">Welcome Back</span>";
+		$page.="<span class=\"subTitle\">".$rows[0]["first_name"]." ".$rows[0]["last_name"]."</span>";
+		$page.="<span class=\"label\">Password:</span>";
+		$page.="<input type=\"password\" name=\"password\" placeholder=\"Password\"/>";
+		$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 	}
 	$sqlConn = null;
 }
@@ -50,7 +50,7 @@ if($state == 0){
 		<div>
 			<img src="logo.png"/> <span>PassMan</span>
 		</div>
-		<?php echo($page);?>
+		<?php print($page);?>
 	</form>
 </div>
 <?php require "footer.php"; ?>
