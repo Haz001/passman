@@ -23,7 +23,7 @@ if($state == 0){
 	$page+="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 }
 elseif($state == 1){
-
+	$username = strtoLower($_POST["username"]);
 	require "../pwd/mysql.php";
 	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
 	$sqlConn = new PDO($dsn, $sqlUsername, $sqlPassword);
