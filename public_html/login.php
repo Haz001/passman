@@ -2,13 +2,14 @@
 <?php
 $state = 0;
 echo $_SERVER['REQUEST_METHOD'];
-if($_SERVER['REQUEST_METHOD'] == "GET"){
+if($_SERVER['REQUEST_METHOD'] == "POST"){
 	$state = 0;
 }
-elseif ($_SERVER['REQUEST_METHOD'] == "POST")
+elseif ($_SERVER['REQUEST_METHOD'] == "GET")
 {
 	if(isset($_POST['username'])){
 		$state = 1;
+		echo $_POST['username'];
 	}
 	else{
 		$state = 0;
@@ -16,7 +17,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 }
 $page = "";
 if($state == 0){
-	$page.="<form action=\"/login.php\" method=\"post\">";
+	$page.="<form action=\"/login.php\" method=\"GET\">";
 	$page.="<span class=\"title\">Sign In</span>";
 	$page.="<span class=\"subTitle\">Use your PassMan Account</span>";
 	$page.="<span class=\"label\">Username:</span>";
