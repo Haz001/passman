@@ -1,7 +1,6 @@
 <?php require_once "header.php";?>
 <?php
 $state = 0;
-echo $_SERVER['REQUEST_METHOD'];
 if($_SERVER['REQUEST_METHOD'] == "GET"){
 	$state = 0;
 }
@@ -23,7 +22,7 @@ if($state == 0){
 	$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
 }elseif($state == 1){
 	$username = strtoLower($_POST["username"]);
-	require "../pwd/mysql.php";
+	require "pwd/mysql.php";
 	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
 	$sqlConn = new PDO($dsn, $sqlUsername, $sqlPassword);
 	$sql = "SELECT first_name, last_name FROM users WHERE username = :username";
