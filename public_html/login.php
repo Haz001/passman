@@ -26,7 +26,7 @@ if($state == 0){
 	require "pwd/mysql.php";
 	$dsn = "mysql:host=$sqlHost;dbname=$sqlDatabase";
 	$sqlConn = new PDO($dsn, $sqlUsername, $sqlPassword);
-	$sql = "SELECT first_name, last_name FROM users WHERE username = :username";
+	$sql = "SELECT first_name, last_name FROM user WHERE username = :username";
 	$statement = $sqlConn->prepare($sql);
 	$statement->bindParam(':username', $username, PDO::PARAM_STR);
 	$statement->execute();
