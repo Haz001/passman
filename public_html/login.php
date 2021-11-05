@@ -2,14 +2,13 @@
 <?php
 $state = 0;
 echo $_SERVER['REQUEST_METHOD'];
-if($_SERVER['REQUEST_METHOD'] == "POST"){
+if($_SERVER['REQUEST_METHOD'] == "GET"){
 	$state = 0;
 }
-elseif ($_SERVER['REQUEST_METHOD'] == "GET")
+elseif ($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	if(isset($_POST['username'])){
 		$state = 1;
-		echo $_POST['username'];
 	}
 	else{
 		$state = 0;
@@ -17,13 +16,11 @@ elseif ($_SERVER['REQUEST_METHOD'] == "GET")
 }
 $page = "";
 if($state == 0){
-	$page.="<form action=\"/login.php\" method=\"GET\">";
 	$page.="<span class=\"title\">Sign In</span>";
 	$page.="<span class=\"subTitle\">Use your PassMan Account</span>";
 	$page.="<span class=\"label\">Username:</span>";
 	$page.="<input type=\"text\" name=\"username\" placeholder=\"Username\"/>";
 	$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
-	$page.="</form>";
 }elseif($state == 1){
 	$username = strtoLower($_POST["username"]);
 	require "../pwd/mysql.php";
@@ -36,14 +33,11 @@ if($state == 0){
 	$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 	if (count($rows) == 1)
 	{
-
-		$page.="<form action=\"/login.php\" method=\"post\">";
 		$page.="<span class=\"title\">Welcome Back</span>";
 		$page.="<span class=\"subTitle\">".$rows[0]["first_name"]." ".$rows[0]["last_name"]."</span>";
 		$page.="<span class=\"label\">Password:</span>";
 		$page.="<input type=\"password\" name=\"password\" placeholder=\"Password\"/>";
 		$page.="<input type=\"submit\" name=\"submitun\" value=\"Next\"/>";
-		$page.="</form>";
 	}
 	$sqlConn = null;
 }
@@ -51,7 +45,7 @@ if($state == 0){
 
 <div>
 
-	<form action="login.php">
+	<form action="login.php" method="post">
 		<div>
 			<img src="logo.png"/> <span>PassMan</span>
 		</div>
