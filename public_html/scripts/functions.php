@@ -148,12 +148,16 @@ function createWebEntry($conn, $pD)
 
 function passwordComplex($pswd)
 {
-	$uppercase = preg_match('@[A-Z]@', $pswd);
-	$lowercase = preg_match('@[a-z]@', $pswd);
-	$number    = preg_match('@[0-9]@', $pswd);
-	$specialChars = preg_match('@[^\w]@', $pswd);
-	if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pswd) < 8) {
-		return false;
+	if (strlen($pswd) < 20) {
+		$uppercase = preg_match('@[A-Z]@', $pswd);
+		$lowercase = preg_match('@[a-z]@', $pswd);
+		$number    = preg_match('@[0-9]@', $pswd);
+		$specialChars = preg_match('@[^\w]@', $pswd);
+		if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pswd) < 8) {
+			return false;
+		} else {
+			return true;
+		}
 	} else {
 		return true;
 	}
