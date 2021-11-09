@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php
+	session_start(); 
+	require_once("db.php");
+	require_once("functions.php"); // calls both required php scripts
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

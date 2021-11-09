@@ -11,9 +11,20 @@ function emptyFields($toSearch): bool
 	return $rt;
 }
 
-function isUnique($conn, $pD)
+function isUnique($conn, $pD,$opt = 2)
 {
-	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
+	if($opt == 2)// checks user or email
+	{
+		$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
+	}
+	elseif($opt == 1)// only email
+	{
+		$sql = "SELECT * FROM user WHERE email = ?;";
+	}
+	elseif($opt == 0)// only user
+	{
+		$sql = "SELECT * FROM user WHERE username = ?;";
+	}
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) { //checks if statement prepares correctly
 		header("location: ../signup.php?error=stmtfailed");
