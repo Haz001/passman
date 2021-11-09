@@ -13,24 +13,18 @@ $statement->bindParam(':username', $username, PDO::PARAM_STR);
 $statement->execute();
 $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 $passwordhash = password_hash($password, PASSWORD_DEFAULT);
-if (count($rows) == 1)
-{
+if (count($rows) == 1) {
 	if (
 		($rows[0]["username"] == $username)
 		and
 		($rows[0]["password"] == $passwordhash)
-	)
-	{
+	) {
 		echo "Result: Logged in as " . $rows[0]["username"];
 		// this will be turned into function and used elsewhere
-	}
-	else
-	{
+	} else {
 		echo "Result: Could not authenticate";
 	}
-}
-else
-{
+} else {
 	echo "Result: Could not authenticate";
 }
 //elseif (($action == "search") and $debug) {
