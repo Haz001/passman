@@ -145,3 +145,16 @@ function createWebEntry($conn, $pD)
 	}
 	header("location:../index.php?error=success");
 }
+
+function passwordComplex($pswd)
+{
+	$uppercase = preg_match('@[A-Z]@', $pswd);
+	$lowercase = preg_match('@[a-z]@', $pswd);
+	$number    = preg_match('@[0-9]@', $pswd);
+	$specialChars = preg_match('@[^\w]@', $pswd);
+	if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pswd) < 8) {
+		return false;
+	} else {
+		return true;
+	}
+}
