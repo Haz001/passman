@@ -11,17 +11,15 @@ function emptyFields($toSearch): bool
 	return $rt;
 }
 
-function isUnique($conn, $pD,$opt = 2)
+function isUnique($conn, $pD, $opt = 2)
 {
-	if($opt == 2)// checks user or email
+	if ($opt == 2) // checks user or email
 	{
 		$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
-	}
-	elseif($opt == 1)// only email
+	} elseif ($opt == 1) // only email
 	{
 		$sql = "SELECT * FROM user WHERE email = ?;";
-	}
-	elseif($opt == 0)// only user
+	} elseif ($opt == 0) // only user
 	{
 		$sql = "SELECT * FROM user WHERE username = ?;";
 	}
@@ -62,6 +60,24 @@ function isUniqueWeb($conn, $pD)
 	mysqli_stmt_close($stmt);
 }
 
+function generateOneTimePassword($conn, $userInfo)
+{
+	$to = $userInfo["email"];
+	$subject = "OTP from PassMan";
+	$txt = uniqid("otp_", true);
+	$headers = "From: otp@passman.harrysy.red";
+	mail($to, $subject, $txt, $headers); //sets up email parameters and mails it to the user
+	mysqli_query($conn, 'DELETE FROM otp WHERE userID = "' . $userInfo["userID"] . '"');
+	$sql = "INSERT INTO otp (userID, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "sss", $userInfo["userID"], $txt, time());
+	mysqli_stmt_execute($stmt);
+	$_SESSION["tempID"] = $userInfo["userID"];
+	header("location:../otp.php");
+	exit();
+}
+
 function loginUser($conn, $pD)
 {
 	$userInfo = isUnique($conn, $pD); //uses the isUnique function to check if user exists and to get user details
@@ -71,21 +87,11 @@ function loginUser($conn, $pD)
 		exit();
 	}
 	if (password_verify($pD["password"], $userInfo["password"])) {
+		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
-		//hash on the database match, the session is then setup
-		session_start();
-		$_SESSION["userID"] = $userInfo["userID"];
-		$_SESSION["first_name"] = $userInfo["first_name"];
-		$_SESSION["last_name"] = $userInfo["last_name"];
-		$_SESSION["username"] = $userInfo["username"];
-		$_SESSION["email"] = $userInfo["email"];
-		$_SESSION["password"] = $userInfo["password"];
-
-		//$_SESSION["iv"] = $userInfo["iv"];
-		header("location:../index.php?error=success");
-		exit();
+		//hash on the database match, the one time passcode function is then called
 	} else {
-		header("location:../login.php?error=notFound");
+		header("location:../login.php?error=notfound");
 		exit();
 	}
 }
