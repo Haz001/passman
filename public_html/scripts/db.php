@@ -1,5 +1,5 @@
 <?php
-require "../pwd/mysql.php"; // grabbing sql loggins from one place
+require "/var/www/passman/public_html/pwd/mysql.php"; // grabbing sql loggins from one place
 //$sqlservername = "localhost";
 // $sqlusername = "passroot";
 // $sqlpassword = "Genetics-Rockband-Radiated-Ahead";
