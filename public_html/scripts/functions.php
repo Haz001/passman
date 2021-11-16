@@ -173,3 +173,19 @@ function passwordComplex($pswd)
 		return true;
 	}
 }
+function getWebsiteList($conn){
+    $user_id = $_SESSION["user_id"];
+    $sql = "SELECT website_id, website_name, WEB_ADDRESS from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) { //checks if statement prepares correctly
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    $stmt->bind_param("i",$user_id);
+    $stmt->execute();
+
+    $stmtresult = $stmt->get_result();
+    echo $stmtresult;
+    return $stmtresult;
+
+}
