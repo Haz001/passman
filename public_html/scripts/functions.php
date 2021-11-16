@@ -90,6 +90,7 @@ function loginUser($conn, $pD)
 		exit();
 	}
 	if (password_verify($pD["password"], $userInfo["password"])) {
+        $_COOKIE["key"] = hash("sha3-512",$pD["password"]);
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
