@@ -14,18 +14,14 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 	<title>PassMan</title>
 </head>
 
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/styles/styles.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="scripts/errorHandle.js"></script>
-	<title>PassMan</title>
-	<div class="navbar">
-		<h1 class="headerTitle">PassMan</h1>
-		<h3 class="headerMessage">Hello sam</h3>
-		<img class="headerImage" src="/img/profilePicture.jpeg" alt="profile pic">
-	</div>
-</head>
-
+<body>
+	<header>
+		<div class="navbar">
+			<div id="emptyDiv"></div>
+			<h1 class="headerTitle">PassMan</h1>
+			<div id="section2">
+				<h3 class="headerMessage">Hello sam</h3>
+				<img class="headerImage" src="/img/profilePicture.jpeg" alt="profile pic">
+			</div>
+		</div>
+	</header>
