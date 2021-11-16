@@ -17,9 +17,9 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 <body>
 	<header>
 		<div class="navbar">
-			<div id="emptyDiv"></div>
-			<h1 class="headerTitle">PassMan</h1>
-			<div id="section2">
+			<div class="emptyDiv"></div>
+			<h1 class="headerTitle"><span>Pass</span>Man</h1>
+			<div class="section2">
 				<h3 class="headerMessage">Hello sam</h3>
 				<img class="headerImage" src="/img/profilePicture.jpeg" alt="profile pic">
 			</div>

@@ -22,13 +22,26 @@
 .navbar h3, .navbar img{
     float: right;
     padding: 10px;
-    margin-right: 30px;
     display: inline;
 }
 
 .navbar img{
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    background-color: red;
+    height: 50px;
+    width: 50px;
+    align-self: center;
 }
+
+
+.section2{
+    display: flex;
+}
+
+.section2 h3{
+    align-self: center;
+}
+
+span{
+    color: orange;
+}
+
