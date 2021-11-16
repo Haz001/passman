@@ -13,17 +13,6 @@ function emptyFields($toSearch): bool
 
 function isUnique($conn, $pD)
 {
-	// if ($opt == 2) // checks user or email
-	// {
-	// 	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
-	// } elseif ($opt == 1) // only email
-	// {
-	// 	$sql = "SELECT * FROM user WHERE email = ?;";
-	// } elseif ($opt == 0) // only user
-	// {
-	// 	$sql = "SELECT * FROM user WHERE username = ?;";
-	// }
-	//This function does this automatically if used correctly
 	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) { //checks if statement prepares correctly
@@ -88,7 +77,7 @@ function loginUser($conn, $pD)
 		header("location:../login.php?error=notfound");
 		exit();
 	}
-	if (password_verify($pD["password"], $userInfo["password"])) {
+	if (password_verify($pD["password"], $userInfo["master_password"])) {
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
