@@ -20,3 +20,6 @@
         </form>
     </div>
 </body>
+<div>
+    <p id="error"></p>
+</div>

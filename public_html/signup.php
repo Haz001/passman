@@ -10,3 +10,7 @@
     <input type="password" name="password" placeholder="Password">
     <button type="submit" name="submit">Submit</button>
 </form>
+
+<div>
+    <p id="error"></p>
+</div>
