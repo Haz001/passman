@@ -17,12 +17,20 @@
 }
 
 .containerMainLeft {
-    flex: 50%
+    flex: 50%;
      
 }
 
 .containerMainRight {
-    flex: 50%
+    flex: 50%;
+    display: block;
+    
+}
+
+.containerMainRight form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 input {
@@ -34,6 +42,7 @@ input {
 button {
     cursor: pointer;
     transition: transform 1s;
+    
 }
 
 button:hover{
