@@ -1,7 +1,12 @@
-<?php require_once "header.php"; ?>
+<?php require_once "header.php";
+if (!isset($_SESSION["user_id"])) {
+	header("location: login.php");
+	exit();
+}
+?>
 
 <div>
-	<img src="logo.png"/><span>PassMan</span>
+	<img src="logo.png" /><span>PassMan</span>
 </div>
 <form>
 	<ul>
@@ -11,5 +16,5 @@
 </form>
 
 </body>
-</html>
 
+</html>
