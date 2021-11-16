@@ -1,26 +1,44 @@
 * {
     padding: 0px;
-    margin: 0px
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+#error {
+    color: red;
 }
 
 .containerMain {
     height: 100vh;
     background-color: #092834;
     color: #fff;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .containerMainLeft {
-
-
+    flex: 50%
+     
 }
 
 .containerMainRight {
-
+    flex: 50%
 }
 
+input {
+    width: 50%;
+    padding: 10px 15px;
+    margin: 8px 0px;
+}
 
+button {
+    cursor: pointer;
+    transition: transform 1s;
+}
 
-
+button:hover{
+    transform: scale(1.1);
+}
 
 
 
