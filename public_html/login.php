@@ -21,7 +21,8 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 				<img src="logo.png" /><span>Pass</span>Man
 			</div>
 		</div>
-		<div class="containerMainLeft">
+		
+		<div class="containerMainRight">
 			<form action="scripts/loginScript.php" method="POST">
 				<input type="text" name="username" placeholder="Username/Email">
 				<input type="password" name="password" placeholder="Password">

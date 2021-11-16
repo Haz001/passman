@@ -1,0 +1,15 @@
+.navbar{
+    background-color: #092834;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.navar h1{
+    text-align: center;
+    display: inline;
+}
+
+.navbar h3, .navbar img{
+    float: right;
+    display: inline;
+}
