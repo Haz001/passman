@@ -19,7 +19,8 @@
 
 .containerMainLeft {
     flex: 50%;
-     
+    height: 35vh;
+    margin: auto; 
 }
 
 .containerMainRight {
@@ -27,7 +28,6 @@
     display: block;
     height: 35vh;
     margin: auto;
-    
 }
 
 .containerMainRight form{
@@ -58,6 +58,15 @@ button:hover{
     transform: scale(1.1);
 }
 
+.logo {
+    width: 70%;
+    margin: auto;
+    font-size: 4rem;
+}
+
+.logo span{
+    color: orange;
+}
 
 
 
