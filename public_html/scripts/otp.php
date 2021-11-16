@@ -1,7 +1,7 @@
 <?php session_start(["cookie_domain" => "passman.harrysy.red"]);
 require "db.php";
-if (isset($_SESSION["tempID"]) and !isset($_SESSION["userID"]) and isset($_POST["otp_submit"])) { //makes sure the user is not already logged in and post data has been recieved
-    $sql = "SELECT * FROM otp WHERE userID = ? AND otp = ?"; //Queries the database if there is a otp entry for the submited otp and if it is linked to the user ID of the user logging in
+if (isset($_SESSION["tempID"]) and !isset($_SESSION["user_id"]) and isset($_POST["otp_submit"])) { //makes sure the user is not already logged in and post data has been recieved
+    $sql = "SELECT * FROM otp WHERE user_id = ? AND otp = ?"; //Queries the database if there is a otp entry for the submited otp and if it is linked to the user ID of the user logging in
     $stmt = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "is", $_SESSION["tempID"], $_POST["otp"]);
@@ -13,7 +13,7 @@ if (isset($_SESSION["tempID"]) and !isset($_SESSION["userID"]) and isset($_POST[
         exit();
     } else {
         if ((time() - $resulta["otp_created"]) <= 1200) { //only allows the otp if it is less than 20 mins long
-            $_SESSION["userID"] = $_SESSION["tempID"];
+            $_SESSION["user_id"] = $_SESSION["tempID"];
             unset($_SESSION["tempID"]);
             header("location:../index.php?login=success");
             exit();

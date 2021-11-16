@@ -11,10 +11,6 @@ if (isset($_POST["submit"])) { // checks if any post data has been received
         exit();
     }
     //More checks to be done
-    if (!passwordComplex($pD["password"])) {
-        header("location:../index.php?error=pswdcomplexity");
-        exit();
-    }
     loginUser($conn, $pD); //logs in the user
 
 

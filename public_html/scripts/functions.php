@@ -11,18 +11,20 @@ function emptyFields($toSearch): bool
 	return $rt;
 }
 
-function isUnique($conn, $pD, $opt = 2)
+function isUnique($conn, $pD)
 {
-	if ($opt == 2) // checks user or email
-	{
-		$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
-	} elseif ($opt == 1) // only email
-	{
-		$sql = "SELECT * FROM user WHERE email = ?;";
-	} elseif ($opt == 0) // only user
-	{
-		$sql = "SELECT * FROM user WHERE username = ?;";
-	}
+	// if ($opt == 2) // checks user or email
+	// {
+	// 	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
+	// } elseif ($opt == 1) // only email
+	// {
+	// 	$sql = "SELECT * FROM user WHERE email = ?;";
+	// } elseif ($opt == 0) // only user
+	// {
+	// 	$sql = "SELECT * FROM user WHERE username = ?;";
+	// }
+	//This function does this automatically if used correctly
+	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) { //checks if statement prepares correctly
 		header("location: ../signup.php?error=stmtfailed");
@@ -67,13 +69,13 @@ function generateOneTimePassword($conn, $userInfo)
 	$txt = uniqid("otp_", true);
 	$headers = "From: otp@passman.harrysy.red";
 	mail($to, $subject, $txt, $headers); //sets up email parameters and mails it to the user
-	mysqli_query($conn, 'DELETE FROM otp WHERE userID = "' . $userInfo["userID"] . '"');
-	$sql = "INSERT INTO otp (userID, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
+	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
+	$sql = "INSERT INTO otp (user_id, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
-	mysqli_stmt_bind_param($stmt, "sss", $userInfo["userID"], $txt, time());
+	mysqli_stmt_bind_param($stmt, "sss", $userInfo["user_id"], $txt, time());
 	mysqli_stmt_execute($stmt);
-	$_SESSION["tempID"] = $userInfo["userID"];
+	$_SESSION["tempID"] = $userInfo["user_id"];
 	header("location:../otp.php");
 	exit();
 }

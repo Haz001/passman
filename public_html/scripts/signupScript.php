@@ -3,6 +3,7 @@ if (isset($_POST["submit"])) { // checks if any post data has been received
     require_once("db.php");
     require_once("functions.php"); // calls both required php scripts
     $pD = $_POST;
+    $pD["email"] = $pD["username"];
     unset($pD["submit"]);
     $pD = array_map('htmlentities', $pD);
     if (!emptyFields($pD)) { // checks if any of passed fields are empty
@@ -11,6 +12,10 @@ if (isset($_POST["submit"])) { // checks if any post data has been received
     }
     if (isUnique($conn, $pD) !== false) { //checks if the username and email are both unique to the database
         header("location:../signup.php?error=ue");
+        exit();
+    }
+    if (!passwordComplex($pD["password"])) {
+        header("location:../signup.php?error=complexity");
         exit();
     }
 
