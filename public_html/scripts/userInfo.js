@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	$.ajax({
 		type: "POST",
-		url: "userInfo.php",
+		url: "scripts/userInfo.php",
 		dataType: "json",
 		success: function (response) {
 			setName(response);
