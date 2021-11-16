@@ -13,17 +13,6 @@ function emptyFields($toSearch): bool
 
 function isUnique($conn, $pD)
 {
-	// if ($opt == 2) // checks user or email
-	// {
-	// 	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
-	// } elseif ($opt == 1) // only email
-	// {
-	// 	$sql = "SELECT * FROM user WHERE email = ?;";
-	// } elseif ($opt == 0) // only user
-	// {
-	// 	$sql = "SELECT * FROM user WHERE username = ?;";
-	// }
-	//This function does this automatically if used correctly
 	$sql = "SELECT * FROM user WHERE username = ? OR  email = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) { //checks if statement prepares correctly
@@ -66,10 +55,10 @@ function generateOneTimePassword($conn, $userInfo)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
-//    $txt = uniqid("otp_", true);
-	$txt = "otp_".bin2hex(openssl_random_pseudo_bytes(4));
-	$headers = "From: otp@passman.harrysy.red";
-	mail($to, $subject, "Your OTP passcode is:\r\n"+$txt, $headers); //sets up email parameters and mails it to the user
+	//    $txt = uniqid("otp_", true);
+	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
+	$headers = "From: webmaster@harrysy.red";
+	mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
 	$sql = "INSERT INTO otp (user_id, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
 	$stmt = mysqli_stmt_init($conn);
@@ -89,8 +78,9 @@ function loginUser($conn, $pD)
 		header("location:../login.php?error=notfound");
 		exit();
 	}
-	if (password_verify($pD["password"], $userInfo["password"])) {
+    if (password_verify($pD["password"], $userInfo["master_password"])) {
         $_COOKIE["key"] = hash("sha3-512",$pD["password"]);
+
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
