@@ -1,8 +1,9 @@
-<?php require_once "header.php";
+<?php //require_once "header.php";
+//?>
+<?php
+
+session_start(["cookie_domain" => "passman.harrysy.red"]);
+echo $_SESSION["user_id"];
+echo $_COOKIE["key"];
 ?>
-<form action="scripts/loginScript.php" method="POST">
-	<input type="text" name="username" placeholder="Username/Email">
-	<input type="password" name="password" placeholder="Password">
-	<button type="submit" name="submit">Submit</button>
-</form>
 <?php require "footer.php"; ?>

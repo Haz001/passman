@@ -4,11 +4,13 @@
 }
 
 .containerMain {
-    background-size: cover;
-    background-color: 092834;
+    height: 100vh;
+    background-color: #092834;
+    color: #fff;
 }
 
 .containerMainLeft {
+
 
 }
 
