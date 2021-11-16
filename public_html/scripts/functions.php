@@ -55,10 +55,10 @@ function generateOneTimePassword($conn, $userInfo)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
-//    $txt = uniqid("otp_", true);
-	$txt = "otp_".bin2hex(openssl_random_pseudo_bytes(4));
-	$headers = "From: otp@passman.harrysy.red";
-	mail($to, $subject, "Your OTP passcode is:\r\n"+$txt, $headers); //sets up email parameters and mails it to the user
+	//    $txt = uniqid("otp_", true);
+	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
+	$headers = "From: webmaster@harrysy.red";
+	mail($to, $subject, "Your OTP passcode is:\r\n" + $txt, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
 	$sql = "INSERT INTO otp (user_id, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
 	$stmt = mysqli_stmt_init($conn);
