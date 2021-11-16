@@ -9,6 +9,10 @@ $(document).ready(function () {
 });
 
 function errorMsg($_GET) {
+	if ($_GET["error"] !== "") {
+		$("#error").css("background", "lightcoral");
+		$("#error").css("padding", "10px");
+	}
 	switch ($_GET["error"]) {
 		case "ef":
 			$("#error").html(
