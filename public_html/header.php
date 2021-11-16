@@ -12,5 +12,8 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="scripts/errorHandle.js"></script>
 	<title>PassMan</title>
+	<h1 class="headerTitle">PassMan</h1>
+	<h3 class="headerMessage">Hello sam</h3>
+	<img class="headerImage" src="img/profilePicture.jpeg" alt="profile pic">
 </head>
 
