@@ -1,5 +1,6 @@
 <?php
-if (isset($_POST["submit"])) { // checks if any post data has been received
+session_start(["cookie_domain" => "passman.harrysy.red"]);
+if (isset($_POST["submit"]) && !isset($_SESSION["user_id"])) { // checks if any post data has been received
     require_once("db.php");
     require_once("functions.php"); // calls both required php scripts
     $pD = $_POST;

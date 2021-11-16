@@ -79,7 +79,7 @@ function loginUser($conn, $pD)
 		exit();
 	}
     if (password_verify($pD["password"], $userInfo["master_password"])) {
-        $_COOKIE["key"] = hash("sha3-512",$pD["password"]);
+        setcookie("key",hash("sha3-512",$pD["password"]),0,"/","passman.harrysy.red",true);
 
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
@@ -172,4 +172,16 @@ function passwordComplex($pswd)
 	} else {
 		return true;
 	}
+}
+function getWebsiteList($conn,$user_id){
+    print_r($user_id);
+    $sql = "SELECT website_id, website_name, WEB_ADDRESS from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$user_id);
+    mysqli_stmt_execute($stmt);
+    $stmtresult =  mysqli_stmt_get_result($stmt);
+    echo $stmtresult;
+    return $stmtresult;
+
 }
