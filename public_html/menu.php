@@ -5,6 +5,7 @@
 session_start(["cookie_domain" => "passman.harrysy.red"]);
 echo $_SESSION["user_id"];
 setcookie("likeiknow","fuck",0,"","passman.harrysy.red",true);
-echo $_COOKIE[""];
+echo $_COOKIE["key"];
+echo $_COOKIE["likeiknow"];
 ?>
 <?php require "footer.php"; ?>

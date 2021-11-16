@@ -79,7 +79,7 @@ function loginUser($conn, $pD)
 		exit();
 	}
     if (password_verify($pD["password"], $userInfo["master_password"])) {
-        setcookie("key",hash("sha3-512",$pD["password"]),0,"","passman.harrysy.red",true);
+        setcookie("key",hash("sha3-512",$pD["password"]),0,"/","passman.harrysy.red",true);
 
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
