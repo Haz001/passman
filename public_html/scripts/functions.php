@@ -181,7 +181,8 @@ function getWebsiteList($conn,$user_id){
     mysqli_stmt_bind_param($stmt,"s",$user_id);
     mysqli_stmt_execute($stmt);
     $stmtresult =  mysqli_stmt_get_result($stmt);
-    echo $stmtresult;
-    return $stmtresult;
+    $result = mysqli_fetch_assoc($stmtresult);
+
+    return json_encode($result);
 
 }
