@@ -22,6 +22,8 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 			</div>
 		</div>
 		
+	<div class="vl"></div>
+
 		<div class="containerMainRight">
 			<form action="scripts/loginScript.php" method="POST">
 				<input type="text" name="username" placeholder="Username/Email">
