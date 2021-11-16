@@ -19,23 +19,29 @@
 
 .containerMainLeft {
     flex: 50%;
-     
+    height: 35vh;
+    margin: auto; 
 }
 
 .containerMainRight {
     flex: 50%;
     display: block;
-    
+    height: 35vh;
+    margin: auto;
 }
 
 .containerMainRight form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 60%;
+    height: 30vh;
+    margin: auto;
 }
 
+
 input {
-    width: 50%;
+    width: 100%;
     padding: 10px 15px;
     margin: 8px 0px;
 }
@@ -43,13 +49,24 @@ input {
 button {
     cursor: pointer;
     transition: transform 1s;
-    
+    padding: 10px 50px 10px 50px;
+    background-color: lightskyblue;
+    color: white;
 }
 
 button:hover{
     transform: scale(1.1);
 }
 
+.logo {
+    width: 70%;
+    margin: auto;
+    font-size: 4rem;
+}
+
+.logo span{
+    color: orange;
+}
 
 
 

@@ -1,15 +1,61 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .navbar{
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding: 30px;
     background-color: #092834;
-    overflow: hidden;
-    padding: 10px;
+    color: white ;
+    display: flex;
+    justify-content: space-between;
 }
 
 .navar h1{
-    text-align: center;
-    display: inline;
+    position: absolute;
+    left: 50%;
 }
 
 .navbar h3, .navbar img{
     float: right;
+    padding: 10px;
     display: inline;
+}
+
+.navbar img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    align-self: center;
+}
+
+
+.section2{
+    display: flex;
+}
+
+.section2 h3{
+    align-self: center;
+}
+
+span{
+    color: orange;
+}
+
+
+footer{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #092834;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4rem; 
+}
+footer a {
+    text-decoration: none;
+    color: white;
 }
