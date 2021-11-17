@@ -60,18 +60,19 @@ button:hover{
 }
 
 .logo {
-    width: 70%;
+    width: fit-content;
     margin: auto;
     font-size: 4.5rem;
     text-align: center;
 }
 
-.logo span{
-    color: orange;
+.logo > span > span{
+    color: #ffb570;
 }
 
 .vl {
-    border-left: 6px solid white;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
     height: 80%;
     position: absolute;
     left: 50%;

@@ -174,14 +174,14 @@ function passwordComplex($pswd)
 	}
 }
 function getWebsiteList($conn,$user_id){
-    print_r($user_id);
-    $sql = "SELECT website_id, website_name, WEB_ADDRESS from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
+    $sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
     $stmt = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($stmt,$sql);
     mysqli_stmt_bind_param($stmt,"s",$user_id);
     mysqli_stmt_execute($stmt);
     $stmtresult =  mysqli_stmt_get_result($stmt);
-    echo $stmtresult;
-    return $stmtresult;
+    $result = mysqli_fetch_all($stmtresult,MYSQLI_ASSOC);
+    mysqli_free_result($stmtresult);
+    return json_encode($result);
 
 }
