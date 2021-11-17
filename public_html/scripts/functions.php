@@ -78,8 +78,8 @@ function loginUser($conn, $pD)
 		header("location:../login.php?error=notfound");
 		exit();
 	}
-    if (password_verify($pD["password"], $userInfo["master_password"])) {
-        setcookie("key",hash("sha3-512",$pD["password"]),0,"/","passman.harrysy.red",true);
+	if (password_verify($pD["password"], $userInfo["master_password"])) {
+		setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
 
 		generateOneTimePassword($conn, $userInfo);
 		//checks if the password hash inputted and the password
@@ -173,15 +173,15 @@ function passwordComplex($pswd)
 		return true;
 	}
 }
-function getWebsiteList($conn,$user_id){
-    $sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
-    $stmt = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$user_id);
-    mysqli_stmt_execute($stmt);
-    $stmtresult =  mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($stmtresult,MYSQLI_ASSOC);
-    mysqli_free_result($stmtresult);
-    return json_encode($result);
-
+function getWebsiteList($conn, $user_id)
+{
+	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $user_id);
+	mysqli_stmt_execute($stmt);
+	$stmtresult =  mysqli_stmt_get_result($stmt);
+	$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
+	mysqli_free_result($stmtresult);
+	return json_encode($result);
 }

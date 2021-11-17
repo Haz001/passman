@@ -1,2 +1,2 @@
 # passman
-Password Manager
+The best Password Manager
