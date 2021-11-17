@@ -19,7 +19,7 @@
 						tmp.innerText = websites[i]["website_name"]
 						tmp.name = websites[i]["web_address"];
 						tmp.value = websites[i]["website_id"];
-						console.log(tmp);
+						div.append(tmp);
 					}
 				} else {
 					alert("Error")
@@ -29,6 +29,7 @@
 	}
     $("#refresh").click(function (e) { 
         e.preventDefault();
+        listWebsites($("#list"));
         
     });
 
