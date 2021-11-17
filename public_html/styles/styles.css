@@ -52,6 +52,7 @@ button {
     padding: 10px 50px 10px 50px;
     background-color: lightskyblue;
     color: white;
+    margin: auto;
 }
 
 button:hover{
@@ -61,14 +62,23 @@ button:hover{
 .logo {
     width: 70%;
     margin: auto;
-    font-size: 4rem;
+    font-size: 4.5rem;
+    text-align: center;
 }
 
 .logo span{
     color: orange;
 }
 
-
+.vl {
+    border-left: 6px solid white;
+    height: 80%;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 10%;
+    bottom: 10%;
+  }
 
 
 
