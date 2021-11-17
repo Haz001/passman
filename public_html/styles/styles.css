@@ -87,5 +87,6 @@ button:hover {
 @media screen and (max-width: 600px) {
 	.vl {
 		transform: rotate(90deg);
+		height: 100vw;
 	}
 }
