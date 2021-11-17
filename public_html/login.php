@@ -18,7 +18,7 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 	<div class="containerMain">
 		<div class="containerMainLeft">
 			<div class="logo">
-				<img src="logo.png" style="width:1rem;flaot:left;"/><span><span>Pass</span>Man</span>
+				<img src="logo.png" style="width:1em;flaot:left;"/><span><span>Pass</span>Man</span>
 			</div>
 		</div>
 		
