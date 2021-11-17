@@ -51,6 +51,12 @@ function errorMsg($_GET) {
 				'Password does not meet complexity requirements <br> <ul style="list-style-type: none"><li>8 Characters</li><li>1 Special Character</li><li>1 Uppercase Character</li><li>1 Number</li></ul>'
 			);
 			$("[name='password']").css("border-color", "red");
+			break;
+		case "otpIncorrect":
+			$("#error").css("background", "lightcoral");
+			$("#error").css("padding", "10px");
+			$("#error").html("One time passcode is incorrect, please try again");
+			break;
 		default:
 			break;
 	}
