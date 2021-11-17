@@ -1,150 +1,91 @@
 * {
-    padding: 0px;
-    margin: 0px;
-    font-family: sans-serif;
+	padding: 0px;
+	margin: 0px;
+	font-family: sans-serif;
 }
 
 #error {
-    color: red;
-    text-align: center;
+	color: red;
+	text-align: center;
 }
 
 .containerMain {
-    height: 100vh;
-    background-color: #092834;
-    color: #fff;
-    display: flex;
-    flex-wrap: wrap;
+	height: 100vh;
+	background-color: #092834;
+	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .containerMainLeft {
-    flex: 50%;
-    height: 35vh;
-    margin: auto; 
+	flex: 50%;
+	height: 35vh;
+	margin: auto;
 }
 
 .containerMainRight {
-    flex: 50%;
-    display: block;
-    height: 35vh;
-    margin: auto;
+	flex: 50%;
+	display: block;
+	height: 35vh;
+	margin: auto;
 }
 
-.containerMainRight form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
-    height: 30vh;
-    margin: auto;
+.containerMainRight form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 60%;
+	height: 30vh;
+	margin: auto;
 }
-
 
 input {
-    width: 100%;
-    padding: 10px 15px;
-    margin: 8px 0px;
+	width: 100%;
+	padding: 10px 15px;
+	margin: 8px 0px;
 }
 
 button {
-    cursor: pointer;
-    transition: transform 1s;
-    padding: 10px 50px 10px 50px;
-    background-color: lightskyblue;
-    color: white;
-    margin: auto;
+	cursor: pointer;
+	transition: transform 1s;
+	padding: 10px 50px 10px 50px;
+	background-color: lightskyblue;
+	color: white;
+	margin: auto;
 }
 
-button:hover{
-    transform: scale(1.1);
+button:hover {
+	transform: scale(1.1);
 }
 
 .logo {
-    width: fit-content;
-    margin: auto;
-    font-size: 4.5rem;
-    text-align: center;
+	width: fit-content;
+	margin: auto;
+	font-size: 4.5rem;
+	text-align: center;
 }
 
-.logo > span > span{
-    color: #ffb570;
+.logo > span > span {
+	color: #ffb570;
 }
 
 .vl {
-    border-left: 3px solid white;
-    border-right: 3px solid white;
-    height: 80%;
-    position: absolute;
-    left: 50%;
-    margin-left: -3px;
-    top: 10%;
-    bottom: 10%;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.navbar{
-    background-color: 092834;
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	height: 80%;
+	position: absolute;
+	left: 50%;
+	margin-left: -3px;
+	top: 10%;
+	bottom: 10%;
+}
+
+.navbar {
+	background-color: 092834;
+}
+
+@media screen and (max-width: 600px) {
+	.vl {
+		transform: rotate(90deg);
+	}
 }
