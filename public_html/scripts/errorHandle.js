@@ -55,7 +55,9 @@ function errorMsg($_GET) {
 		case "otpIncorrect":
 			$("#error").css("background", "lightcoral");
 			$("#error").css("padding", "10px");
-			$("#error").html("One time passcode is incorrect, please try again");
+			$("#error").html(
+				"One time passcode is incorrect, please try again"
+			);
 			break;
 		default:
 			break;
