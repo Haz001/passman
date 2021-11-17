@@ -1,6 +1,13 @@
 <?php require_once "header.php";
 //
 ?>
+<style>
+    button::after{
+        content: attr(name);
+        display: block;
+        color: gray;
+    }
+</style>
 <div id="list"><button id="refresh">Refresh</button> </div>
 <script>
 	function listWebsites(div) {
@@ -9,21 +16,27 @@
 			url: "/scripts/ajax.php",
 			data: "get=websites",
 			dataType: "JSON",
+            statusCode:{
+                444: function(){
+                    alert ("cant find data");
+                },
+                500:function(){
+                    alert ("PHP code error");
+                },
+                401: function(){
+                    alert ("please authenticate");
+                    document.location = "/logout.php"
+                }
+            },
 			success: function (response) {
-				if (result.status == 200) {
-					let websitesJson = result.responseText;
-					let websites = JSON.parse(websitesJson);
-					console.log(websites);
-					for (let i = 0; i < websites.length; i++) {
-						let tmp = document.createElement("button");
-						tmp.innerText = websites[i]["website_name"]
-						tmp.name = websites[i]["web_address"];
-						tmp.value = websites[i]["website_id"];
-						div.append(tmp);
-					}
-				} else {
-					alert("Error")
-				}
+                console.log(response);
+                for (let i = 0; i < response.length; i++) {
+                    let tmp = document.createElement("button");
+                    tmp.innerText = response[i]["website_name"];
+                    tmp.name = response[i]["web_address"];
+                    tmp.value = response[i]["website_id"];
+                    div.append(tmp);
+                }
 			}
 		});
 	}
