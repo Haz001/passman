@@ -33,7 +33,7 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 				<input type="password" name="password" placeholder="Password">
 				<button type="submit" name="submit">Submit</button>
 			</form>
-			<p id="CreateAccount">Create Account</p> 
+			<a href="signup.php"><p id="CreateAccount">Create Account</p></a>
 			<div>
 				<p id="error"></p>
 			</div>
