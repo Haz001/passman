@@ -110,6 +110,21 @@ button:hover {
 	margin: auto;
 }
 
+.containerReportBug {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	background-color: red;
+}
+
+.containerReportBug form {
+	background-color: yellowgreen;
+	padding: 20px;
+	margin: auto;
+
+}
+
 a {
 	text-decoration: none;
 }
