@@ -116,13 +116,24 @@ button:hover {
 	align-items: center;
 	margin: auto;
 	background-color: red;
+
 }
 
 .containerReportBug form {
 	background-color: yellowgreen;
 	padding: 20px;
-	margin: auto;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 50%;
+}
 
+.containerReportBug form input {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
 }
 
 a {
