@@ -34,3 +34,4 @@
 				<p id="error"></p>
 			</div>
 		</div>
+</div>

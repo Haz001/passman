@@ -13,13 +13,29 @@
 </head>
 
 <body>
-	<div class="otp">
-		<form action="scripts/otp.php" method="POST">
-			<input type="text" name="otp" placeholder="Please enter OTP">
-			<button type="submit" name="otp_submit">Submit</button>
-		</form>
+
+<div class="containerMain">
+		<div class="containerMainLeft">
+			<div class="logo">
+				<img src="logo.png" style="width:1em;float:left;" /><span><span>Pass</span>Man</span>
+			</div>
+		</div>
+
+		<div class="vl"></div>
+		
+		<div class="containerMainRight">
+			<img id="loginIcon" src="img\profilePicture.jpeg">
+			
+			<p id="emailVerifi">Email verification code sent to example@gmail.com</p>
+
+			<form action="scripts/otp.php" method="POST">
+				<input type="text" name="otp" placeholder="Please enter OTP">
+				<button type="submit" name="otp_submit">Submit</button>
+			</form>
+	
+			<div>
+				<p id="error"></p>
+			</div>
+		</div>
 	</div>
 </body>
-<div>
-	<p id="error"></p>
-</div>
