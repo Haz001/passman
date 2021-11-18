@@ -16,7 +16,6 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 
 <body>
 	<div class="containerMain">
-
 		<div class="containerMainLeft">
 			<div class="logo">
 				<img src="logo.png" style="width:1em;float:left;" /><span><span>Pass</span>Man</span>
@@ -24,10 +23,9 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 		</div>
 
 		<div class="vl"></div>
-
+		
 		<div class="containerMainRight">
 			<img id="loginIcon" src="img\profilePicture.jpeg">
-
 			<form action="scripts/loginScript.php" method="post">
 				<input type="text" name="username" placeholder="Username/Email">
 				<input type="password" name="password" placeholder="Password">
@@ -38,5 +36,4 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 				<p id="error"></p>
 			</div>
 		</div>
-
 	</div>

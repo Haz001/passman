@@ -104,6 +104,8 @@ a {
 	text-decoration: none;
 }
 
+
+
 @media screen and (max-width: 600px) {
 	.vl {
 		transform: rotate(90deg);
