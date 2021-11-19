@@ -55,6 +55,16 @@ button:hover {
 	transform: scale(1.1);
 }
 
+button#bugSend {
+	color: black;
+	background: white;
+	transition: transform 1s;
+}
+
+button#bugSend:hover {
+	transform: scale(0.5);
+}
+
 .logo {
 	width: fit-content;
 	margin: auto;
