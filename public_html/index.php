@@ -2,10 +2,12 @@
 if (!isset($_SESSION["user_id"])) {
 	header("location: login.php");
 	exit();
+}else{
+	require_once "menu.php";
 }
 ?>
 
-<div>
+<!--<div>
 	<img src="logo.png" /><span>PassMan</span>
 </div>
 <form>
@@ -13,7 +15,7 @@ if (!isset($_SESSION["user_id"])) {
 		<li><a href="login.php">Login</a></li>
 		<li><a href="signup.php">Signup</a></li>
 	</ul>
-</form>
+</form>-->
 
 </body>
 
