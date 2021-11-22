@@ -1,4 +1,4 @@
-<?php require_once "header.php";
+<?php //require_once "header.php";
 //
 ?>
 <style>
@@ -89,4 +89,4 @@
 		listWebsites($("#list"));
 	});
 </script>
-<?php require "footer.php"; ?>
+<?php //require "footer.php"; ?>
