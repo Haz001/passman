@@ -88,5 +88,6 @@
 		//e.preventDefault();
 		listWebsites($("#list"));
 	});
+	$(document).ready(function() {listWebsites($("#list"));});
 </script>
 <?php //require "footer.php"; ?>
