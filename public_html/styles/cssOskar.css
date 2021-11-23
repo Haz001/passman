@@ -127,7 +127,7 @@ footer a {
     height: 140px;
 }
 
-.contactPage{
+.contactPage, .addPage{
     background-color: #F7F4D4;
 }
 
@@ -136,7 +136,7 @@ footer a {
     margin-bottom: 10px;
 }
 
-input, label{
+input, label, button{
     text-align: center;
     display: block;
     width: 70%;
@@ -155,7 +155,7 @@ input{
     height: 100px;
 }
 
-.contactSend{
+.contactSend, .addUpload{
     margin-top: 50px;
     width: 50%;
     margin-right: 25%;
@@ -168,4 +168,46 @@ input{
 
 .contactForm form{
     margin-top: 30px;
+}
+
+
+
+
+
+
+.addMain{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 70vh;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 25px;
+    color: white;
+}
+
+
+.verticalLine{
+    border: 6px solid black;
+    height: 65%;
+    position: relative;
+    top: 20%;
+    bottom: 20%;
+}
+
+
+.addNewWebsite, .uploadNewWesbite{
+    width: 40%;
+    margin: auto;
+    margin-top: 7%;
+    font-size: 20px;
+}
+
+.addMain{
+    background-color: #092834;
+}
+
+.addTitle{
+    margin-bottom: 30px;
 }
