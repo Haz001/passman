@@ -66,7 +66,7 @@ function grabIp()
 	}
 	return $ip;
 }
-function generateOneTimePassword($conn, $userInfo)
+function generateOneTimePassword($conn, $userInfo, $pD)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
@@ -103,26 +103,38 @@ function generateOneTimePassword($conn, $userInfo)
 	mysqli_stmt_bind_param($stmt, "sss", $userInfo["user_id"], $txt, time());
 	mysqli_stmt_execute($stmt);
 	$_SESSION["tempID"] = $userInfo["user_id"];
-	header("location:../otp.php");
-	exit();
+	if (!isset($pD["location"])) {
+		header("location:../otp.php");
+		exit();
+	} else {
+		response("otp");
+	}
 }
 function loginUser($conn, $pD)
 {
 	$userInfo = isUnique($conn, $pD); //uses the isUnique function to check if user exists and to get user details
 	// from database
 	if ($userInfo == false) {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 	if (password_verify($pD["password"], $userInfo["master_password"])) {
 		setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
 
-		generateOneTimePassword($conn, $userInfo);
+		generateOneTimePassword($conn, $userInfo, $pD);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
 	} else {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 }
 function signUp($conn, $pD)
@@ -242,4 +254,11 @@ function getPasswordList($conn, $user_id, $website_id, $key)
 		$result[$i]["password"] = decryptData($cipher[$i]["password"], $key, base64_decode($cipher[$i]["iv"]));
 	}
 	return json_encode($result);
+}
+
+function response($response, $error = "none")
+{
+	$return = array("response" => $response, "error" => $error);
+	echo json_encode($return);
+	exit();
 }
