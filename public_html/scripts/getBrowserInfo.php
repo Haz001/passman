@@ -1,9 +1,11 @@
 <?php
+
 /**
  * get operating system and browser
  * 
  */
-function getOS() { 
+function getOS()
+{
 
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -34,37 +36,43 @@ function getOS() {
 		'/webos/i'              =>  'Mobile'
 	);
 
-	foreach ( $os_array as $regex => $value ) { 
-		if ( preg_match($regex, $user_agent ) ) {
+	foreach ($os_array as $regex => $value) {
+		if (preg_match($regex, $user_agent)) {
 			$os_platform = $value;
 		}
-	}   
+	}
 	return $os_platform;
 }
-function getBrowser() {
+function getBrowser()
+{
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	if ($_SERVER['HTTP_SENT_FROM'] == "passext") {
+		$browser = "PassManExtension";
+		return $browser;
+	} else {
 
-	$browser        = "Browser Unknown";
-	$browser_array  = array(
-		'/passext/i'    =>  'PassManExtension',
-		'/msie/i'       =>  'Internet Explorer',
-		'/firefox/i'    =>  'Firefox',
-		'/safari/i'     =>  'Safari',
-		'/chrome/i'     =>  'Chrome',
-		'/edge/i'       =>  'Edge',
-		'/opera/i'      =>  'Opera',
-		'/netscape/i'   =>  'Netscape',
-		'/maxthon/i'    =>  'Maxthon',
-		'/konqueror/i'  =>  'Konqueror',
-		'/mobile/i'     =>  'Handheld Browser'
-	);
+		$browser = "Browser Unknown";
+		$browser_array  = array(
+			'/passext/i'    =>  'PassManExtension',
+			'/msie/i'       =>  'Internet Explorer',
+			'/firefox/i'    =>  'Firefox',
+			'/safari/i'     =>  'Safari',
+			'/chrome/i'     =>  'Chrome',
+			'/edge/i'       =>  'Edge',
+			'/opera/i'      =>  'Opera',
+			'/netscape/i'   =>  'Netscape',
+			'/maxthon/i'    =>  'Maxthon',
+			'/konqueror/i'  =>  'Konqueror',
+			'/mobile/i'     =>  'Handheld Browser'
+		);
 
-	foreach ( $browser_array as $regex => $value ) { 
-		if ( preg_match( $regex, $user_agent ) ) {
-			$browser = $value;
+		foreach ($browser_array as $regex => $value) {
+			if (preg_match($regex, $user_agent)) {
+				$browser = $value;
+			}
 		}
+		return $browser;
 	}
-	return $browser;
 }
 
 //echo getOS() . " - " . getBrowser();
