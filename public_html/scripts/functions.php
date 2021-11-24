@@ -50,20 +50,21 @@ function isUniqueWeb($conn, $pD)
 	}
 	mysqli_stmt_close($stmt);
 }
-function grabIp(){
+function grabIp()
+{
 	//whether ip is from the share internet  
-	if(!emptyempty($_SERVER['HTTP_CLIENT_IP'])) {  
-			$ip = $_SERVER['HTTP_CLIENT_IP'];  
-	}  
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
+	}
 	//whether ip is from the proxy  
-	elseif (!emptyempty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-		}  
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
 	//whether ip is from the remote address  
-	else{  
-			$ip = $_SERVER['REMOTE_ADDR'];  
-	}  
-	return $ip;  
+	else {
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	return $ip;
 }
 function generateOneTimePassword($conn, $userInfo)
 {
@@ -72,33 +73,27 @@ function generateOneTimePassword($conn, $userInfo)
 	// $txt = uniqid("otp_", true);
 	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
 	$tempPath = "./temp/email.html";
-	try//tries to read email template
+	try //tries to read email template
 	{
-		$f = fopen($tempPath,'r');
-		$temp = fread($f,filesize($tempPath));
+		$f = fopen($tempPath, 'r');
+		$temp = fread($f, filesize($tempPath));
 		fclose($f);
-	}
-	catch (Exception $ex)
-	{
+	} catch (Exception $ex) {
 		$temp = '$name here is your code:<br/>$code';
 	}
-	if(($temp == "")or($temp == null))
-	{
+	if (($temp == "") or ($temp == null)) {
 		$temp = '$name here is your code:<br/>$code';
 	}
-	try
-	{
+	try {
 		include "getBrowserInfo.php";
 		$browser = getOS() . " - " . getBrowser();
-	}
-	catch (Exception $ex)
-	{
+	} catch (Exception $ex) {
 		$browser = grabIp();
 	}
-	$body = str_replace('$device',$browser,str_replace('$code',$txt, str_replace('$name',$userInfo["first_name"],$temp)));
-	$headers = "MIME-Version: 1.0" . "\r\n";// tells email provider to accept next line
-	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";// tells email provider that this email is formatted in HTML
-	$headers .= "From: otp@passman.harrysy.red";//tells email that it was sent by
+	$body = str_replace('$device', $browser, str_replace('$code', $txt, str_replace('$name', $userInfo["first_name"], $temp)));
+	$headers = "MIME-Version: 1.0" . "\r\n"; // tells email provider to accept next line
+	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; // tells email provider that this email is formatted in HTML
+	$headers .= "From: otp@passman.harrysy.red"; //tells email that it was sent by
 	//mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
 	mail($to, $subject, $body, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
@@ -227,7 +222,7 @@ function getWebsiteList($conn, $user_id)
 	mysqli_free_result($stmtresult);
 	return json_encode($result);
 }
-function getPasswordList($conn, $user_id, $website_id,$key)
+function getPasswordList($conn, $user_id, $website_id, $key)
 {
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
@@ -239,12 +234,12 @@ function getPasswordList($conn, $user_id, $website_id,$key)
 	$cipher = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
 	mysqli_free_result($stmtresult);
 	$result = [];
-	for ($i = 0;$i < sizeof($cipher);$i++){
+	for ($i = 0; $i < sizeof($cipher); $i++) {
 		$result[$i] = [];
-		$result[$i]["website_id"]  =$cipher[$i]["website_id"];
-		$result[$i]["password_id"] =$cipher[$i]["password_id"];
-		$result[$i]["username"]=decryptData($cipher[$i]["username"],$key,base64_decode($cipher[$i]["iv"]));
-		$result[$i]["password"]=decryptData($cipher[$i]["password"],$key,base64_decode($cipher[$i]["iv"]));
+		$result[$i]["website_id"]  = $cipher[$i]["website_id"];
+		$result[$i]["password_id"] = $cipher[$i]["password_id"];
+		$result[$i]["username"] = decryptData($cipher[$i]["username"], $key, base64_decode($cipher[$i]["iv"]));
+		$result[$i]["password"] = decryptData($cipher[$i]["password"], $key, base64_decode($cipher[$i]["iv"]));
 	}
 	return json_encode($result);
 }
