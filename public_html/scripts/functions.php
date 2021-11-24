@@ -50,15 +50,22 @@ function isUniqueWeb($conn, $pD)
 	}
 	mysqli_stmt_close($stmt);
 }
-
 function generateOneTimePassword($conn, $userInfo)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
-	//    $txt = uniqid("otp_", true);
+	// $txt = uniqid("otp_", true);
+	$tempPath = "./temp/email.html";
+	$f = fopen($tempPath);
+	$temp = fread($f,filesize($tempPath));
+	fclose($f);
 	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
-	$headers = "From: webmaster@harrysy.red";
-	mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
+	$body = str_replace('$code',$txt,str_replace('$name',$userInfo["first_name"],$temp));
+	$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+	$headers .= "From: webmaster@harrysy.red";
+	//mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
+	mail($to, $subject, $body, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
 	$sql = "INSERT INTO otp (user_id, otp, otp_created) VALUES (?,?,?)"; //inserts the otp into the otp database linked to the user
 	$stmt = mysqli_stmt_init($conn);
@@ -69,7 +76,6 @@ function generateOneTimePassword($conn, $userInfo)
 	header("location:../otp.php");
 	exit();
 }
-
 function loginUser($conn, $pD)
 {
 	$userInfo = isUnique($conn, $pD); //uses the isUnique function to check if user exists and to get user details
@@ -89,7 +95,6 @@ function loginUser($conn, $pD)
 		exit();
 	}
 }
-
 function signUp($conn, $pD)
 {
 	$sql = "INSERT INTO user (first_name, last_name, username, email, master_password, dob, mobile) VALUES (?,?,?,?,?,?,?);"; //starts to
