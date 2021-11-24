@@ -23,16 +23,17 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 		</div>
 
 		<div class="vl"></div>
-
+		
 		<div class="containerMainRight">
-			<form action="scripts/loginScript.php" method="POST">
+			<img id="loginIcon" src="img\profilePicture.jpeg">
+			<form action="scripts/loginScript.php" method="post">
 				<input type="text" name="username" placeholder="Username/Email">
 				<input type="password" name="password" placeholder="Password">
 				<button type="submit" name="submit">Submit</button>
 			</form>
+			<a href="signup.php"><p id="CreateAccount">Create Account</p></a>
 			<div>
 				<p id="error"></p>
 			</div>
 		</div>
-
 	</div>
