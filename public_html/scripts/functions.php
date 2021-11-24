@@ -50,20 +50,55 @@ function isUniqueWeb($conn, $pD)
 	}
 	mysqli_stmt_close($stmt);
 }
+function grabIp(){
+	//whether ip is from the share internet  
+	if(!emptyempty($_SERVER['HTTP_CLIENT_IP'])) {  
+			$ip = $_SERVER['HTTP_CLIENT_IP'];  
+	}  
+	//whether ip is from the proxy  
+	elseif (!emptyempty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+		}  
+	//whether ip is from the remote address  
+	else{  
+			$ip = $_SERVER['REMOTE_ADDR'];  
+	}  
+	return $ip;  
+}
 function generateOneTimePassword($conn, $userInfo)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
 	// $txt = uniqid("otp_", true);
-	$tempPath = "./temp/email.html";
-	$f = fopen($tempPath);
-	$temp = fread($f,filesize($tempPath));
-	fclose($f);
 	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
-	$body = str_replace('$code',$txt,str_replace('$name',$userInfo["first_name"],$temp));
-	$headers = "MIME-Version: 1.0" . "\r\n";
-$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-	$headers .= "From: webmaster@harrysy.red";
+	$tempPath = "./temp/email.html";
+	try//tries to read email template
+	{
+		$f = fopen($tempPath,'r');
+		$temp = fread($f,filesize($tempPath));
+		fclose($f);
+	}
+	catch (Exception $ex)
+	{
+		$temp = '$name here is your code:<br/>$code';
+	}
+	if(($temp == "")or($temp == null))
+	{
+		$temp = '$name here is your code:<br/>$code';
+	}
+	try
+	{
+		include "getBrowserInfo.php";
+		$browser = getOS() . " - " . getBrowser();
+	}
+	catch (Exception $ex)
+	{
+		$browser = grabIp();
+	}
+	$body = str_replace('$device',$browser,str_replace('$code',$txt, str_replace('$name',$userInfo["first_name"],$temp)));
+	$headers = "MIME-Version: 1.0" . "\r\n";// tells email provider to accept next line
+	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";// tells email provider that this email is formatted in HTML
+	$headers .= "From: otp@passman.harrysy.red";//tells email that it was sent by
 	//mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
 	mail($to, $subject, $body, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
