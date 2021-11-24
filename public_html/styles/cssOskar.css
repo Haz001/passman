@@ -75,7 +75,6 @@ footer a {
 .contactMain{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     margin:50px;
     height: 70vh;
 }
@@ -155,7 +154,7 @@ input{
     height: 100px;
 }
 
-.contactSend, .addUpload{
+.contactSend, .addUpload, .addUpload2{
     margin-top: 50px;
     width: 50%;
     margin-right: 25%;
@@ -183,6 +182,7 @@ input{
     height: 70vh;
     margin: auto;
     margin-top: 50px;
+    margin-bottom: 50px;
     border-radius: 25px;
     color: white;
 }
@@ -210,4 +210,30 @@ input{
 
 .addTitle{
     margin-bottom: 30px;
+}
+
+
+@media only screen and  (max-width: 1150px){
+    .addMain{
+        flex-direction: column;
+        height: auto;
+    }
+    .addUpload{
+        margin-top: 0;
+    }
+    input, label{
+        width: 100%;
+        margin: auto;
+    }
+    .contactMain{
+        flex-direction: column;
+    }
+    .contactForm, .contactTeam{
+        width: 100%;
+        margin-top: 30px;
+        margin: auto;
+    }
+    .verticalLine{
+        margin-top: 50px;
+    }
 }

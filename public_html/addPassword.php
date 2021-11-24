@@ -23,7 +23,7 @@
                 <input type="password" id="websitePassword" name="websitePassword" required>
                 <label for="websiteAddress">Website Address</label>
                 <input type="text" id="websiteAddress" name="websiteAddress" required>
-                <input class="addUpload" type="submit" value="Add">
+                <input class="addUpload2" type="submit" value="Add">
             </form>
         </div>
         <div class="verticalLine">

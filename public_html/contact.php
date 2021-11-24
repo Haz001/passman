@@ -19,25 +19,18 @@
     <div class="contactMain">
         <div class="contactForm">
             <form action="" method="GET">
-                <div class="contactRow1">
                     <label for="fName">First Name</label>
                     <input type="text" id="fName" name="fName" required>
                     <label for="lName">Last Name</label>
-                    <input type="text" id="lName" name="lName" required>
-                </div>
-                <br>
-                <div class="contactRow2">
+                    <input type="text" id="lName" name="lName" required>               
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                     <label for="confirmEmail">Confirm Email</label>
                     <input type="email" id="confirmEmail" name="confirmEmail" required>
-                </div>
-                <br>
-                <div class="contactRow3">
                     <label for="message">Message:</label>
                     <input type="text" id="message" name="message" required>
                     <input type="submit" value="Send" class="contactSend">
-                </div>
+               
             </form>
         </div>
         <div class="contactTeam">
