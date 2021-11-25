@@ -5,7 +5,7 @@
     <div class="containerReportBug">
         <p id="NewBugReport">Report New Bug</p>
 
-        <form id="">
+        <form>
             <label>Title:</label>
             <input type="text" name="title">
             <label>Frequency:</label>
@@ -13,7 +13,7 @@
             <label>Serverity:</label>
             <input type="text" name="serverity">
             <label>Description:</label>
-			<input type="text" name="description">
+			<textarea></textarea>
 			<button id="bugSend" type="submit" name="submit">Send</button>
         </form>
     </div>    

@@ -120,17 +120,24 @@ button#bugSend:hover {
 	margin: auto;
 }
 
+#NewBugReport {
+	font-size: 2.5rem;
+	padding: 15px;
+
+}
+
 .containerReportBug {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: auto;
-	background-color: red;
-
+	background-color: white;
+	height: 80vh;
 }
 
 .containerReportBug form {
-	background-color: yellowgreen;
+	background-color: #092834;
+	color: white;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -145,6 +152,18 @@ button#bugSend:hover {
 	align-items: center;
 	margin: auto;
 }
+
+.containerReportBug form textarea {
+	height: 150px;
+	box-sizing: border-box;
+	font-size: 16px;
+	resize: none;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+  }
 
 a {
 	text-decoration: none;
