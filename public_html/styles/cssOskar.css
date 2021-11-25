@@ -53,8 +53,187 @@ footer {
 	bottom: 0;
 	width: 100%;
 	height: 4rem;
+    margin-top: 100px;
 }
 footer a {
 	text-decoration: none;
 	color: white;
+}
+
+
+
+
+
+.contactTitle{
+    text-align: center;
+}
+
+.contactTitle{
+    font-size: 35px;
+}
+
+.contactMain{
+    display: flex;
+    flex-direction: row;
+    margin:50px;
+    height: 70vh;
+}
+
+.contactForm{
+    background-color: red;
+    width: 40%;
+    background-color: #092834;
+    color: white;
+    flex: 2;
+    margin:20px;
+}
+
+.contactTeam{
+    background-color: orange;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    text-align: center;
+    background-color: #092834;
+    color: white;
+    flex: 1.5;
+    margin:20px;
+}
+
+.contactTeamMemeber1, .contactTeamMemeber3{
+    text-align: right;
+}
+.contactTeamMemeber2{
+    text-align: left;
+}
+
+.contactTeamMemeber2, .contactTeamMemeber1, .contactTeamMemeber3{
+    width: 40vh;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.contactTeamMemeber1 img, .contactTeamMemeber3 img{
+    float: left;
+}
+
+.contactTeamMemeber2 img{
+    float: right;
+}
+
+.contactTeamMemeber1 img, .contactTeamMemeber2 img, .contactTeamMemeber3 img{
+    width: 140px;
+    height: 140px;
+}
+
+.contactPage, .addPage{
+    background-color: #F7F4D4;
+}
+
+.meetName{
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+input, label, button{
+    text-align: center;
+    display: block;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    font-size: 25px;
+}
+
+
+input{
+    height: 30px;
+    margin-bottom: 15px
+}
+
+#message{
+    height: 100px;
+}
+
+.contactSend, .addUpload, .addUpload2{
+    margin-top: 50px;
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+}
+
+.contactTeamTitle{
+    font-size: 35px;
+}
+
+.contactForm form{
+    margin-top: 30px;
+}
+
+
+
+
+
+
+.addMain{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 70vh;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 25px;
+    color: white;
+}
+
+
+.verticalLine{
+    border: 6px solid black;
+    height: 65%;
+    position: relative;
+    top: 20%;
+    bottom: 20%;
+}
+
+
+.addNewWebsite, .uploadNewWesbite{
+    width: 40%;
+    margin: auto;
+    margin-top: 7%;
+    font-size: 20px;
+}
+
+.addMain{
+    background-color: #092834;
+}
+
+.addTitle{
+    margin-bottom: 30px;
+}
+
+
+@media only screen and  (max-width: 1150px){
+    .addMain{
+        flex-direction: column;
+        height: auto;
+    }
+    .addUpload{
+        margin-top: 0;
+    }
+    input, label{
+        width: 100%;
+        margin: auto;
+    }
+    .contactMain{
+        flex-direction: column;
+    }
+    .contactForm, .contactTeam{
+        width: 100%;
+        margin-top: 30px;
+        margin: auto;
+    }
+    .verticalLine{
+        margin-top: 50px;
+    }
 }
