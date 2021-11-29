@@ -28,7 +28,7 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	else if(isset($_POST["update"]))
 	{
 		if($_POST["update"] == "password"){
-			$result[0] =   $_POST["username"] . $_POST["password"];
+			$result[0] = setPasswordList($conn,$uid,$_POST["password_id"],$key,$_POST["username"],$_POST["password"]);
 			$result[1] = 420;
 		}
 	}

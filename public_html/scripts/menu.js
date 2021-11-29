@@ -77,11 +77,13 @@ function updatePasswords(evt){
 	if(tPart.length > 2){
 		part = tPart[1];
 	}
+	let passwordId = btn.name.split(":")[1];
 	$.ajax({
 		type: "POST",
 		url: "/scripts/ajax.php",
 		data: {
 			update:"password",
+			password_id:passwordId,
 			username:newUsername,
 			password:newPassword
 		},
