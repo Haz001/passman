@@ -243,3 +243,25 @@ function getPasswordList($conn, $user_id, $website_id, $key)
 	}
 	return json_encode($result);
 }
+function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
+{
+	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
+	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
+	$sql = "UPDATE website_password as tb set tb.username = '?', tb.password = '?' where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $username, $password,$password_id,$user_id);
+	mysqli_stmt_execute($stmt);
+	$stmtresult =  mysqli_stmt_get_result($stmt);
+	$cipher = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
+	mysqli_free_result($stmtresult);
+	$result = [];
+	for ($i = 0; $i < sizeof($cipher); $i++) {
+		$result[$i] = [];
+		$result[$i]["website_id"]  = $cipher[$i]["website_id"];
+		$result[$i]["password_id"] = $cipher[$i]["password_id"];
+		$result[$i]["username"] = decryptData($cipher[$i]["username"], $key, base64_decode($cipher[$i]["iv"]));
+		$result[$i]["password"] = decryptData($cipher[$i]["password"], $key, base64_decode($cipher[$i]["iv"]));
+	}
+	return json_encode($result);
+}
