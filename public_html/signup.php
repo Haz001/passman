@@ -20,13 +20,13 @@
 		<img id="loginIcon" src="img\profilePicture.jpeg">
 
 		<form action="scripts/signupScript.php" method="POST">
-			<input type="text" name="first_name" placeholder="First Name">
-			<input type="text" name="last_name" placeholder="Last Name">
-			<input type="text" name="username" placeholder="Username">
-			<input type="text" name="email" placeholder="Email">
-			<input type="date" name="dob" placeholder="Date of Birth">
-			<input type="text" name="mobile" placeholder="Mobile Number">
-			<input type="password" name="password" placeholder="Password">
+			<input required type="text" name="first_name" placeholder="First Name">
+			<input required type="text" name="last_name" placeholder="Last Name">
+			<input required type="text" name="username" placeholder="Username">
+			<input required type="text" name="email" placeholder="Email">
+			<input required type="date" name="dob" placeholder="Date of Birth">
+			<input required type="text" name="mobile" placeholder="Mobile Number">
+			<input required type="password" name="password" placeholder="Password">
 			<button type="submit" name="submit">Submit</button>
 		</form>
 
