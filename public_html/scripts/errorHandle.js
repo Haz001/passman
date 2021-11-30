@@ -59,6 +59,12 @@ function errorMsg($_GET) {
 				"One time passcode is incorrect, please try again"
 			);
 			break;
+		case "ue":
+			$("#error").css("background", "lightcoral");
+			$("#error").css("padding", "10px");
+			$("#error").html(
+				"A user with with your username or email already exists, please try <a href='index.php'>logging in</a>"
+			);
 		default:
 			break;
 	}

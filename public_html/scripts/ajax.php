@@ -1,5 +1,6 @@
 <?php
 
+
 require_once "functions.php";
 require_once "db.php";
 session_start(["cookie_domain" => "passman.harrysy.red"]);
@@ -11,12 +12,12 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	if (isset($_GET["get"])) {
 		$get = $_GET["get"];
 		if ($get == "websites") {
-			$result[0] = getWebsiteList($conn, $uid);
+			$result[0] = getWebsiteList($conn, [0,$uid]);
 			$result[1] = 200;
 		}
 		else if ($get == "passwords") {
 			if (isset($_GET["website_id"])) {
-				$result[0] = getPasswordList($conn, $uid, $_GET["website_id"], $key);
+				$result[0] = getPasswordList($conn, [0,$uid], $_GET["website_id"], $key);
 				$result[1] = 200;
 			}
 		}
