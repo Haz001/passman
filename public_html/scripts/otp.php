@@ -24,7 +24,37 @@ if (isset($_SESSION["tempID"]) and !isset($_SESSION["user_id"]) and isset($_POST
 			exit();
 		}
 	}
+} elseif (isset($_POST["location"]) && $_POST["location"] == "extension") {
+	$sql = "SELECT * FROM otp WHERE otp = ?"; //Queries the database if there is a otp entry for the submited otp and if it is linked to the user ID of the user logging in
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $_POST["otp"]);
+	mysqli_stmt_execute($stmt);
+	$result = mysqli_stmt_get_result($stmt);
+	$resulta = mysqli_fetch_assoc($result);
+	mysqli_stmt_close($stmt);
+	if (mysqli_num_rows($result) == 0) { //if no results returned is assumed to be inccorect
+		response("error", "otpIncorrect");
+	} else {
+		if ((time() - $resulta["otp_created"]) <= 1200) { //only allows the otp if it is less than 20 mins long
+			$authToken = bin2hex(openssl_random_pseudo_bytes(20));
+			$sql = "INSERT INTO auth_token (user_id, auth_token) VALUES (?,?)";
+			$stmt = mysqli_stmt_init($conn);
+			mysqli_stmt_prepare($stmt, $sql);
+			mysqli_stmt_bind_param($stmt, "is", $resulta["user_id"], $authToken);
+			mysqli_stmt_execute($stmt);
+			response("success", $authToken);
+		} else {
+			response("error", "otpExpired");
+		}
+	}
 } else {
 	header("location:../index.php?error=loginError");
+	exit();
+}
+function response($response, $error = "none")
+{
+	$return = array("response" => $response, "error" => $error);
+	echo json_encode($return);
 	exit();
 }

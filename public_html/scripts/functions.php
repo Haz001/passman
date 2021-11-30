@@ -66,7 +66,7 @@ function grabIp()
 	}
 	return $ip;
 }
-function generateOneTimePassword($conn, $userInfo)
+function generateOneTimePassword($conn, $userInfo, $pD)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
@@ -103,26 +103,38 @@ function generateOneTimePassword($conn, $userInfo)
 	mysqli_stmt_bind_param($stmt, "sss", $userInfo["user_id"], $txt, time());
 	mysqli_stmt_execute($stmt);
 	$_SESSION["tempID"] = $userInfo["user_id"];
-	header("location:../otp.php");
-	exit();
+	if (!isset($pD["location"])) {
+		header("location:../otp.php");
+		exit();
+	} else {
+		response("otp");
+	}
 }
 function loginUser($conn, $pD)
 {
 	$userInfo = isUnique($conn, $pD); //uses the isUnique function to check if user exists and to get user details
 	// from database
 	if ($userInfo == false) {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 	if (password_verify($pD["password"], $userInfo["master_password"])) {
 		setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
 
-		generateOneTimePassword($conn, $userInfo);
+		generateOneTimePassword($conn, $userInfo, $pD);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
 	} else {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 }
 function signUp($conn, $pD)
@@ -210,8 +222,20 @@ function passwordComplex($pswd)
 		return true;
 	}
 }
-function getWebsiteList($conn, $user_id)
+/**
+ * $conn - database connection
+ * $user_identifier (array)
+ * 		[0] - type (0 - user_id,)
+ * 		[1] - 
+ */
+function getWebsiteList($conn, $user_identifier)
 {
+	$user_id = "";
+	if($user_identifier[0] == 0){
+		$user_id = $user_identifier[1];
+	}else{
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
+	}
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -243,6 +267,24 @@ function getPasswordList($conn, $user_id, $website_id, $key)
 	}
 	return json_encode($result);
 }
+
+function response($response, $error = "none")
+{
+	$return = array("response" => $response, "error" => $error);
+	echo json_encode($return);
+	exit();
+}
+function getUidWhereAuthCode($conn, $authToken){
+	/**TODO:
+	 * - make invalid in 2 weeks after date_created
+	 * - add function to make invalid and check if invalid here
+	 */
+	$sql = "SELECT user_id from auth_token where auth_token = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt,$sql);
+	mysqli_stmt_bind_param($stmt,'s',);
+	mysqli_stmt_
+	
 
 function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
 {
