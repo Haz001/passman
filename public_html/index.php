@@ -16,7 +16,5 @@ if (!isset($_SESSION["user_id"])) {
 		<li><a href="signup.php">Signup</a></li>
 	</ul>
 </form>-->
-
 </body>
-
 </html>
