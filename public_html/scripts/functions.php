@@ -274,7 +274,8 @@ function response($response, $error = "none")
 	echo json_encode($return);
 	exit();
 }
-function getUidWhereAuthCode($conn, $authToken){
+function getUidWhereAuthCode($conn, $authToken)
+{
 	/**TODO:
 	 * - make invalid in 2 weeks after date_created
 	 * - add function to make invalid and check if invalid here
@@ -283,8 +284,8 @@ function getUidWhereAuthCode($conn, $authToken){
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt,$sql);
 	mysqli_stmt_bind_param($stmt,'s',);
-	mysqli_stmt_
-	
+	//mysqli_stmt_
+}
 
 function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
 {
