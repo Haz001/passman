@@ -225,17 +225,20 @@ function passwordComplex($pswd)
 /**
  * $conn - database connection
  * $user_identifier (array)
- * 		[0] - type (0 - user_id,)
+ * 		[0] - 	type	(
+ *	 						0 - user_id,
+ *	 						1 - auth_code
+ * 						)
  * 		[1] - 
  */
 function getWebsiteList($conn, $user_identifier)
 {
 	$user_id = "";
-	if($user_identifier[0] == 0){
+	if($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
-	}else{
+	else
 		$user_id = getUidWhereAuthCode($user_identifier[1]);
-	}
+	
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -246,8 +249,13 @@ function getWebsiteList($conn, $user_identifier)
 	mysqli_free_result($stmtresult);
 	return json_encode($result);
 }
-function getPasswordList($conn, $user_id, $website_id, $key)
+function getPasswordList($conn, $user_identifier, $website_id, $key)
 {
+	$user_id = "";
+	if($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
 	$stmt = mysqli_stmt_init($conn);
@@ -283,12 +291,20 @@ function getUidWhereAuthCode($conn, $authToken)
 	$sql = "SELECT user_id from auth_token where auth_token = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt,$sql);
-	mysqli_stmt_bind_param($stmt,'s',);
-	//mysqli_stmt_
+	mysqli_stmt_bind_param($stmt,'s',$authToken);
+	mysqli_stmt_execute($stmt);
+	$stmtresult = mysqli_stmt_get_result($stmt);
+	$result = mysqli_fetch_all($stmtresult);
+	return $result['user_id'];
 }
 
-function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
+function setPasswordList($conn, $user_identifier, $password_id, $key, $username, $password)
 {
+	$user_id = "";
+	if($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWitAuthCode($user_identifier[1]);
 	$iv = generateIV();// genorates a new IV per new version of a password
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
