@@ -285,4 +285,19 @@ function getUidWhereAuthCode($conn, $authToken){
 	mysqli_stmt_bind_param($stmt,'s',);
 	mysqli_stmt_
 	
+
+function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
+{
+	$iv = generateIV();// genorates a new IV per new version of a password
+	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
+	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
+	$cryptUsername = encryptData($username, $key, $iv);
+	$cryptPassword = encryptData($password, $key, $iv);
+	$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "sssii", $cryptUsername, $cryptPassword, base64_encode($iv),$password_id,$user_id);
+	mysqli_stmt_execute($stmt);
+
+	return mysqli_stmt_affected_rows($stmt).$password_id.$user_id;
 }
