@@ -1,5 +1,6 @@
 <?php
 
+
 require_once "functions.php";
 require_once "db.php";
 session_start(["cookie_domain" => "passman.harrysy.red"]);
