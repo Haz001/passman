@@ -284,7 +284,7 @@ function getUidWhereAuthCode($conn, $authToken)
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt,$sql);
 	mysqli_stmt_bind_param($stmt,'s',);
-	mysqli_stmt_
+	//mysqli_stmt_
 }
 
 function setPasswordList($conn, $user_id, $password_id, $key, $username, $password)
