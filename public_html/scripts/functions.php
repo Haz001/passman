@@ -222,8 +222,20 @@ function passwordComplex($pswd)
 		return true;
 	}
 }
-function getWebsiteList($conn, $user_id)
+/**
+ * $conn - database connection
+ * $user_identifier (array)
+ * 		[0] - type (0 - user_id,)
+ * 		[1] - 
+ */
+function getWebsiteList($conn, $user_identifier)
 {
+	$user_id = "";
+	if($user_identifier[0] == 0){
+		$user_id = $user_identifier[1];
+	}else{
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
+	}
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -261,4 +273,16 @@ function response($response, $error = "none")
 	$return = array("response" => $response, "error" => $error);
 	echo json_encode($return);
 	exit();
+}
+function getUidWhereAuthCode($conn, $authToken){
+	/**TODO:
+	 * - make invalid in 2 weeks after date_created
+	 * - add function to make invalid and check if invalid here
+	 */
+	$sql = "SELECT user_id from auth_token where auth_token = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt,$sql);
+	mysqli_stmt_bind_param($stmt,'s',);
+	mysqli_stmt_
+	
 }
