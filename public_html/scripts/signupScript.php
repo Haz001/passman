@@ -13,7 +13,7 @@ if (isset($_POST["submit"])) { // checks if any post data has been received
 		header("location:../signup.php?error=ue");
 		exit();
 	}
-	if (!commonPassword($conn, $pD)) {
+	if (commonPassword($conn, $pD)) {
 		header("location:../signup.php?error=commonPassword");
 		exit();
 	}

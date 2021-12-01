@@ -65,12 +65,14 @@ function errorMsg($_GET) {
 			$("#error").html(
 				"A user with with your username or email already exists, please try <a href='index.php'>logging in</a>"
 			);
+			break;
 		case "commonPassword":
 			$("#error").css("background", "lightcoral");
 			$("#error").css("padding", "10px");
 			$("#error").html(
 				"Your password has been found in a common list of passwords, please try a more complex password"
 			);
+			break;
 		default:
 			break;
 	}
