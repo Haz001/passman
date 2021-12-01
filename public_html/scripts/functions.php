@@ -154,7 +154,7 @@ function signUp($conn, $pD)
 		header("location:../signup.php?error=stmtfailed");
 		exit();
 	}
-	header("location:../signup.php?error=success");
+	header("location:../login.php?signup=success");
 	exit();
 }
 function generateIV()
