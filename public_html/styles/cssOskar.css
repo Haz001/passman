@@ -95,8 +95,6 @@ footer a {
 
 
 .contactTeamMembers{
-    background-color: #092834;
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
