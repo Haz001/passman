@@ -7,13 +7,13 @@ function listWebsites(div) {
 		dataType: "JSON",
 		statusCode: {
 			444: function () {
-				alert("cant find data");
+				console.log("cant find data");
 			},
 			500: function () {
-				alert("PHP code error");
+				console.log("PHP code error");
 			},
 			401: function () {
-				alert("please authenticate");
+				console.log("please authenticate");
 				document.location = "/logout.php";
 			},
 		},
@@ -36,7 +36,39 @@ function listWebsites(div) {
 }
 function addWebsite(evt) { 
 	let overlay = document.createElement("div");
-	overlay.class = "overlay";
+	overlay.classList.add("overlay");
+	overlay.name = "mkWbOverlay";
+
+	let span = document.createElement("span");
+	span.innerText = "Add a new website to your account:";
+	let wbName = document.createElement("input");
+	wbName.type = "text";
+	wbName.placeholder = "Website Name: Google";
+	wbName.name = "wbName";
+	let wbAddr = document.createElement("input");
+	wbAddr.type = "text";
+	wbAddr.placeholder = "Website Address: http://example.com";
+	let wbAddBtn = document.createElement("input");
+	wbAddBtn.name = "wbAddBtn";
+	wbAddBtn.type = "button";
+	wbAddBtn.value = "Add Website";
+
+	let wbCancBtn = document.createElement("input");
+	wbCancBtn.type = "button";
+	wbCancBtn.value = "Cancel";
+	wbCancBtn.name = "wbCancBtn";
+	let btnHolder = document.createElement("div");
+	btnHolder.classList.add("btn");
+	btnHolder.appendChild(wbCancBtn);
+	btnHolder.appendChild(wbAddBtn);
+	overlay.appendChild(span);
+	
+	overlay.appendChild(wbName);
+	overlay.appendChild(wbAddr);
+	
+	overlay.appendChild(btnHolder);
+	document.body.appendChild(overlay);
+
  }
 function editPasswords(evt) {
 	let btn = evt.currentTarget;
@@ -85,17 +117,17 @@ function updatePasswords(evt) {
 		dataType: "JSON",
 		statusCode: {
 			444: function () {
-				alert("cant find data");
+				console.log("cant find data");
 			},
 			500: function () {
-				alert("PHP code error");
+				console.log("PHP code error");
 			},
 			401: function () {
 				document.location = "/logout.php";
 			},
 		},
 		success: function (response) {
-			alert("Password updated")
+			console.log("Password updated")
 			btn.removeEventListener("click",updatePasswords);
 			btn.addEventListener("click",editPasswords);
 			let tmp = $('[name="'+btn.name+'"]');
@@ -123,10 +155,10 @@ function grabPasswords(evt) {
 		dataType: "JSON",
 		statusCode: {
 			444: function () {
-				alert("cant find data");
+				console.log("cant find data");
 			},
 			500: function () {
-				alert("PHP code error");
+				console.log("PHP code error");
 			},
 			401: function () {
 				document.location = "/logout.php";
