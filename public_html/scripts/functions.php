@@ -318,3 +318,18 @@ function setPasswordList($conn, $user_identifier, $password_id, $key, $username,
 
 	return mysqli_stmt_affected_rows($stmt) . $password_id . $user_id;
 }
+function commonPassword($conn, $pD)
+{
+	$pD["password"] = strtolower($pD["password"]);
+	$sql = "SELECT * FROM common_passwords WHERE password = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $pD["password"]);
+	mysqli_stmt_execute($stmt);
+	$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
+	if (mysqli_fetch_assoc($stmtresult)) {  // creates an associative array of the sql result
+		return true;
+	} else {
+		return false;
+	}
+}
