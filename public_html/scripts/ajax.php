@@ -5,7 +5,6 @@ require_once "functions.php";
 require_once "db.php";
 session_start(["cookie_domain" => "passman.harrysy.red"]);
 if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
-
 	$uid = $_SESSION["user_id"];
 	$key = $_COOKIE["key"];
 	$result = [];
@@ -29,16 +28,26 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	else if(isset($_POST["update"]))
 	{
 		if($_POST["update"] == "password"){
-			$result[0] = json_encode([
-				"result"=>setPasswordList($conn,$uid,$_POST["password_id"],$key,$_POST["username"],$_POST["password"]),
-				"uid"=>$uid,
-				"key" => $key
-			]);
+			$result[0] = json_encode(setPasswordList($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
 			$result[1] = 420;
 		}
 	}
+	else if (isset($_POST["add"]))
+	{
+		if ($_POST["add"] == "website")
+		{
+			$result[0] = addWebsite($conn,[0,$uid],$_POST["website_name"],$_POST["website_address"]);
+			$result[1] = 200;
+		}
+		else if ($_POST["add"] == "password")
+		{
+			$result[0] = addPassword($conn,[0,$uid],$_POST["website_id"],$_POST["usernmae"],$_POST["password"],$key);
+			$result[1] = 200;
+		}
+	}
+
 	if (($result[0] == "") || ($result[0] == null) || ($result[0] == "null")||($result[0] == "[]")) {
-		$result[0] = "No data found";
+		echo "No data found";
 		$result[1] = 204;
 	}
 	echo $result[0];
