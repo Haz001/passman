@@ -3,6 +3,7 @@
 * {
 	margin: 0;
 	box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 .navbar {
@@ -43,8 +44,8 @@
 	align-self: center;
 }
 
-span {
-	color: orange;
+h1 > span {
+	color: #ffb570;
 }
 
 /* FOOTER */
@@ -270,8 +271,6 @@ footer a {
     margin: auto;
 }
 
-
-
 /* INPUT LABEL BUTTON */
 
 input, label, button{
@@ -289,4 +288,37 @@ input{
     margin-bottom: 15px
 }
 
-
+/* Overlay For Add Website and Add Password*/
+.addTitle{
+    margin-bottom: 30px;
+}
+div.overlay{
+	display: block;
+	position: fixed;
+    background-color: #092834;
+    border-radius: 1rem;
+    border-width: 1rem;
+	top: calc( 2rem + 100px );
+	left: 2rem;
+	right: 2rem;
+    height: fit-content;
+    padding: 2rem 0 2rem 0;
+}
+div.overlay input[type="button"]{
+    margin: auto;
+}
+div.overlay > span{
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+div.overlay > div.btn{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+div.overlay > div.btn > input{
+    width: fit-content;
+}

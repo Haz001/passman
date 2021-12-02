@@ -48,7 +48,7 @@ function errorMsg($_GET) {
 			$("#error").css("background", "lightcoral");
 			$("#error").css("padding", "10px");
 			$("#error").html(
-				'Password does not meet complexity requirements <br> <ul style="list-style-type: none"><li>8 Characters</li><li>1 Special Character</li><li>1 Uppercase Character</li><li>1 Number</li></ul>'
+				'Password does not meet complexity requirements <br> <ul style="list-style-type: none"><li>8 Characters</li><li>1 Special Character</li><li>1 Uppercase Character</li><li>1 Number</li><li>Not be in top 100,000 most common passwords</ul>'
 			);
 			$("[name='password']").css("border-color", "red");
 			break;
@@ -57,6 +57,20 @@ function errorMsg($_GET) {
 			$("#error").css("padding", "10px");
 			$("#error").html(
 				"One time passcode is incorrect, please try again"
+			);
+			break;
+		case "ue":
+			$("#error").css("background", "lightcoral");
+			$("#error").css("padding", "10px");
+			$("#error").html(
+				"A user with with your username or email already exists, please try <a href='index.php'>logging in</a>"
+			);
+			break;
+		case "commonPassword":
+			$("#error").css("background", "lightcoral");
+			$("#error").css("padding", "10px");
+			$("#error").html(
+				"Your password has been found in a common list of passwords, please try a more complex password"
 			);
 			break;
 		default:

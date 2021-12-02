@@ -50,55 +50,50 @@ function isUniqueWeb($conn, $pD)
 	}
 	mysqli_stmt_close($stmt);
 }
-function grabIp(){
+function grabIp()
+{
 	//whether ip is from the share internet  
-	if(!emptyempty($_SERVER['HTTP_CLIENT_IP'])) {  
-			$ip = $_SERVER['HTTP_CLIENT_IP'];  
-	}  
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
+	}
 	//whether ip is from the proxy  
-	elseif (!emptyempty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-		}  
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
 	//whether ip is from the remote address  
-	else{  
-			$ip = $_SERVER['REMOTE_ADDR'];  
-	}  
-	return $ip;  
+	else {
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	return $ip;
 }
-function generateOneTimePassword($conn, $userInfo)
+function generateOneTimePassword($conn, $userInfo, $pD)
 {
 	$to = $userInfo["email"];
 	$subject = "OTP from PassMan";
 	// $txt = uniqid("otp_", true);
 	$txt = "otp_" . bin2hex(openssl_random_pseudo_bytes(4));
 	$tempPath = "./temp/email.html";
-	try//tries to read email template
+	try //tries to read email template
 	{
-		$f = fopen($tempPath,'r');
-		$temp = fread($f,filesize($tempPath));
+		$f = fopen($tempPath, 'r');
+		$temp = fread($f, filesize($tempPath));
 		fclose($f);
-	}
-	catch (Exception $ex)
-	{
+	} catch (Exception $ex) {
 		$temp = '$name here is your code:<br/>$code';
 	}
-	if(($temp == "")or($temp == null))
-	{
+	if (($temp == "") or ($temp == null)) {
 		$temp = '$name here is your code:<br/>$code';
 	}
-	try
-	{
+	try {
 		include "getBrowserInfo.php";
 		$browser = getOS() . " - " . getBrowser();
-	}
-	catch (Exception $ex)
-	{
+	} catch (Exception $ex) {
 		$browser = grabIp();
 	}
-	$body = str_replace('$device',$browser,str_replace('$code',$txt, str_replace('$name',$userInfo["first_name"],$temp)));
-	$headers = "MIME-Version: 1.0" . "\r\n";// tells email provider to accept next line
-	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";// tells email provider that this email is formatted in HTML
-	$headers .= "From: otp@passman.harrysy.red";//tells email that it was sent by
+	$body = str_replace('$device', $browser, str_replace('$code', $txt, str_replace('$name', $userInfo["first_name"], $temp)));
+	$headers = "MIME-Version: 1.0" . "\r\n"; // tells email provider to accept next line
+	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; // tells email provider that this email is formatted in HTML
+	$headers .= "From: otp@passman.harrysy.red"; //tells email that it was sent by
 	//mail($to, $subject, "Your OTP passcode is:\r\n" . $txt, $headers); //sets up email parameters and mails it to the user
 	mail($to, $subject, $body, $headers); //sets up email parameters and mails it to the user
 	mysqli_query($conn, 'DELETE FROM otp WHERE user_id = "' . $userInfo["user_id"] . '"');
@@ -108,26 +103,38 @@ function generateOneTimePassword($conn, $userInfo)
 	mysqli_stmt_bind_param($stmt, "sss", $userInfo["user_id"], $txt, time());
 	mysqli_stmt_execute($stmt);
 	$_SESSION["tempID"] = $userInfo["user_id"];
-	header("location:../otp.php");
-	exit();
+	if (!isset($pD["location"])) {
+		header("location:../otp.php");
+		exit();
+	} else {
+		response("otp");
+	}
 }
 function loginUser($conn, $pD)
 {
 	$userInfo = isUnique($conn, $pD); //uses the isUnique function to check if user exists and to get user details
 	// from database
 	if ($userInfo == false) {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 	if (password_verify($pD["password"], $userInfo["master_password"])) {
 		setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
 
-		generateOneTimePassword($conn, $userInfo);
+		generateOneTimePassword($conn, $userInfo, $pD);
 		//checks if the password hash inputted and the password
 		//hash on the database match, the one time passcode function is then called
 	} else {
-		header("location:../login.php?error=notfound");
-		exit();
+		if (!isset($pD["location"])) {
+			header("location:../login.php?error=notfound");
+			exit();
+		} else {
+			response("error", "notfound");
+		}
 	}
 }
 function signUp($conn, $pD)
@@ -144,10 +151,10 @@ function signUp($conn, $pD)
 	mysqli_stmt_bind_param($stmt, "sssssss", $pD["first_name"], $pD["last_name"], $pD["username"], $pD["email"], $pswdHash, $pD["dob"], $pD["mobile"]);
 	//bind parameters to statement
 	if (!mysqli_stmt_execute($stmt)) { //executes the INSERT statement
-		header("location:../signup.php?error=exfailed");
+		header("location:../signup.php?error=stmtfailed");
 		exit();
 	}
-	header("location:../signup.php?error=success");
+	header("location:../login.php?signup=success");
 	exit();
 }
 function generateIV()
@@ -215,8 +222,22 @@ function passwordComplex($pswd)
 		return true;
 	}
 }
-function getWebsiteList($conn, $user_id)
+/**
+ * $conn - database connection
+ * $user_identifier (array)
+ * 		[0] - 	type	(
+ *	 						0 - user_id,
+ *	 						1 - auth_code
+ * 						)
+ * 		[1] - 
+ */
+function getWebsiteList($conn, $user_identifier)
 {
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -227,8 +248,88 @@ function getWebsiteList($conn, $user_id)
 	mysqli_free_result($stmtresult);
 	return json_encode($result);
 }
-function getPasswordList($conn, $user_id, $website_id,$key)
+function addWebsite($conn, $user_identifier,$wb_name,$wb_address)
 {
+	$website_name = ($wb_name);
+	$website_address = ($wb_address);
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
+	$rand = 0;
+	$available = false;
+	do {
+		$rand = rand(0,9999999999);
+		$sql = "SELECT 1 as 'exists' from saved_website WHERE website_id = ?";
+		$stmt = mysqli_stmt_init($conn);
+		mysqli_stmt_prepare($stmt, $sql);
+		mysqli_stmt_bind_param($stmt, "s", $rand);
+		mysqli_stmt_execute($stmt);
+		$stmtresult =  mysqli_stmt_get_result($stmt);
+		$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
+		mysqli_free_result($stmtresult);
+		if(sizeof($result) > 0){
+			$available = false;
+		}else if(sizeof($result) == 0){
+			$available = true;
+		}
+		$stmt->close();
+	} while (!$available);
+	$sql = "INSERT INTO saved_website VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "iiss", $rand,$user_id,$website_name,$website_address);
+	mysqli_stmt_execute($stmt);
+	$result =  mysqli_stmt_affected_rows($stmt);
+	return json_encode(["result"=>$result,"name"=>$website_name,"address"=>$website_address]);
+}
+function addPassword($conn, $user_identifier,$website_id,$pw_username,$pw_password,$key)
+{
+	$iv = generateIV(); // genorates a new IV per new version of a password
+	$cryptUsername = encryptData($username, $key, $iv);
+	$cryptPassword = encryptData($password, $key, $iv);
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
+	$rand = 0;
+	$available = false;
+	do {
+		$rand = rand(0,9999999999);
+		$sql = "SELECT 1 as 'exists' from website_password WHERE password_id = ?";
+		$stmt = mysqli_stmt_init($conn);
+		mysqli_stmt_prepare($stmt, $sql);
+		mysqli_stmt_bind_param($stmt, "s", $rand);
+		mysqli_stmt_execute($stmt);
+		$stmtresult =  mysqli_stmt_get_result($stmt);
+		$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
+		mysqli_free_result($stmtresult);
+		if(sizeof($result) > 0){
+			$available = false;
+		}else if(sizeof($result) == 0){
+			$available = true;
+		}
+		$stmt->close();
+	} while (!$available);
+	$sql = "INSERT INTO website_password values (?,(SELECT sw.website_id FROM `saved_website` as sw WHERE sw.website_id = ? AND sw.user_id = ?),?,?,?)";
+	//$sql = "INSERT INTO website_password values (?,(SELECT website_id FROM `saved_website` WHERE website_id = ? AND user_id = ?),?,?,?)";
+	//$sql = "INSERT INTO password_id VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "iiisss", $rand,$website_id,$user_id,$cryptUsername,$cryptPassword,base64_encode($iv));
+	mysqli_stmt_execute($stmt);
+	$result =  mysqli_stmt_affected_rows($stmt);
+	return json_encode(["result"=>$result,"rand"=>$rand,"website_id"=>$website_id,"user_id"=>$user_id,"cryptUn"=>$cryptUsername,"cryptPw"=>$cryptPassword]);
+}
+function getPasswordList($conn, $user_identifier, $website_id, $key)
+{
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($user_identifier[1]);
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
 	$stmt = mysqli_stmt_init($conn);
@@ -239,12 +340,71 @@ function getPasswordList($conn, $user_id, $website_id,$key)
 	$cipher = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
 	mysqli_free_result($stmtresult);
 	$result = [];
-	for ($i = 0;$i < sizeof($cipher);$i++){
+	for ($i = 0; $i < sizeof($cipher); $i++) {
 		$result[$i] = [];
-		$result[$i]["website_id"]  =$cipher[$i]["website_id"];
-		$result[$i]["password_id"] =$cipher[$i]["password_id"];
-		$result[$i]["username"]=decryptData($cipher[$i]["username"],$key,base64_decode($cipher[$i]["iv"]));
-		$result[$i]["password"]=decryptData($cipher[$i]["password"],$key,base64_decode($cipher[$i]["iv"]));
+		$result[$i]["website_id"]  = $cipher[$i]["website_id"];
+		$result[$i]["password_id"] = $cipher[$i]["password_id"];
+		$result[$i]["username"] = decryptData($cipher[$i]["username"], $key, base64_decode($cipher[$i]["iv"]));
+		$result[$i]["password"] = decryptData($cipher[$i]["password"], $key, base64_decode($cipher[$i]["iv"]));
 	}
 	return json_encode($result);
+}
+
+function response($response, $error = "none")
+{
+	$return = array("response" => $response, "error" => $error);
+	echo json_encode($return);
+	exit();
+}
+function getUidWhereAuthCode($conn, $authToken)
+{
+	/**TODO:
+	 * - make invalid in 2 weeks after date_created
+	 * - add function to make invalid and check if invalid here
+	 */
+	$sql = "SELECT user_id from auth_token where auth_token = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, 's', $authToken);
+	mysqli_stmt_execute($stmt);
+	$stmtresult = mysqli_stmt_get_result($stmt);
+	$result = mysqli_fetch_all($stmtresult);
+	return $result['user_id'];
+}
+
+function setPasswordList($conn, $user_identifier, $password_id, $key, $username, $password)
+{
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWitAuthCode($user_identifier[1]);
+	$iv = generateIV(); // genorates a new IV per new version of a password
+	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
+	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
+	$cryptUsername = encryptData($username, $key, $iv);
+	$cryptPassword = encryptData($password, $key, $iv);
+	$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "sssii", $cryptUsername, $cryptPassword, base64_encode($iv), $password_id, $user_id);
+	mysqli_stmt_execute($stmt);
+
+	return mysqli_stmt_affected_rows($stmt) . $password_id . $user_id;
+}
+function commonPassword($conn, $pD)
+{
+	$pD["password"] = strtolower($pD["password"]);
+	$sql = "SELECT * FROM `common_passwords` WHERE `password` = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $pD["password"]);
+	mysqli_stmt_execute($stmt);
+	$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
+	$result = mysqli_fetch_assoc($stmtresult);
+	if (count($result) >= 1) {
+		return true;
+	} else {
+		return false;
+	}
 }

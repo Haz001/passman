@@ -177,3 +177,12 @@ a {
 		height: 100vw;
 	}
 }
+
+div.overlay{
+	display: block;
+	position: fixed;
+	top: 2rem;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+}

@@ -6,7 +6,6 @@ if (!isset($_SESSION["user_id"])) {
 	require_once "menu.php";
 }
 ?>
-
 <!--<div>
 	<img src="logo.png" /><span>PassMan</span>
 </div>
@@ -16,7 +15,5 @@ if (!isset($_SESSION["user_id"])) {
 		<li><a href="signup.php">Signup</a></li>
 	</ul>
 </form>-->
-
 </body>
-
 </html>
