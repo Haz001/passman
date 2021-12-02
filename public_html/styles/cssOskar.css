@@ -1,3 +1,5 @@
+/* HEADER */
+
 * {
 	margin: 0;
 	box-sizing: border-box;
@@ -46,6 +48,8 @@ h1 > span {
 	color: #ffb570;
 }
 
+/* FOOTER */
+
 footer {
 	display: flex;
 	justify-content: space-evenly;
@@ -61,81 +65,213 @@ footer a {
 	color: white;
 }
 
+ /* CONTACT */
 
 
-
-
-.contactTitle{
-    text-align: center;
+#message{
+    height: 100px;
 }
 
-.contactTitle{
-    font-size: 35px;
+.contactTeamTitle, .contactFName{
+    margin-top: 20px;
 }
 
-.contactMain{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin:50px;
-    height: 70vh;
-}
-
-.contactForm{
-    background-color: red;
-    width: 40%;
-    background-color: #092834;
-    color: white;
-    flex: 2;
-    margin:20px;
-}
-
-.contactTeam{
-    background-color: orange;
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    text-align: center;
-    background-color: #092834;
-    color: white;
-    flex: 1.5;
-    margin:20px;
-}
-
-.contactTeamMemeber1, .contactTeamMemeber3{
-    text-align: right;
-}
-.contactTeamMemeber2{
-    text-align: left;
-}
-
-.contactTeamMemeber2, .contactTeamMemeber1, .contactTeamMemeber3{
-    width: 40vh;
-    margin: auto;
-    margin-top: 40px;
-}
 
 .contactTeamMemeber1 img, .contactTeamMemeber3 img{
     float: left;
+    height: 130px;
+    width: 130px;
+}
+
+#contactMainSection2{
+    background-color: #092834;
+    color: white;
+    flex: 8;
+}
+
+.contactTeamTitle{
+    font-size: 30px;
+    text-align: center;
+}
+
+
+.contactTeamMembers{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    width: 80%;
+    font-size: 20px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.contactTeamMemeber1, .contactTeamMemeber2, .contactTeamMemeber3{
+    margin: 20px;
 }
 
 .contactTeamMemeber2 img{
     float: right;
+    height: 130px;
+    width: 130px;
 }
 
-.contactTeamMemeber1 img, .contactTeamMemeber2 img, .contactTeamMemeber3 img{
-    width: 140px;
-    height: 140px;
-}
 
-.contactPage, .addPage{
+.contactPage, .mainPage, .main{
     background-color: #F7F4D4;
 }
 
-.meetName{
+#contactMainPage{
+    background-color: white;
     font-size: 30px;
-    margin-bottom: 10px;
+    text-align: center;
 }
+
+
+
+
+/* MAIN */
+
+
+
+.mainPage{
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.mainBody{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5vh;
+    height: 65vh;
+}
+
+.verticalLine{
+    width: 20px;
+    background-color: white;
+    float: 0.4;
+}
+
+.mainSection1, .mainSection2{
+    flex: 10;
+    color: black;
+}
+
+#mainSection2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.mainUserName{
+    flex: 0.7;    
+    background-color: white;
+}
+
+.mainUserDetails{
+    flex: 2;
+    padding: 10px;
+    border: solid;
+    text-align: center;
+    font-size: 25px;
+}
+
+.mainUserDetails input{
+    padding: 20px;
+}
+
+.mainUserDetailsButtons{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 40vh;
+}
+
+.editButton{
+    background-color: green;
+}
+
+.deleteButton{
+    background-color: red;
+}
+
+.mainUserName button{
+    width: 100%;
+    margin: auto;
+}
+
+.mainSection1Title, .mainSection2Title{
+    text-align: center;
+    margin: 20px;
+    margin-bottom: 35px;
+    font-size: 40px;
+}
+
+.mainUserName, .mainUserDetails{
+    border: 3px solid black;
+}
+
+.mainSection2{
+    background-color: #CCFFFF;
+}
+
+.name{
+    height: 60px;
+}
+
+#mainWebsiteSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.mainSearch{
+    border-radius: 25px;
+    width: 35%;
+    height: 9%;
+    margin: auto;
+}
+
+.mainAddImport{
+    border-radius: 25px;
+    width: 25%;
+    height: 7%;
+    margin-left: 37%;
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+
+.mainSection2 hr{
+    width: 100%;
+}
+
+
+.websiteName{
+    background-color: #B0E3E6;
+    margin-bottom: 35px;
+}
+
+.loadMoreButton{
+    background-color: #0050EF;
+    width: 40%;
+    margin: auto;
+    color: white;
+}
+
+#addMainSection1, #addMainSection2{
+    background-color: #092834;
+    color: white;
+}
+
+.addUpload2, .addUpload{
+    width: 150px;
+    height: 60px;
+    margin: auto;
+}
+
+/* INPUT LABEL BUTTON */
 
 input, label, button{
     text-align: center;
@@ -152,63 +288,7 @@ input{
     margin-bottom: 15px
 }
 
-#message{
-    height: 100px;
-}
-
-.contactSend, .addUpload{
-    margin-top: 50px;
-    width: 50%;
-    margin-right: 25%;
-    margin-left: 25%;
-}
-
-.contactTeamTitle{
-    font-size: 35px;
-}
-
-.contactForm form{
-    margin-top: 30px;
-}
-
-
-
-
-
-
-.addMain{
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    height: 70vh;
-    margin: auto;
-    margin-top: 50px;
-    border-radius: 25px;
-    color: white;
-}
-
-
-.verticalLine{
-    border: 6px solid black;
-    height: 65%;
-    position: relative;
-    top: 20%;
-    bottom: 20%;
-}
-
-
-.addNewWebsite, .uploadNewWesbite{
-    width: 40%;
-    margin: auto;
-    margin-top: 7%;
-    font-size: 20px;
-}
-
-.addMain{
-    background-color: #092834;
-}
-
+/* Overlay For Add Website and Add Password*/
 .addTitle{
     margin-bottom: 30px;
 }
