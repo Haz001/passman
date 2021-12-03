@@ -1,12 +1,341 @@
 * {
-	padding: 0px;
-	margin: 0px;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 	font-family: sans-serif;
+}
+
+.navbar {
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	padding: 30px;
+	color: #fff;
+	justify-content: space-between;
+}
+
+.navar h1 {
+	position: absolute;
+	left: 50%;
+}
+
+.navbar h3,
+.navbar img {
+	float: right;
+	padding: 10px;
+	display: inline;
+}
+
+.navbar img {
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+}
+
+.navbar,
+.section2 {
+	display: flex;
+}
+
+.navbar img,
+.section2 h3 {
+	align-self: center;
+}
+
+h1 > span {
+	color: #ffb570;
+}
+
+div.overlay,
+footer {
+	background-color: #092834;
+}
+
+footer {
+	display: flex;
+	justify-content: space-evenly;
+	position: absolute;
+	bottom: 0;
+	height: 4rem;
+	margin-top: 100px;
+}
+
+footer a {
+	color: #fff;
+}
+
+#message {
+	height: 100px;
+}
+
+.contactFName,
+.contactTeamTitle {
+	margin-top: 20px;
+}
+
+.contactTeamMemeber1 img,
+.contactTeamMemeber3 img {
+	float: left;
+	height: 130px;
+	width: 130px;
+}
+
+#contactMainSection2 {
+	background-color: #092834;
+	color: #fff;
+	flex: 8;
+}
+
+#contactMainPage,
+.contactTeamTitle {
+	font-size: 30px;
+	text-align: center;
+}
+
+.contactTeamMembers {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
+	width: 80%;
+	font-size: 20px;
+	margin: 20px auto auto;
+}
+
+.contactTeamMemeber1,
+.contactTeamMemeber2,
+.contactTeamMemeber3 {
+	margin: 20px;
+}
+
+.contactTeamMemeber2 img {
+	float: right;
+	height: 130px;
+	width: 130px;
+}
+
+.contactPage,
+.main,
+.mainPage {
+	background-color: #f7f4d4;
+}
+
+#contactMainPage {
+	background-color: #fff;
+}
+
+.mainPage {
+	height: 100%;
+	width: 80%;
+	margin: auto;
+	border-radius: 5px;
+}
+
+.mainBody {
+	display: flex;
+	flex-direction: row;
+	margin-top: 5vh;
+	height: 65vh;
+}
+
+.verticalLine {
+	width: 20px;
+	background-color: #fff;
+	float: 0.4;
+}
+
+.mainSection1,
+.mainSection2 {
+	flex: 10;
+	color: #000;
+}
+
+#mainSection2,
+#mainWebsiteSection {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.mainUserName {
+	flex: 0.7;
+	background-color: #fff;
+}
+
+.mainUserDetails {
+	flex: 2;
+	padding: 10px;
+	text-align: center;
+	font-size: 25px;
+}
+
+.mainUserDetails input {
+	padding: 20px;
+}
+
+.mainUserDetailsButtons {
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	width: 40vh;
+}
+
+.editButton {
+	background-color: green;
+}
+
+.deleteButton {
+	background-color: red;
+}
+
+.mainUserName button {
+	width: 100%;
+	margin: auto;
+}
+
+.mainSection1Title,
+.mainSection2Title {
+	text-align: center;
+	margin: 20px 20px 35px;
+	font-size: 40px;
+}
+
+.mainUserDetails,
+.mainUserName {
+	border: 3px solid #000;
+}
+
+.mainSection2 {
+	background-color: #cff;
+}
+
+.name {
+	height: 60px;
+}
+
+#mainWebsiteSection {
+	flex-direction: column;
+}
+
+.mainSearch {
+	border-radius: 25px;
+	width: 35%;
+	height: 9%;
+	margin: auto;
+}
+
+.mainAddImport {
+	border-radius: 25px;
+	width: 25%;
+	height: 7%;
+	margin-left: 37%;
+	margin-top: 10px;
+	margin-bottom: 35px;
+}
+
+.mainSection2 hr,
+footer {
+	width: 100%;
+}
+
+.websiteName {
+	background-color: #b0e3e6;
+	margin-bottom: 35px;
+}
+
+.loadMoreButton {
+	background-color: #0050ef;
+	width: 40%;
+	margin: auto;
+	color: #fff;
+}
+
+#addMainSection1,
+#addMainSection2 {
+	background-color: #092834;
+	color: #fff;
+}
+
+.addUpload,
+.addUpload2 {
+	width: 150px;
+	height: 60px;
+	margin: auto;
+}
+
+input {
+	height: 30px;
+	width: 80%;
+	padding: 10px 15px;
+	margin: 8px 0;
+}
+
+label {
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+#error,
+button,
+div.overlay > span,
+input,
+label {
+	text-align: center;
+}
+
+button,
+input,
+label {
+	display: block;
+	font-size: 25px;
+}
+
+button,
+label {
+	width: 70%;
+}
+
+.addTitle {
+	margin-bottom: 30px;
+}
+
+div.overlay {
+	border-radius: 1rem;
+	border-width: 1rem;
+	top: calc(2rem + 100px);
+	height: fit-content;
+	padding: 2rem 0;
+	display: block;
+	position: fixed;
+	top: 2rem;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+}
+
+div.overlay input[type="button"] {
+	margin: auto;
+}
+
+div.overlay > span {
+	color: #fff;
+	font-size: 2rem;
+	width: 100%;
+	display: block;
+}
+
+div.overlay > div.btn {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+}
+
+div.overlay > div.btn > input {
+	width: fit-content;
 }
 
 #error {
 	color: red;
-	text-align: center;
 }
 
 .containerMain {
@@ -17,18 +346,19 @@
 	flex-wrap: wrap;
 }
 
-.containerMainLeft {
+.containerMainLeft,
+.containerMainRight {
 	flex: 50%;
 	margin: auto;
 }
 
 .containerMainRight {
-	flex: 50%;
 	display: block;
-	margin: auto;
 }
 
-.containerMainRight form {
+.containerMainRight form,
+.containerReportBug form input,
+.containerReportBug form textarea {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -36,18 +366,16 @@
 	margin: auto;
 }
 
-input {
-	width: 80%;
-	padding: 10px 15px;
-	margin: 8px 0px;
+button,
+button#bugSend {
+	transition: transform 1s;
 }
 
 button {
 	cursor: pointer;
-	transition: transform 1s;
-	padding: 10px 50px 10px 50px;
-	background-color: lightskyblue;
-	color: white;
+	padding: 10px 50px;
+	background-color: #87cefa;
+	color: #fff;
 	margin: 10px;
 }
 
@@ -56,9 +384,8 @@ button:hover {
 }
 
 button#bugSend {
-	color: black;
-	background: white;
-	transition: transform 1s;
+	color: #000;
+	background: #fff;
 }
 
 button#bugSend:hover {
@@ -77,8 +404,8 @@ button#bugSend:hover {
 }
 
 .vl {
-	border-left: 3px solid white;
-	border-right: 3px solid white;
+	border-left: 3px solid #fff;
+	border-right: 3px solid #fff;
 	height: 80%;
 	position: absolute;
 	left: 50%;
@@ -88,69 +415,63 @@ button#bugSend:hover {
 }
 
 .navbar {
-	background-color: 092834;
+	background-color: 92834;
 }
 
 #loginIcon {
 	width: 10%;
 	height: 10%;
+	margin: 10px auto;
+}
+
+#CreateAccount,
+#loginIcon,
+.containerReportBug {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 10px auto;
 }
 
 #CreateAccount {
 	font-size: 0.8rem;
-	align-items: center;
+	color: #fff;
+	margin: -5px 0 10px;
+}
+
+#emailVerifi,
+.containerReportBug form {
+	color: #fff;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	color: white;
-	margin: -5px 0px 10px 0px;
 }
 
 #emailVerifi {
 	font-size: 1rem;
 	align-items: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	color: white;
 	margin: auto;
 }
 
 #NewBugReport {
 	font-size: 2.5rem;
 	padding: 15px;
-
 }
 
 .containerReportBug {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	margin: auto;
-	background-color: white;
+	background-color: #fff;
 	height: 80vh;
 }
 
 .containerReportBug form {
 	background-color: #092834;
-	color: white;
 	padding: 20px;
-	display: flex;
-	flex-direction: column;
 	flex-wrap: wrap;
 	width: 50%;
 }
 
-.containerReportBug form input {
+.containerReportBug form input,
+.containerReportBug form textarea {
 	width: 80%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: auto;
 }
 
 .containerReportBug form textarea {
@@ -158,31 +479,16 @@ button#bugSend:hover {
 	box-sizing: border-box;
 	font-size: 16px;
 	resize: none;
-	width: 80%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: auto;
-  }
-
-a {
-	text-decoration: none;
 }
 
-
+a,
+footer a {
+	text-decoration: none;
+}
 
 @media screen and (max-width: 600px) {
 	.vl {
 		transform: rotate(90deg);
 		height: 100vw;
 	}
-}
-
-div.overlay{
-	display: block;
-	position: fixed;
-	top: 2rem;
-	left: 2rem;
-	right: 2rem;
-	bottom: 2rem;
 }
