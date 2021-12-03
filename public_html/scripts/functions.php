@@ -248,7 +248,7 @@ function getWebsiteList($conn, $user_identifier)
 	mysqli_free_result($stmtresult);
 	return json_encode($result);
 }
-function addWebsite($conn, $user_identifier,$wb_name,$wb_address)
+function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 {
 	$website_name = ($wb_name);
 	$website_address = ($wb_address);
@@ -260,7 +260,7 @@ function addWebsite($conn, $user_identifier,$wb_name,$wb_address)
 	$rand = 0;
 	$available = false;
 	do {
-		$rand = rand(0,9999999999);
+		$rand = rand(0, 9999999999);
 		$sql = "SELECT 1 as 'exists' from saved_website WHERE website_id = ?";
 		$stmt = mysqli_stmt_init($conn);
 		mysqli_stmt_prepare($stmt, $sql);
@@ -269,9 +269,9 @@ function addWebsite($conn, $user_identifier,$wb_name,$wb_address)
 		$stmtresult =  mysqli_stmt_get_result($stmt);
 		$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
 		mysqli_free_result($stmtresult);
-		if(sizeof($result) > 0){
+		if (sizeof($result) > 0) {
 			$available = false;
-		}else if(sizeof($result) == 0){
+		} else if (sizeof($result) == 0) {
 			$available = true;
 		}
 		$stmt->close();
@@ -279,16 +279,16 @@ function addWebsite($conn, $user_identifier,$wb_name,$wb_address)
 	$sql = "INSERT INTO saved_website VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
-	mysqli_stmt_bind_param($stmt, "iiss", $rand,$user_id,$website_name,$website_address);
+	mysqli_stmt_bind_param($stmt, "iiss", $rand, $user_id, $website_name, $website_address);
 	mysqli_stmt_execute($stmt);
 	$result =  mysqli_stmt_affected_rows($stmt);
-	return json_encode(["result"=>$result,"name"=>$website_name,"address"=>$website_address]);
+	return json_encode(["result" => $result, "name" => $website_name, "address" => $website_address]);
 }
-function addPassword($conn, $user_identifier,$website_id,$pw_username,$pw_password,$key)
+function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_password, $key)
 {
 	$iv = generateIV(); // genorates a new IV per new version of a password
-	$cryptUsername = encryptData($username, $key, $iv);
-	$cryptPassword = encryptData($password, $key, $iv);
+	$cryptUsername = encryptData($pw_username, $key, $iv);
+	$cryptPassword = encryptData($pw_password, $key, $iv);
 	$user_id = "";
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
@@ -297,7 +297,7 @@ function addPassword($conn, $user_identifier,$website_id,$pw_username,$pw_passwo
 	$rand = 0;
 	$available = false;
 	do {
-		$rand = rand(0,9999999999);
+		$rand = rand(0, 9999999999);
 		$sql = "SELECT 1 as 'exists' from website_password WHERE password_id = ?";
 		$stmt = mysqli_stmt_init($conn);
 		mysqli_stmt_prepare($stmt, $sql);
@@ -306,9 +306,9 @@ function addPassword($conn, $user_identifier,$website_id,$pw_username,$pw_passwo
 		$stmtresult =  mysqli_stmt_get_result($stmt);
 		$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
 		mysqli_free_result($stmtresult);
-		if(sizeof($result) > 0){
+		if (sizeof($result) > 0) {
 			$available = false;
-		}else if(sizeof($result) == 0){
+		} else if (sizeof($result) == 0) {
 			$available = true;
 		}
 		$stmt->close();
@@ -318,10 +318,10 @@ function addPassword($conn, $user_identifier,$website_id,$pw_username,$pw_passwo
 	//$sql = "INSERT INTO password_id VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
-	mysqli_stmt_bind_param($stmt, "iiisss", $rand,$website_id,$user_id,$cryptUsername,$cryptPassword,base64_encode($iv));
+	mysqli_stmt_bind_param($stmt, "iiisss", $rand, $website_id, $user_id, $cryptUsername, $cryptPassword, base64_encode($iv));
 	mysqli_stmt_execute($stmt);
 	$result =  mysqli_stmt_affected_rows($stmt);
-	return json_encode(["result"=>$result,"rand"=>$rand,"website_id"=>$website_id,"user_id"=>$user_id,"cryptUn"=>$cryptUsername,"cryptPw"=>$cryptPassword]);
+	return json_encode(["result" => $result, "rand" => $rand, "website_id" => $website_id, "user_id" => $user_id, "cryptUn" => $cryptUsername, "cryptPw" => $cryptPassword]);
 }
 function getPasswordList($conn, $user_identifier, $website_id, $key)
 {
