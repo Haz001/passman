@@ -1,7 +1,202 @@
 * {
-	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	font-family: sans-serif;
+}
+
+#error {
+	color: red;
+	text-align: center;
+}
+
+.containerMain {
+	height: 100vh;
+	background-color: #092834;
+	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.containerMainLeft {
+	flex: 50%;
+	margin: auto;
+}
+
+.containerMainRight {
+	flex: 50%;
+	display: block;
+	margin: auto;
+}
+
+.containerMainRight form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin: auto;
+}
+
+input {
+	width: 80%;
+	padding: 10px 15px;
+	margin: 8px 0;
+}
+
+button {
+	cursor: pointer;
+	transition: transform 1s;
+	padding: 10px 50px;
+	background-color: lightskyblue;
+	color: white;
+	margin: 10px;
+}
+
+button:hover {
+	transform: scale(1.1);
+}
+
+button#bugSend {
+	color: black;
+	background: white;
+	transition: transform 1s;
+}
+
+button#bugSend:hover {
+	transform: scale(0.5);
+}
+
+.logo {
+	width: fit-content;
+	margin: auto;
+	font-size: 4.5rem;
+	text-align: center;
+}
+
+.logo > span > span {
+	color: #ffb570;
+}
+
+.vl {
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	height: 80%;
+	position: absolute;
+	left: 50%;
+	margin-left: -3px;
+	top: 10%;
+	bottom: 10%;
+}
+
+.navbar {
+	background-color: #092834;
+}
+
+#loginIcon {
+	width: 10%;
+	height: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px auto;
+}
+
+#CreateAccount {
+	font-size: 0.8rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: -5px 0 10px;
+}
+
+#emailVerifi {
+	font-size: 1rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: auto;
+}
+
+#NewBugReport {
+	font-size: 2.5rem;
+	padding: 15px;
+}
+
+.containerReportBug {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	background-color: white;
+	height: 80vh;
+}
+
+.containerReportBug form {
+	background-color: #092834;
+	color: white;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 50%;
+}
+
+.containerReportBug form input {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+.containerReportBug form textarea {
+	height: 150px;
+	box-sizing: border-box;
+	font-size: 16px;
+	resize: none;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+a {
+	text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+	.vl {
+		transform: rotate(90deg);
+		height: 100vw;
+	}
+}
+
+div.overlay {
+	display: block;
+	position: fixed;
+	top: 2rem;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+	display: block;
+	position: fixed;
+	background-color: #092834;
+	border-radius: 1rem;
+	border-width: 1rem;
+	top: calc(2rem + 100px);
+	left: 2rem;
+	right: 2rem;
+	height: fit-content;
+	padding: 2rem 0;
+}
+
+* {
+	margin: 0;
+	box-sizing: border-box;
 	font-family: sans-serif;
 }
 
@@ -10,7 +205,9 @@
 	height: 100px;
 	text-align: center;
 	padding: 30px;
-	color: #fff;
+	background-color: #092834;
+	color: white;
+	display: flex;
 	justify-content: space-between;
 }
 
@@ -30,14 +227,13 @@
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
+	align-self: center;
 }
 
-.navbar,
 .section2 {
 	display: flex;
 }
 
-.navbar img,
 .section2 h3 {
 	align-self: center;
 }
@@ -46,30 +242,28 @@ h1 > span {
 	color: #ffb570;
 }
 
-div.overlay,
-footer {
-	background-color: #092834;
-}
-
 footer {
 	display: flex;
 	justify-content: space-evenly;
+	background-color: #092834;
 	position: absolute;
 	bottom: 0;
+	width: 100%;
 	height: 4rem;
 	margin-top: 100px;
 }
 
 footer a {
-	color: #fff;
+	text-decoration: none;
+	color: white;
 }
 
 #message {
 	height: 100px;
 }
 
-.contactFName,
-.contactTeamTitle {
+.contactTeamTitle,
+.contactFName {
 	margin-top: 20px;
 }
 
@@ -82,11 +276,10 @@ footer a {
 
 #contactMainSection2 {
 	background-color: #092834;
-	color: #fff;
+	color: white;
 	flex: 8;
 }
 
-#contactMainPage,
 .contactTeamTitle {
 	font-size: 30px;
 	text-align: center;
@@ -99,7 +292,8 @@ footer a {
 	text-align: center;
 	width: 80%;
 	font-size: 20px;
-	margin: 20px auto auto;
+	margin: auto;
+	margin-top: 20px;
 }
 
 .contactTeamMemeber1,
@@ -115,13 +309,15 @@ footer a {
 }
 
 .contactPage,
-.main,
-.mainPage {
+.mainPage,
+.main {
 	background-color: #f7f4d4;
 }
 
 #contactMainPage {
-	background-color: #fff;
+	background-color: white;
+	font-size: 30px;
+	text-align: center;
 }
 
 .mainPage {
@@ -140,18 +336,17 @@ footer a {
 
 .verticalLine {
 	width: 20px;
-	background-color: #fff;
+	background-color: white;
 	float: 0.4;
 }
 
 .mainSection1,
 .mainSection2 {
 	flex: 10;
-	color: #000;
+	color: black;
 }
 
-#mainSection2,
-#mainWebsiteSection {
+#mainSection2 {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
@@ -159,12 +354,13 @@ footer a {
 
 .mainUserName {
 	flex: 0.7;
-	background-color: #fff;
+	background-color: white;
 }
 
 .mainUserDetails {
 	flex: 2;
 	padding: 10px;
+	border: solid;
 	text-align: center;
 	font-size: 25px;
 }
@@ -196,17 +392,18 @@ footer a {
 .mainSection1Title,
 .mainSection2Title {
 	text-align: center;
-	margin: 20px 20px 35px;
+	margin: 20px;
+	margin-bottom: 35px;
 	font-size: 40px;
 }
 
-.mainUserDetails,
-.mainUserName {
-	border: 3px solid #000;
+.mainUserName,
+.mainUserDetails {
+	border: 3px solid black;
 }
 
 .mainSection2 {
-	background-color: #cff;
+	background-color: #ccffff;
 }
 
 .name {
@@ -214,7 +411,9 @@ footer a {
 }
 
 #mainWebsiteSection {
+	display: flex;
 	flex-direction: column;
+	justify-content: space-evenly;
 }
 
 .mainSearch {
@@ -233,8 +432,7 @@ footer a {
 	margin-bottom: 35px;
 }
 
-.mainSection2 hr,
-footer {
+.mainSection2 hr {
 	width: 100%;
 }
 
@@ -247,70 +445,40 @@ footer {
 	background-color: #0050ef;
 	width: 40%;
 	margin: auto;
-	color: #fff;
+	color: white;
 }
 
 #addMainSection1,
 #addMainSection2 {
 	background-color: #092834;
-	color: #fff;
+	color: white;
 }
 
-.addUpload,
-.addUpload2 {
+.addUpload2,
+.addUpload {
 	width: 150px;
 	height: 60px;
 	margin: auto;
 }
 
-input {
-	height: 30px;
-	width: 80%;
-	padding: 10px 15px;
-	margin: 8px 0;
-}
-
-label {
+input,
+label,
+button {
+	text-align: center;
+	display: block;
+	width: 70%;
 	margin-left: 15%;
 	margin-right: 15%;
-}
-
-#error,
-button,
-div.overlay > span,
-input,
-label {
-	text-align: center;
-}
-
-button,
-input,
-label {
-	display: block;
 	font-size: 25px;
 }
 
-button,
-label {
-	width: 70%;
+input {
+	height: 30px;
+	margin-bottom: 15px;
 }
 
 .addTitle {
 	margin-bottom: 30px;
-}
-
-div.overlay {
-	border-radius: 1rem;
-	border-width: 1rem;
-	top: calc(2rem + 100px);
-	height: fit-content;
-	padding: 2rem 0;
-	display: block;
-	position: fixed;
-	top: 2rem;
-	left: 2rem;
-	right: 2rem;
-	bottom: 2rem;
 }
 
 div.overlay input[type="button"] {
@@ -318,8 +486,9 @@ div.overlay input[type="button"] {
 }
 
 div.overlay > span {
-	color: #fff;
+	color: white;
 	font-size: 2rem;
+	text-align: center;
 	width: 100%;
 	display: block;
 }
@@ -332,163 +501,4 @@ div.overlay > div.btn {
 
 div.overlay > div.btn > input {
 	width: fit-content;
-}
-
-#error {
-	color: red;
-}
-
-.containerMain {
-	height: 100vh;
-	background-color: #092834;
-	color: #fff;
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.containerMainLeft,
-.containerMainRight {
-	flex: 50%;
-	margin: auto;
-}
-
-.containerMainRight {
-	display: block;
-}
-
-.containerMainRight form,
-.containerReportBug form input,
-.containerReportBug form textarea {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 50%;
-	margin: auto;
-}
-
-button,
-button#bugSend {
-	transition: transform 1s;
-}
-
-button {
-	cursor: pointer;
-	padding: 10px 50px;
-	background-color: #87cefa;
-	color: #fff;
-	margin: 10px;
-}
-
-button:hover {
-	transform: scale(1.1);
-}
-
-button#bugSend {
-	color: #000;
-	background: #fff;
-}
-
-button#bugSend:hover {
-	transform: scale(0.5);
-}
-
-.logo {
-	width: fit-content;
-	margin: auto;
-	font-size: 4.5rem;
-	text-align: center;
-}
-
-.logo > span > span {
-	color: #ffb570;
-}
-
-.vl {
-	border-left: 3px solid #fff;
-	border-right: 3px solid #fff;
-	height: 80%;
-	position: absolute;
-	left: 50%;
-	margin-left: -3px;
-	top: 10%;
-	bottom: 10%;
-}
-
-.navbar {
-	background-color: 92834;
-}
-
-#loginIcon {
-	width: 10%;
-	height: 10%;
-	margin: 10px auto;
-}
-
-#CreateAccount,
-#loginIcon,
-.containerReportBug {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#CreateAccount {
-	font-size: 0.8rem;
-	color: #fff;
-	margin: -5px 0 10px;
-}
-
-#emailVerifi,
-.containerReportBug form {
-	color: #fff;
-	display: flex;
-	flex-direction: column;
-}
-
-#emailVerifi {
-	font-size: 1rem;
-	align-items: center;
-	margin: auto;
-}
-
-#NewBugReport {
-	font-size: 2.5rem;
-	padding: 15px;
-}
-
-.containerReportBug {
-	margin: auto;
-	background-color: #fff;
-	height: 80vh;
-}
-
-.containerReportBug form {
-	background-color: #092834;
-	padding: 20px;
-	flex-wrap: wrap;
-	width: 50%;
-}
-
-.containerReportBug form input,
-.containerReportBug form textarea {
-	width: 80%;
-}
-
-.containerReportBug form textarea {
-	height: 150px;
-	box-sizing: border-box;
-	font-size: 16px;
-	resize: none;
-}
-
-a,
-footer a {
-	text-decoration: none;
-}
-
-@media screen and (max-width: 600px) {
-	.vl {
-		transform: rotate(90deg);
-		height: 100vw;
-	}
 }
