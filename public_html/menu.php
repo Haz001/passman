@@ -8,6 +8,7 @@
 	}
 </style>
 <button id="refresh">Refresh</button>
+<button id="addWebsite" onclick="addWebsite(this)">Add Website</button>
 <div class="menuContainer">
 	<div id="list"></div>
 	<div id="passwords"></div>

@@ -24,6 +24,7 @@ function listWebsites(div) {
 				tmp.innerText = response[i]["website_name"];
 				tmp.name = response[i]["web_address"];
 				tmp.value = response[i]["website_id"];
+				tmp.classList.add("websiteName");
 				tmp.addEventListener("click",grabPasswords);
 				div.append(tmp);
 			}
@@ -285,61 +286,61 @@ function grabPasswords(evt) {
 			},
 		},
 		success: function (response) {
-			div.empty();
-			let tmp0 = document.createElement("h1");
-			tmp0.innerText = btn.innerText;
-			tmp0.name = btn.name;
-			tmp0.id = count;
-			count++;
-			let tmp1 = document.createElement("h2");
-			tmp1.innerText = btn.name;
-			div.append(tmp0);
-			div.append(tmp1);
-			if(typeof response !== 'undefined'){
-				for (let i = 0; i < response.length; i++) {
-					tmpName = "password_id:" + response[i]["password_id"];
-					if (i > 0) {
-						let hr = document.createElement("hr");
-						div.append(hr);
-					}
-					let br = document.createElement("br");
-					let tmp0 = document.createElement("h1");
-					tmp0.innerText = "Account " + i.toString() + ":";
-					let tmp1 = document.createElement("input");
-					tmp1.type = "text";
-					tmp1.disabled = true;
-					tmp1.id = tmpName + ":un";
-					tmp1.name = tmpName;
-					tmp1.value = response[i]["username"];
-					let tmp2 = document.createElement("input");
-					tmp2.type = "text";
-					tmp2.disabled = true;
-					tmp2.id = tmpName + ":pw";
-					tmp2.name = tmpName;
-					tmp2.value = response[i]["password"];
-					let tmp3 = document.createElement("input");
-					tmp3.type = "button";
-					tmp3.id = tmpName + ":btn";
-					tmp3.name = tmpName;
-					tmp3.value = "Edit";
-					tmp3.addEventListener("click", editPasswords);
-					div.append(tmp0);
-					div.append(tmp1);
-					div.append(br);
-					div.append(tmp2);
-					div.append(br);
-					div.append(tmp3);
-				}
-			}else{
-				console.log("No data");
-			}
-			let tmp4 = document.createElement("input");
-			tmp4.type = "button";
-			tmp4.id = btn.value + ":btn";
-			tmp4.name = btn.value;
-			tmp4.value = "add";
-			tmp4.addEventListener("click", addPassword);
-			div.append(tmp4);
+			// div.empty();
+			// let tmp0 = document.createElement("h1");
+			// tmp0.innerText = btn.innerText;
+			// tmp0.name = btn.name;
+			// tmp0.id = count;
+			// count++;
+			// let tmp1 = document.createElement("h2");
+			// tmp1.innerText = btn.name;
+			// div.append(tmp0);
+			// div.append(tmp1);
+			// if(typeof response !== 'undefined'){
+			// 	for (let i = 0; i < response.length; i++) {
+			// 		tmpName = "password_id:" + response[i]["password_id"];
+			// 		if (i > 0) {
+			// 			let hr = document.createElement("hr");
+			// 			div.append(hr);
+			// 		}
+			// 		let br = document.createElement("br");
+			// 		let tmp0 = document.createElement("h1");
+			// 		tmp0.innerText = "Account " + i.toString() + ":";
+			// 		let tmp1 = document.createElement("input");
+			// 		tmp1.type = "text";
+			// 		tmp1.disabled = true;
+			// 		tmp1.id = tmpName + ":un";
+			// 		tmp1.name = tmpName;
+			// 		tmp1.value = response[i]["username"];
+			// 		let tmp2 = document.createElement("input");
+			// 		tmp2.type = "text";
+			// 		tmp2.disabled = true;
+			// 		tmp2.id = tmpName + ":pw";
+			// 		tmp2.name = tmpName;
+			// 		tmp2.value = response[i]["password"];
+			// 		let tmp3 = document.createElement("input");
+			// 		tmp3.type = "button";
+			// 		tmp3.id = tmpName + ":btn";
+			// 		tmp3.name = tmpName;
+			// 		tmp3.value = "Edit";
+			// 		tmp3.addEventListener("click", editPasswords);
+			// 		div.append(tmp0);
+			// 		div.append(tmp1);
+			// 		div.append(br);
+			// 		div.append(tmp2);
+			// 		div.append(br);
+			// 		div.append(tmp3);
+			// 	}
+			// }else{
+			// 	console.log("No data");
+			// }
+			// let tmp4 = document.createElement("input");
+			// tmp4.type = "button";
+			// tmp4.id = btn.value + ":btn";
+			// tmp4.name = btn.value;
+			// tmp4.value = "add";
+			// tmp4.addEventListener("click", addPassword);
+			// div.append(tmp4);
 		},
 	});
 }

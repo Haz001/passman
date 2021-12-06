@@ -300,7 +300,8 @@ function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_pas
 		$user_id = getUidWhereAuthCode($user_identifier[1]);
 	$rand = 0;
 	$available = false;
-	do {
+	do
+	{
 		$rand = rand(0, 999999999);
 		$sql = "SELECT 1 as 'exists' from website_password WHERE password_id = ?";
 		$stmt = mysqli_stmt_init($conn);
@@ -316,7 +317,8 @@ function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_pas
 			$available = true;
 		}
 		$stmt->close();
-	} while (!$available);
+	}
+	while (!$available);
 	$sql = "INSERT INTO website_password values (?,(SELECT sw.website_id FROM `saved_website` as sw WHERE sw.website_id = ? AND sw.user_id = ?),?,?,?)";
 	//$sql = "INSERT INTO website_password values (?,(SELECT website_id FROM `saved_website` WHERE website_id = ? AND user_id = ?),?,?,?)";
 	//$sql = "INSERT INTO password_id VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
@@ -344,7 +346,8 @@ function getPasswordList($conn, $user_identifier, $website_id, $key)
 	$cipher = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
 	mysqli_free_result($stmtresult);
 	$result = [];
-	for ($i = 0; $i < sizeof($cipher); $i++) {
+	for ($i = 0; $i < sizeof($cipher); $i++)
+	{
 		$result[$i] = [];
 		$result[$i]["website_id"]  = $cipher[$i]["website_id"];
 		$result[$i]["password_id"] = $cipher[$i]["password_id"];
@@ -393,7 +396,6 @@ function setPasswordList($conn, $user_identifier, $password_id, $key, $username,
 	mysqli_stmt_prepare($stmt, $sql);
 	mysqli_stmt_bind_param($stmt, "sssii", $cryptUsername, $cryptPassword, base64_encode($iv), $password_id, $user_id);
 	mysqli_stmt_execute($stmt);
-
 	return mysqli_stmt_affected_rows($stmt) . $password_id . $user_id;
 }
 function commonPassword($conn, $pD)
