@@ -260,7 +260,7 @@ function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 	$rand = 0;
 	$available = false;
 	do {
-		$rand = rand(0, 9999999999);
+		$rand = rand(0, 999999999);
 		$sql = "SELECT 1 as 'exists' from saved_website WHERE website_id = ?";
 		$stmt = mysqli_stmt_init($conn);
 		mysqli_stmt_prepare($stmt, $sql);
@@ -297,7 +297,7 @@ function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_pas
 	$rand = 0;
 	$available = false;
 	do {
-		$rand = rand(0, 9999999999);
+		$rand = rand(0, 999999999);
 		$sql = "SELECT 1 as 'exists' from website_password WHERE password_id = ?";
 		$stmt = mysqli_stmt_init($conn);
 		mysqli_stmt_prepare($stmt, $sql);

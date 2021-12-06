@@ -41,7 +41,7 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 		}
 		else if ($_POST["add"] == "password")
 		{
-			$result[0] = addPassword($conn,[0,$uid],$_POST["website_id"],$_POST["usernmae"],$_POST["password"],$key);
+			$result[0] = addPassword($conn,[0,$uid],$_POST["website_id"],$_POST["username"],$_POST["password"],$key);
 			$result[1] = 200;
 		}
 	}
