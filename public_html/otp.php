@@ -26,7 +26,13 @@
 		<div class="containerMainRight">
 			<img id="loginIcon" src="img\profilePicture.jpeg">
 			
-			<p id="emailVerifi">Email verification code sent to example@gmail.com</p>
+			<p id="emailVerifi">Email verification code sent to <?php 
+			if(isset($_GET["email"]))
+				echo "&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;".$_GET["email"];
+			else
+				echo "example@example.com";
+			?></p>
+
 
 			<form action="scripts/otp.php" method="POST">
 				<input type="text" name="otp" placeholder="Please enter OTP">

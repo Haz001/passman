@@ -104,7 +104,11 @@ function generateOneTimePassword($conn, $userInfo, $pD)
 	mysqli_stmt_execute($stmt);
 	$_SESSION["tempID"] = $userInfo["user_id"];
 	if (!isset($pD["location"])) {
-		header("location:../otp.php");
+		$censoredEmail = explode('@',$userInfo["email"]);
+		if(sizeof($censoredEmail)>1)
+			header("location:../otp.php?email=@".$censoredEmail[1]);
+		else
+			header("location:../otp.php");
 		exit();
 	} else {
 		response("otp");

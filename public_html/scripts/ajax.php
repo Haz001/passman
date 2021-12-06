@@ -45,6 +45,19 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 			$result[1] = 200;
 		}
 	}
+	else if (isset($_POST["delete"]))
+	{
+		if ($_POST["delete"] == "website")
+		{
+			//$result[0] = addWebsite($conn,[0,$uid],$_POST["website_id"]);
+			$result[1] = 200;
+		}
+		else if ($_POST["delete"] == "password")
+		{
+			//$result[0] = addPassword($conn,[0,$uid],$_POST["password_id"]);
+			$result[1] = 200;
+		}
+	}
 
 	if (($result[0] == "") || ($result[0] == null) || ($result[0] == "null")||($result[0] == "[]")) {
 		echo "No data found";
