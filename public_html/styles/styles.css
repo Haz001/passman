@@ -234,6 +234,16 @@ div.overlay {
 	display: flex;
 	position: relative;
 }
+.section2 a {
+	border-color: grey;
+	padding: 0.5em;
+	border-style: solid;
+	border-width: 1px;
+}
+.section2 a:hover {
+	background-color: #092834;
+	color: white;
+}
 .accountDrop {
 	display: none;
 	position: absolute;
