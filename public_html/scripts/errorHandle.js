@@ -15,6 +15,14 @@ $(document).ready(function () {
 			$("[class='accountDrop']").hide();
 		}
 	);
+	$("[class='section2']").click(function (e) {
+		e.preventDefault();
+		$("[class='accountDrop']").toggle();
+	});
+	$("[class='section2']").blur(function (e) {
+		e.preventDefault();
+		$("[class='accountDrop']").hide();
+	});
 });
 
 function errorMsg($_GET) {
