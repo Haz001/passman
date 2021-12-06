@@ -6,6 +6,15 @@ $(document).ready(function () {
 		$_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
 	}
 	errorMsg($_GET);
+	$("[class='section2']").hover(
+		function () {
+			$("[class='accountDrop']").show();
+			$("[class='accountDrop']").css("display", "flex");
+		},
+		function () {
+			$("[class='accountDrop']").hide();
+		}
+	);
 });
 
 function errorMsg($_GET) {
