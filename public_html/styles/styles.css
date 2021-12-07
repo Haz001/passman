@@ -261,6 +261,14 @@ div.overlay {
 	align-self: center;
 }
 
+.menuContainer {
+	min-height: 65vh;
+}
+
+#passwords {
+	text-align: center;
+}
+
 h1 > span {
 	color: #ffb570;
 }
