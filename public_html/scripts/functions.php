@@ -379,7 +379,24 @@ function getUidWhereAuthCode($conn, $authToken)
 	return $result['user_id'];
 }
 
-function setPasswordList($conn, $user_identifier, $password_id, $key, $username, $password)
+function deletePassword($conn, $user_identifier, $password_id)
+{
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWitAuthCode($user_identifier[1]);
+	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
+	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
+	//$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$sql = "DELETE FROM website_password where password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "ii", $password_id, $user_id);
+	mysqli_stmt_execute($stmt);
+	return ["success"=>mysqli_stmt_affected_rows($stmt)];
+}
+function setPassword($conn, $user_identifier, $password_id, $key, $username, $password)
 {
 	$user_id = "";
 	if ($user_identifier[0] == 0)
