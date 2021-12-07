@@ -8,6 +8,9 @@
 	}
 </style>
 <button id="refresh">Refresh</button>
-<div id="list"></div>
-<div id="passwords"></div>
+<button id="addWebsite" onclick="addWebsite(this)">Add Website</button>
+<div class="menuContainer">
+	<div id="list"></div>
+	<div id="passwords"></div>
+</div>
 <?php require "footer.php"; ?>

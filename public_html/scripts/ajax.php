@@ -28,7 +28,7 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	else if(isset($_POST["update"]))
 	{
 		if($_POST["update"] == "password"){
-			$result[0] = json_encode(setPasswordList($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
+			$result[0] = json_encode(setPassword($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
 			$result[1] = 420;
 		}
 	}
@@ -41,7 +41,20 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 		}
 		else if ($_POST["add"] == "password")
 		{
-			$result[0] = addPassword($conn,[0,$uid],$_POST["website_id"],$_POST["usernmae"],$_POST["password"],$key);
+			$result[0] = addPassword($conn,[0,$uid],$_POST["website_id"],$_POST["username"],$_POST["password"],$key);
+			$result[1] = 200;
+		}
+	}
+	else if (isset($_POST["delete"]))
+	{
+		if ($_POST["delete"] == "website")
+		{
+			//$result[0] = addWebsite($conn,[0,$uid],$_POST["website_id"]);
+			$result[1] = 200;
+		}
+		else if ($_POST["delete"] == "password")
+		{
+			$result[0] = json_encode(deletePassword($conn,[0,$uid],$_POST["password_id"]));
 			$result[1] = 200;
 		}
 	}
