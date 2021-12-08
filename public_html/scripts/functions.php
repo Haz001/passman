@@ -127,7 +127,13 @@ function loginUser($conn, $pD)
 		}
 	}
 	if (password_verify($pD["password"], $userInfo["master_password"])) {
-		setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
+		if($userInfo["masterkey"] == ""){
+			//setcookie("key", hash("sha3-512", $pD["password"]), 0, "/", "passman.harrysy.red", true);
+			setcookie("key", keyGen($conn, $pD["password"], $userInfo["user_id"]), 0, "/", "passman.harrysy.red", true);
+
+		}else{
+			setcookie("key", keyGet($conn, $pD["password"], $userInfo["user_id"]), 0, "/", "passman.harrysy.red", true);
+		}
 
 		generateOneTimePassword($conn, $userInfo, $pD);
 		//checks if the password hash inputted and the password
@@ -140,6 +146,30 @@ function loginUser($conn, $pD)
 			response("error", "notfound");
 		}
 	}
+}
+function keyGet($conn,$password,$user_id){
+	$sql = "select masterkey, masteriv from user where user_id = ?;"; //sql statement to get masterkey and masteriv
+	$stmt = mysqli_stmt_init($conn);// to make statement variable
+	mysqli_stmt_prepare($stmt,$sql);// to prepare statment with sql line
+	mysqli_stmt_bind_param($stmt,"si",$user_id);// binds the parameter
+	mysqli_stmt_execute($stmt);// executes sql
+	$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
+	$row = mysqli_fetch_assoc($stmtresult);  // creates an associative array of the sql result
+	$iv = base64_decode($row["masteriv"]);// decoded iv to binary version
+	$masterkey = decryptData($row["masterkey"],$password,$iv);// decrypt masterpassword
+	return $masterkey;// returns master password
+}
+function keyGen($conn,$password,$user_id){
+	$sql = "update user set masterkey = ?, masteriv = ? where user_id = ?;"; 
+	$iv = generateIV();
+	$key  = hash("sha3-512", $password);
+	$masterkey = encryptData($key,$password,$iv);
+	$stmt = mysqli_stmt_init($conn);
+	$based_iv = base64_encode($iv);
+	mysqli_stmt_prepare($stmt,$sql);
+	mysqli_stmt_bind_param($stmt,"si",$masterkey,$based_iv,$user_id);
+	mysqli_stmt_execute($stmt);
+	return keyGet($conn,$password,$user_id);	
 }
 function signUp($conn, $pD)
 {
@@ -241,7 +271,7 @@ function getWebsiteList($conn, $user_identifier)
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWhereAuthCode($user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -260,7 +290,7 @@ function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWhereAuthCode($user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$rand = 0;
 	$available = false;
 	do {
@@ -297,7 +327,8 @@ function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_pas
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWhereAuthCode($user_identifier[1]);
+		
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$rand = 0;
 	$available = false;
 	do
@@ -335,7 +366,7 @@ function getPasswordList($conn, $user_identifier, $website_id, $key)
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWhereAuthCode($user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
 	$stmt = mysqli_stmt_init($conn);
@@ -378,14 +409,13 @@ function getUidWhereAuthCode($conn, $authToken)
 	$result = mysqli_fetch_all($stmtresult);
 	return $result['user_id'];
 }
-
 function deletePassword($conn, $user_identifier, $password_id)
 {
 	$user_id = "";
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWitAuthCode($user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
 	//$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
@@ -396,13 +426,31 @@ function deletePassword($conn, $user_identifier, $password_id)
 	mysqli_stmt_execute($stmt);
 	return ["success"=>mysqli_stmt_affected_rows($stmt)];
 }
+function deleteWebsite($conn, $user_identifier, $website_id)
+{
+	$user_id = "";
+	if ($user_identifier[0] == 0)
+		$user_id = $user_identifier[1];
+	else
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
+	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
+	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
+	//$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	//$sql = "DELETE FROM website_password where password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
+	$sql = "DELETE FROM website_password as wp where wp.website_id = ? AND wp.user_id = ?;";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "ii", $website_id, $user_id);
+	mysqli_stmt_execute($stmt);
+	return ["success"=>mysqli_stmt_affected_rows($stmt)];
+}
 function setPassword($conn, $user_identifier, $password_id, $key, $username, $password)
 {
 	$user_id = "";
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWitAuthCode($user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$iv = generateIV(); // genorates a new IV per new version of a password
 	//$sql = "SELECT website_password.website_id, password_id, username, password, vi from website_password JOIN [SELECT website_id, from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ?] where website";
 	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";

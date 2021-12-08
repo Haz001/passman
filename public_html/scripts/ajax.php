@@ -52,7 +52,7 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	{
 		if ($_POST["delete"] == "website")
 		{
-			//$result[0] = addWebsite($conn,[0,$uid],$_POST["website_id"]);
+			$result[0] = json_encode(deleteWebsite($conn,[0,$uid],$_POST["website_id"]));
 			$result[1] = 200;
 		}
 		else if ($_POST["delete"] == "password")
