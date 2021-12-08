@@ -15,15 +15,17 @@
         </div>
         <div class="mainSection2"  id="mainSection2">
             <div id="mainUserButtons" class="mainUserName">
-                <button value="hello" class="name">Harry</button>
+
+                <button value="hello" class="name">Refresh</button>
+                <button value="hello" class="name">Username</button>
             </div>
             <div class="mainUserDetails" id="mainWebsiteSection">
-                <a id="mainWebsiteLink"><h1 id="mainWebsiteTitle" class="mainSection2Title">Amazon</h1></a>
+                <a id="mainWebsiteLink"><h1 id="mainWebsiteTitle" class="mainSection2Title">Example.com</h1></a>
 	            <div id="passwords">
                     <h4>Username</h4>
-                    <input disabled id="passwordUsername" type="text">
+                    <input disabled id="passwordUsername" type="text" value="Username">
                     <h4>Password</h4>
-                    <input disabled id="passwordPassword" type="text">
+                    <input disabled id="passwordPassword" type="text" value="Password">
                     <!--<h4>Website Address</h4>
                     <input type="text">-->
                     <div class="mainUserDetailsButtons">

@@ -29,10 +29,6 @@ function listWebsites(div) {
 				websiteButton.addEventListener("click",grabPasswords);
 				div.append(websiteButton);
 			}
-			// let tmp = document.createElement("newWebsite");
-			// tmp.innerText = "Add Website";
-			// tmp.name = "newWebsiteBtn";
-			// tmp.addEventListener("click",addWebsite);
 		},
 	});
 }
@@ -232,16 +228,17 @@ function deletePasswords(evt) {
 	btn.removeEventListener("click", updatePasswords);
 }
 function updatePasswords(evt) {
-	let newUsername = "";
-	let newPassword = "";
+	let newUsername = document.getElementById("passwordUsername").value;
+	let newPassword = document.getElementById("passwordPassword").value;
+	
 	let btn = evt.currentTarget;
 	let tmp = $('[name="' + btn.name + '"]');
-	for (let i = 0; i < tmp.length; i++) {
-		if (tmp[i].id = "passwordUsername")
-			newUsername = tmp[i].value;
-		if (tmp[i].id = "passwordPassword")
-			newPassword = tmp[i].value;
-	}
+	// for (let i = 0; i < tmp.length; i++) {
+	// 	if (tmp[i].id = "passwordUsername")
+	// 		newUsername = tmp[i].value;
+	// 	if (tmp[i].id = "passwordPassword")
+	// 		newPassword = tmp[i].value;
+	// }
 	let tPart = btn.id.split(":");
 	let part = "";
 	if (tPart.length > 2)

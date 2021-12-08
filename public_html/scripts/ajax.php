@@ -29,7 +29,10 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	{
 		if($_POST["update"] == "password"){
 			$result[0] = json_encode(setPassword($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
-			$result[1] = 420;
+		}
+		else {
+			$result[0] = $_GET["get"] . " command not found";
+			$result[1] = 403;
 		}
 	}
 	else if (isset($_POST["add"]))

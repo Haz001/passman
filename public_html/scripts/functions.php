@@ -413,7 +413,7 @@ function setPassword($conn, $user_identifier, $password_id, $key, $username, $pa
 	mysqli_stmt_prepare($stmt, $sql);
 	mysqli_stmt_bind_param($stmt, "sssii", $cryptUsername, $cryptPassword, base64_encode($iv), $password_id, $user_id);
 	mysqli_stmt_execute($stmt);
-	return mysqli_stmt_affected_rows($stmt) . $password_id . $user_id;
+	return ["success"=>mysqli_stmt_affected_rows($stmt)];
 }
 function commonPassword($conn, $pD)
 {

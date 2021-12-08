@@ -3,7 +3,7 @@ if (!isset($_SESSION["user_id"])) {
 	header("location: login.php");
 	exit();
 }else{
-	require_once "menu.php";
+	require_once "main.php";
 }
 ?>
 <!--<div>
