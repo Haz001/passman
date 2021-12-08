@@ -19,23 +19,24 @@ function listWebsites(div) {
 		},
 		success: function (response) {
 			while (div.children().length > 0) div.children()[0].remove();
+			$("#passwords").empty();
 			for (let i = 0; i < response.length; i++) {
 				let tmp = document.createElement("button");
 				tmp.innerText = response[i]["website_name"];
 				tmp.name = response[i]["web_address"];
 				tmp.value = response[i]["website_id"];
-				tmp.addEventListener("click",grabPasswords);
+				tmp.addEventListener("click", grabPasswords);
 				div.append(tmp);
 			}
 			let tmp = document.createElement("newWebsite");
 			tmp.innerText = "Add Website";
 			tmp.name = "newWebsiteBtn";
-			tmp.addEventListener("click",addWebsite);
+			tmp.addEventListener("click", addWebsite);
 		},
 	});
 }
-function addWebsite(evt) { 
-	if( document.getElementById("mkWbOverlay") == null){
+function addWebsite(evt) {
+	if (document.getElementById("mkWbOverlay") == null) {
 		let overlay = document.createElement("div");
 		overlay.classList.add("overlay");
 		overlay.id = "mkWbOverlay";
@@ -48,17 +49,17 @@ function addWebsite(evt) {
 		let wbAddr = document.createElement("input");
 		wbAddr.type = "text";
 		wbAddr.placeholder = "Website Address: http://example.com";
-		wbAddr.name ="wbAddr";
+		wbAddr.name = "wbAddr";
 		let wbAddBtn = document.createElement("input");
 		wbAddBtn.name = "wbAddBtn";
 		wbAddBtn.type = "button";
 		wbAddBtn.value = "Add Website";
-		wbAddBtn.addEventListener("click",createWebsite);
+		wbAddBtn.addEventListener("click", createWebsite);
 		let wbCancBtn = document.createElement("input");
 		wbCancBtn.type = "button";
 		wbCancBtn.value = "Cancel";
 		wbCancBtn.name = "wbCancBtn";
-		wbCancBtn.addEventListener("click",function (){
+		wbCancBtn.addEventListener("click", function () {
 			document.getElementById("mkWbOverlay").remove();
 		});
 		let btnHolder = document.createElement("div");
@@ -66,19 +67,19 @@ function addWebsite(evt) {
 		btnHolder.appendChild(wbCancBtn);
 		btnHolder.appendChild(wbAddBtn);
 		overlay.appendChild(span);
-		
+
 		overlay.appendChild(wbName);
 		overlay.appendChild(wbAddr);
-		
+
 		overlay.appendChild(btnHolder);
 		document.body.appendChild(overlay);
 	}
 }
-function addPassword(evt) { 
+function addPassword(evt) {
 	let btn = evt.currentTarget;
 	let wbId = btn.name;
 	console.log(wbId);
-	if( document.getElementById("mkPwOverlay") == null){
+	if (document.getElementById("mkPwOverlay") == null) {
 		let overlay = document.createElement("div");
 		overlay.classList.add("overlay");
 		overlay.id = "mkPwOverlay";
@@ -91,17 +92,17 @@ function addPassword(evt) {
 		let wbAddr = document.createElement("input");
 		wbAddr.type = "password";
 		wbAddr.placeholder = "Password";
-		wbAddr.name ="pwPassword";
+		wbAddr.name = "pwPassword";
 		let wbAddBtn = document.createElement("input");
 		wbAddBtn.name = wbId;
 		wbAddBtn.type = "button";
 		wbAddBtn.value = "Add Password";
-		wbAddBtn.addEventListener("click",createPassword);
+		wbAddBtn.addEventListener("click", createPassword);
 		let wbCancBtn = document.createElement("input");
 		wbCancBtn.type = "button";
 		wbCancBtn.value = "Cancel";
 		wbCancBtn.name = "pwCancBtn";
-		wbCancBtn.addEventListener("click",function (){
+		wbCancBtn.addEventListener("click", function () {
 			document.getElementById("mkPwOverlay").remove();
 		});
 		let btnHolder = document.createElement("div");
@@ -109,63 +110,65 @@ function addPassword(evt) {
 		btnHolder.appendChild(wbCancBtn);
 		btnHolder.appendChild(wbAddBtn);
 		overlay.appendChild(span);
-		
+
 		overlay.appendChild(wbName);
 		overlay.appendChild(wbAddr);
-		
+
 		overlay.appendChild(btnHolder);
 		document.body.appendChild(overlay);
 	}
 }
-function createWebsite(evt){
+function createWebsite(evt) {
 	let wbName = "";
 	let wbAddr = "";
 
-	let overlayChildren =  evt.currentTarget.parentNode.parentNode.children;
-	for(let i = 0; i < overlayChildren.length;i++){
+	let overlayChildren = evt.currentTarget.parentNode.parentNode.children;
+	for (let i = 0; i < overlayChildren.length; i++) {
 		let child = overlayChildren[i];
-		if(child.name == "wbAddr"){
+		if (child.name == "wbAddr") {
 			wbAddr = child.value;
-		}else if(child.name == "wbName"){
+		} else if (child.name == "wbName") {
 			wbName = child.value;
 		}
 	}
-	$.post("/scripts/ajax.php", data={
-		add:"website",
-		website_name:wbName,
-		website_address:wbAddr
-	},
+	$.post(
+		"/scripts/ajax.php",
+		(data = {
+			add: "website",
+			website_name: wbName,
+			website_address: wbAddr,
+		}),
 		function (data, textStatus, jqXHR) {
-			if(data == 1)
-				document.getElementById("mkWbOverlay").remove();
+			if (data == 1) document.getElementById("mkWbOverlay").remove();
 		},
 		"json"
 	);
 }
-function createPassword(evt){
+function createPassword(evt) {
 	let btn = evt.currentTarget;
 	let wbId = btn.name;
 	let pwUsername = "";
 	let pwPassword = "";
 
-	let overlayChildren =  evt.currentTarget.parentNode.parentNode.children;
-	for(let i = 0; i < overlayChildren.length;i++){
+	let overlayChildren = evt.currentTarget.parentNode.parentNode.children;
+	for (let i = 0; i < overlayChildren.length; i++) {
 		let child = overlayChildren[i];
-		if(child.name == "pwUsername"){
+		if (child.name == "pwUsername") {
 			pwUsername = child.value;
-		}else if(child.name == "pwPassword"){
+		} else if (child.name == "pwPassword") {
 			pwPassword = child.value;
 		}
 	}
-	$.post("/scripts/ajax.php", data={
-		add:"password",
-		website_id:wbId,
-		username:pwUsername,
-		password:pwPassword,
-
-	},
+	$.post(
+		"/scripts/ajax.php",
+		(data = {
+			add: "password",
+			website_id: wbId,
+			username: pwUsername,
+			password: pwPassword,
+		}),
 		function (data, textStatus, jqXHR) {
-			if(data["result"] == 1)
+			if (data["result"] == 1)
 				document.getElementById("mkPwOverlay").remove();
 		},
 		"json"
@@ -177,10 +180,8 @@ function editPasswords(evt) {
 	for (let i = 0; i < tmp.length; i++) {
 		let tPart = tmp[i].id.split(":");
 		let part = "";
-		if (tPart.length == 3)
-			part = tPart[2];
-		if (part == "un" || part == "pw")
-			tmp[i].disabled = false;
+		if (tPart.length == 3) part = tPart[2];
+		if (part == "un" || part == "pw") tmp[i].disabled = false;
 	}
 	btn.value = "Save";
 	btn.removeEventListener("click", editPasswords);
@@ -194,17 +195,13 @@ function updatePasswords(evt) {
 	for (let i = 0; i < tmp.length; i++) {
 		let tPart = tmp[i].id.split(":");
 		let part = "";
-		if (tPart.length == 3)
-			part = tPart[2];
-		if (part == "un")
-			newUsername = tmp[i].value;
-		if (part == "pw")
-			newPassword = tmp[i].value;
+		if (tPart.length == 3) part = tPart[2];
+		if (part == "un") newUsername = tmp[i].value;
+		if (part == "pw") newPassword = tmp[i].value;
 	}
 	let tPart = btn.id.split(":");
 	let part = "";
-	if (tPart.length > 2)
-		part = tPart[1];
+	if (tPart.length > 2) part = tPart[1];
 	let passwordId = btn.name.split(":")[1];
 	$.ajax({
 		type: "POST",
@@ -228,20 +225,17 @@ function updatePasswords(evt) {
 			},
 		},
 		success: function (response) {
-			console.log("Password updated")
-			btn.removeEventListener("click",updatePasswords);
-			btn.addEventListener("click",editPasswords);
-			let tmp = $('[name="'+btn.name+'"]');
-			for (let i = 0;i < tmp.length;i++)
-			{
+			console.log("Password updated");
+			btn.removeEventListener("click", updatePasswords);
+			btn.addEventListener("click", editPasswords);
+			let tmp = $('[name="' + btn.name + '"]');
+			for (let i = 0; i < tmp.length; i++) {
 				let tPart = tmp[i].id.split(":");
 				let part = "";
-				if(tPart.length == 3)
-					part = tPart[2];
-				if((part == "un")||(part == "pw"))
-					tmp[i].disabled = false;
+				if (tPart.length == 3) part = tPart[2];
+				if (part == "un" || part == "pw") tmp[i].disabled = false;
 			}
-		}
+		},
 	});
 	btn.removeEventListener("click", updatePasswords);
 }
@@ -255,7 +249,7 @@ function grabPasswords(evt) {
 		data: "get=passwords&website_id=" + btn.value,
 		dataType: "JSON",
 		statusCode: {
-			204: function(){
+			204: function () {
 				div.empty();
 				let tmp0 = document.createElement("h1");
 				tmp0.innerText = btn.innerText;
@@ -295,7 +289,7 @@ function grabPasswords(evt) {
 			tmp1.innerText = btn.name;
 			div.append(tmp0);
 			div.append(tmp1);
-			if(typeof response !== 'undefined'){
+			if (typeof response !== "undefined") {
 				for (let i = 0; i < response.length; i++) {
 					tmpName = "password_id:" + response[i]["password_id"];
 					if (i > 0) {
@@ -330,7 +324,7 @@ function grabPasswords(evt) {
 					div.append(br);
 					div.append(tmp3);
 				}
-			}else{
+			} else {
 				console.log("No data");
 			}
 			let tmp4 = document.createElement("input");
