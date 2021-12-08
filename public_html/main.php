@@ -1,5 +1,3 @@
-<?php include 'header.php';?>
-
 <div class="mainPage">
     <div class="mainBody">
         <div class="mainSection1">
@@ -13,15 +11,17 @@
         </div>
         <div class="verticalLine">
         </div>
-        <div class="mainSection2"  id="mainSection2">
+        <div class="mainSection2" id="mainSection2">
             <div id="mainUserButtons" class="mainUserName">
 
                 <button value="hello" class="name">Refresh</button>
                 <button value="hello" class="name">Username</button>
             </div>
             <div class="mainUserDetails" id="mainWebsiteSection">
-                <a id="mainWebsiteLink"><h1 id="mainWebsiteTitle" class="mainSection2Title">Example.com</h1></a>
-	            <div id="passwords">
+                <a id="mainWebsiteLink">
+                    <h1 id="mainWebsiteTitle" class="mainSection2Title">Example.com</h1>
+                </a>
+                <div id="passwords">
                     <h4>Username</h4>
                     <input disabled id="passwordUsername" type="text" value="Username">
                     <h4>Password</h4>
@@ -29,16 +29,16 @@
                     <!--<h4>Website Address</h4>
                     <input type="text">-->
                     <div class="mainUserDetailsButtons">
-						<button id="passwordEdit" class="editButton">Edit</button>
+                        <button id="passwordEdit" class="editButton">Edit</button>
                         <button id="passwordDelete" class="deleteButton">Delete</button>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
 </div>
 <script src="scripts/main.js"></script>
-<?php 
+<?php
 include 'footer.php';
 ?>
