@@ -28,8 +28,11 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	else if(isset($_POST["update"]))
 	{
 		if($_POST["update"] == "password"){
-			$result[0] = json_encode(setPasswordList($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
-			$result[1] = 420;
+			$result[0] = json_encode(setPassword($conn,[0,$uid],$_POST["password_id"],$key,$_POST["username"],$_POST["password"]));
+		}
+		else {
+			$result[0] = $_GET["get"] . " command not found";
+			$result[1] = 403;
 		}
 	}
 	else if (isset($_POST["add"]))
@@ -54,7 +57,7 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 		}
 		else if ($_POST["delete"] == "password")
 		{
-			//$result[0] = addPassword($conn,[0,$uid],$_POST["password_id"]);
+			$result[0] = json_encode(deletePassword($conn,[0,$uid],$_POST["password_id"]));
 			$result[1] = 200;
 		}
 	}

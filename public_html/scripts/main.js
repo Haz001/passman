@@ -1,4 +1,5 @@
 var count = 0;
+document.getElementById("mainAddImport").addEventListener("click",addWebsite);
 function listWebsites(div) {
 	$.ajax({
 		type: "GET",
@@ -21,17 +22,14 @@ function listWebsites(div) {
 			while (div.children().length > 0) div.children()[0].remove();
 			$("#passwords").empty();
 			for (let i = 0; i < response.length; i++) {
-				let tmp = document.createElement("button");
-				tmp.innerText = response[i]["website_name"];
-				tmp.name = response[i]["web_address"];
-				tmp.value = response[i]["website_id"];
-				tmp.addEventListener("click", grabPasswords);
-				div.append(tmp);
+				let websiteButton = document.createElement("button");
+				websiteButton.innerText = response[i]["website_name"];
+				websiteButton.name = response[i]["web_address"];
+				websiteButton.value = response[i]["website_id"];
+				websiteButton.classList.add("websiteName");
+				websiteButton.addEventListener("click",grabPasswords);
+				div.append(websiteButton);
 			}
-			let tmp = document.createElement("newWebsite");
-			tmp.innerText = "Add Website";
-			tmp.name = "newWebsiteBtn";
-			tmp.addEventListener("click", addWebsite);
 		},
 	});
 }
@@ -75,7 +73,17 @@ function addWebsite(evt) {
 		document.body.appendChild(overlay);
 	}
 }
-function addPassword(evt) {
+function refreshPassword(evt) { 
+	let btn = evt.currentTarget;
+	let wbId = btn.name;
+	let allWebsiteButtons = $(".websiteName");
+	for (let i = 0;i < allWebsiteButtons.length;i++){
+		if(allWebsiteButtons[i].value == wbId){
+			allWebsiteButtons[i].click();
+		}
+	}
+}
+function addPassword(evt) { 
 	let btn = evt.currentTarget;
 	let wbId = btn.name;
 	console.log(wbId);
@@ -178,27 +186,62 @@ function editPasswords(evt) {
 	let btn = evt.currentTarget;
 	let tmp = $('[name="' + btn.name + '"]');
 	for (let i = 0; i < tmp.length; i++) {
-		let tPart = tmp[i].id.split(":");
-		let part = "";
-		if (tPart.length == 3) part = tPart[2];
-		if (part == "un" || part == "pw") tmp[i].disabled = false;
+		if (tmp[i].id == "passwordUsername" || tmp[i].id == "passwordPassword")
+			tmp[i].disabled = false;
 	}
 	btn.value = "Save";
 	btn.removeEventListener("click", editPasswords);
 	btn.addEventListener("click", updatePasswords);
 }
+function deletePasswords(evt) {
+	let btn = evt.currentTarget;
+	let tPart = btn.id.split(":");
+	let part = "";
+	if (tPart.length > 2)
+		part = tPart[1];
+	let passwordId = btn.name.split(":")[1];
+	$.ajax({
+		type: "POST",
+		url: "/scripts/ajax.php",
+		data: {
+			delete: "password",
+			password_id: passwordId
+		},
+		dataType: "JSON",
+		statusCode: {
+			444: function () {
+				console.log("cant find data");
+			},
+			500: function () {
+				console.log("PHP code error");
+			},
+			401: function () {
+				document.location = "/logout.php";
+			},
+		},
+		success: function (response) {
+			if(response["success"] == 1)
+			{
+				console.log("deleted");
+				$("#refreshBtn").click();
+			}
+
+		}
+	});
+	btn.removeEventListener("click", updatePasswords);
+}
 function updatePasswords(evt) {
-	let newUsername = "";
-	let newPassword = "";
+	let newUsername = document.getElementById("passwordUsername").value;
+	let newPassword = document.getElementById("passwordPassword").value;
+	
 	let btn = evt.currentTarget;
 	let tmp = $('[name="' + btn.name + '"]');
-	for (let i = 0; i < tmp.length; i++) {
-		let tPart = tmp[i].id.split(":");
-		let part = "";
-		if (tPart.length == 3) part = tPart[2];
-		if (part == "un") newUsername = tmp[i].value;
-		if (part == "pw") newPassword = tmp[i].value;
-	}
+	// for (let i = 0; i < tmp.length; i++) {
+	// 	if (tmp[i].id = "passwordUsername")
+	// 		newUsername = tmp[i].value;
+	// 	if (tmp[i].id = "passwordPassword")
+	// 		newPassword = tmp[i].value;
+	// }
 	let tPart = btn.id.split(":");
 	let part = "";
 	if (tPart.length > 2) part = tPart[1];
@@ -241,33 +284,12 @@ function updatePasswords(evt) {
 }
 function grabPasswords(evt) {
 	let btn = evt.currentTarget;
-	let div = $("#passwords");
-	console.log(btn);
 	$.ajax({
 		type: "GET",
 		url: "/scripts/ajax.php",
 		data: "get=passwords&website_id=" + btn.value,
 		dataType: "JSON",
 		statusCode: {
-			204: function () {
-				div.empty();
-				let tmp0 = document.createElement("h1");
-				tmp0.innerText = btn.innerText;
-				tmp0.name = btn.name;
-				tmp0.id = count;
-				count++;
-				let tmp1 = document.createElement("h2");
-				tmp1.innerText = btn.name;
-				div.append(tmp0);
-				div.append(tmp1);
-				let tmp4 = document.createElement("input");
-				tmp4.type = "button";
-				tmp4.id = btn.value + ":btn";
-				tmp4.name = btn.value;
-				tmp4.value = "add";
-				tmp4.addEventListener("click", addPassword);
-				div.append(tmp4);
-			},
 			444: function () {
 				console.log("cant find data");
 			},
@@ -279,61 +301,56 @@ function grabPasswords(evt) {
 			},
 		},
 		success: function (response) {
-			div.empty();
-			let tmp0 = document.createElement("h1");
-			tmp0.innerText = btn.innerText;
-			tmp0.name = btn.name;
-			tmp0.id = count;
-			count++;
-			let tmp1 = document.createElement("h2");
-			tmp1.innerText = btn.name;
-			div.append(tmp0);
-			div.append(tmp1);
-			if (typeof response !== "undefined") {
+			document.getElementById("mainWebsiteTitle").innerText = btn.innerText;
+			document.getElementById("mainWebsiteTitle").name = btn.name;
+			document.getElementById("mainWebsiteLink").href = btn.name;
+			let mainUserButtons = $("#mainUserButtons");
+			mainUserButtons.empty();
+
+			let refBtn = document.createElement("button");
+			refBtn.id = "refreshBtn";
+			refBtn.name = btn.value;
+			refBtn.classList.add("name");
+			refBtn.innerText = "Refresh";
+			refBtn.addEventListener("click", refreshPassword);
+			mainUserButtons.append(refBtn);
+			if(typeof response !== 'undefined'){
+				document.getElementById("passwordUsername").value = "";
+				document.getElementById("passwordUsername").name = "password_id:";
+				document.getElementById("passwordPassword").value = "";
+				document.getElementById("passwordPassword").name = "password_id:";
 				for (let i = 0; i < response.length; i++) {
+					let tmpButton = document.createElement("button");
 					tmpName = "password_id:" + response[i]["password_id"];
-					if (i > 0) {
-						let hr = document.createElement("hr");
-						div.append(hr);
-					}
-					let br = document.createElement("br");
-					let tmp0 = document.createElement("h1");
-					tmp0.innerText = "Account " + i.toString() + ":";
-					let tmp1 = document.createElement("input");
-					tmp1.type = "text";
-					tmp1.disabled = true;
-					tmp1.id = tmpName + ":un";
-					tmp1.name = tmpName;
-					tmp1.value = response[i]["username"];
-					let tmp2 = document.createElement("input");
-					tmp2.type = "text";
-					tmp2.disabled = true;
-					tmp2.id = tmpName + ":pw";
-					tmp2.name = tmpName;
-					tmp2.value = response[i]["password"];
-					let tmp3 = document.createElement("input");
-					tmp3.type = "button";
-					tmp3.id = tmpName + ":btn";
-					tmp3.name = tmpName;
-					tmp3.value = "Edit";
-					tmp3.addEventListener("click", editPasswords);
-					div.append(tmp0);
-					div.append(tmp1);
-					div.append(br);
-					div.append(tmp2);
-					div.append(br);
-					div.append(tmp3);
+					tmpButton.id = tmpName;
+					tmpButton.innerText = response[i]["username"];
+					tmpButton.addEventListener("click",function (){
+
+						document.getElementById("passwordUsername").value = response[i]["username"];
+						document.getElementById("passwordUsername").name = tmpName;
+						document.getElementById("passwordPassword").value = response[i]["password"];
+						document.getElementById("passwordPassword").name = tmpName;
+						let editBtn = document.getElementById("passwordEdit");
+						let deleteBtn = document.getElementById("passwordDelete");
+						editBtn.value = response[i]["password_id"];
+						deleteBtn.value = response[i]["password_id"];
+                        editBtn.name = tmpName;
+                        deleteBtn.name = tmpName;
+					 	editBtn.addEventListener("click", editPasswords);
+					 	deleteBtn.addEventListener("click", deletePasswords);
+					});
+					mainUserButtons.append(tmpButton);
 				}
 			} else {
 				console.log("No data");
 			}
-			let tmp4 = document.createElement("input");
-			tmp4.type = "button";
-			tmp4.id = btn.value + ":btn";
-			tmp4.name = btn.value;
-			tmp4.value = "add";
-			tmp4.addEventListener("click", addPassword);
-			div.append(tmp4);
+			let addBtn = document.createElement("button");
+			addBtn.id = btn.value + ":btn";
+			addBtn.name = btn.value;
+			addBtn.classList.add("name");
+			addBtn.innerText = "Add";
+			addBtn.addEventListener("click", addPassword);
+			mainUserButtons.append(addBtn);
 		},
 	});
 }
