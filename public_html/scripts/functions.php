@@ -160,12 +160,12 @@ function keyGet($conn,$password,$user_id){
 	return $masterkey;// returns master password
 }
 function keyGen($conn,$password,$user_id){
-	$sql = "update user set masterkey = ?, masteriv = ? where user_id = ?;"; 
-	$iv = generateIV();
-	$key  = hash("sha3-512", $password);
+	$iv = generateIV();// genorates iv
+	$key  = hash("sha3-512", $password);//genorates key
+	$based_iv = base64_encode($iv);//base64
 	$masterkey = encryptData($key,$password,$iv);
+	$sql = "update user set masterkey = ?, masteriv = ? where user_id = ?;"; 
 	$stmt = mysqli_stmt_init($conn);
-	$based_iv = base64_encode($iv);
 	mysqli_stmt_prepare($stmt,$sql);
 	mysqli_stmt_bind_param($stmt,"si",$masterkey,$based_iv,$user_id);
 	mysqli_stmt_execute($stmt);
