@@ -10,4 +10,10 @@
         <input required type="text" name="mobile" placeholder="Mobile Number">
         <button type="button" name="submit" id="submit">Update Details</button>
     </form>
+    <div>
+        <p id="output"></p>
+    </div>
+    <div class="ad">
+        <button type="button" id="delete">Delete Account</button>
+    </div>
 </div>

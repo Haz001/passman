@@ -9,9 +9,38 @@ $(document).ready(function () {
 			dataType: "json",
 			success: function (response) {
 				console.log(response);
+				if (response["result"] == "success") {
+					$("#output").html("Account Details Updated Successfully");
+				} else {
+					$("#output").html("There was an error");
+				}
 				refresh();
 			},
 		});
+	});
+	$("#delete").click(function (e) {
+		e.preventDefault();
+		if (
+			confirm(
+				"This will delete your entire account permanently, are you sure?"
+			)
+		) {
+			$.ajax({
+				type: "POST",
+				url: "scripts/manageAccount.php",
+				data: { request: "delete" },
+				dataType: "json",
+				success: function (response) {
+					if (response["result"] == "success") {
+						window.location.replace("logout.php");
+					} else {
+						$("#output").html(
+							"There was an error, try again later"
+						);
+					}
+				},
+			});
+		}
 	});
 });
 function getDetails() {

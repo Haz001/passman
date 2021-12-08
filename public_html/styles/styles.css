@@ -531,3 +531,7 @@ div.overlay > div.btn {
 div.overlay > div.btn > input {
 	width: fit-content;
 }
+
+.ad button {
+	background-color: red;
+}
