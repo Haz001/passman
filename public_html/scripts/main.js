@@ -20,7 +20,7 @@ function listWebsites(div) {
 		},
 		success: function (response) {
 			while (div.children().length > 0) div.children()[0].remove();
-			$("#passwords").empty();
+			//$("#passwords").empty();
 			for (let i = 0; i < response.length; i++) {
 				let websiteButton = document.createElement("button");
 				websiteButton.innerText = response[i]["website_name"];
