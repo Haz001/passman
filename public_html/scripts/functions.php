@@ -151,7 +151,7 @@ function keyGet($conn,$password,$user_id){
 	$sql = "select masterkey, masteriv from user where user_id = ?;"; //sql statement to get masterkey and masteriv
 	$stmt = mysqli_stmt_init($conn);// to make statement variable
 	mysqli_stmt_prepare($stmt,$sql);// to prepare statment with sql line
-	mysqli_stmt_bind_param($stmt,"si",$user_id);// binds the parameter
+	mysqli_stmt_bind_param($stmt,"i",$user_id);// binds the parameter
 	mysqli_stmt_execute($stmt);// executes sql
 	$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
 	$row = mysqli_fetch_assoc($stmtresult);  // creates an associative array of the sql result
@@ -167,7 +167,7 @@ function keyGen($conn,$password,$user_id){
 	$sql = "update user set masterkey = ?, masteriv = ? where user_id = ?;"; 
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt,$sql);
-	mysqli_stmt_bind_param($stmt,"si",$masterkey,$based_iv,$user_id);
+	mysqli_stmt_bind_param($stmt,"ssi",$masterkey,$based_iv,$user_id);
 	mysqli_stmt_execute($stmt);
 	return keyGet($conn,$password,$user_id);	
 }
