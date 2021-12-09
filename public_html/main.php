@@ -1,3 +1,4 @@
+<?php require_once "header.php"; ?>
 <div class="mainPage">
     <div class="mainBody">
         <div class="mainSection1">
