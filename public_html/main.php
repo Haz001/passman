@@ -37,8 +37,9 @@
             </div>
         </div>
     </div>
+	<div class="status"></div>
 </div>
-<script src="scripts/main.js"></script>
+<script src="scripts/main2.js"></script>
 <?php
 include 'footer.php';
 ?>
