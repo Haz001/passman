@@ -32,9 +32,24 @@ if (isset($_SESSION["user_id"])) {
             echo json_encode(array("result" => "success"));
             exit();
         } else {
-            echo json_encode(array("result" => mysqli_stmt_error($stmt)));
+            echo json_encode(array("result" => "error"));
             exit();
         }
+    } elseif ($_POST["request"] == "delete") {
+        $sql = "DELETE FROM `user` WHERE `user_id` = ?";
+        $stmt = mysqli_stmt_init($conn);
+        mysqli_stmt_prepare($stmt, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $_SESSION["user_id"]);
+        if (mysqli_stmt_execute($stmt)) {
+            echo json_encode(array("result" => "success"));
+            exit();
+        } else {
+            echo json_encode(array("result" => "error"));
+            exit();
+        }
+    } else {
+        echo json_encode(array("result" => "error", "error" => "selection not understood"));
+        exit();
     }
 } else {
     echo json_encode("error1");

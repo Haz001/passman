@@ -2,6 +2,7 @@
 	padding: 0;
 	margin: 0;
 	font-family: sans-serif;
+	text-decoration: none;
 }
 
 #error {
@@ -89,6 +90,10 @@ button#bugSend:hover {
 
 .navbar {
 	background-color: #092834;
+}
+
+.navbar a h1 {
+	color: white;
 }
 
 #loginIcon {
@@ -351,17 +356,14 @@ footer a {
 }
 
 .mainPage {
-	height: 100%;
-	width: 80%;
+	min-height: 100%;
 	margin: auto;
 	border-radius: 5px;
 }
 
 .mainBody {
 	display: flex;
-	flex-direction: row;
-	margin-top: 5vh;
-	height: 65vh;
+	flex-direction: column;
 }
 
 .verticalLine {
@@ -378,7 +380,7 @@ footer a {
 
 #mainSection2 {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: space-evenly;
 }
 
@@ -401,11 +403,11 @@ footer a {
 
 .mainUserDetailsButtons {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	margin: auto;
 	width: 40vh;
+	justify-content: space-around;
 }
-
 .editButton {
 	background-color: green;
 }
@@ -451,15 +453,6 @@ footer a {
 	width: 35%;
 	height: 9%;
 	margin: auto;
-}
-
-.mainAddImport {
-	border-radius: 25px;
-	width: 25%;
-	height: 7%;
-	margin-left: 37%;
-	margin-top: 10px;
-	margin-bottom: 35px;
 }
 
 .mainSection2 hr {
@@ -537,4 +530,7 @@ div.overlay > div.btn > input {
 	bottom: 0;
 	left: 0;
 	display: block;
+}
+.ad button {
+	background-color: red;
 }

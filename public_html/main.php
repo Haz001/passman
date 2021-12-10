@@ -1,3 +1,9 @@
+<?php require_once "header.php";
+if (!isset($_SESSION["user_id"])) {
+    header("location: index.php");
+    exit;
+} ?>
+
 <div class="mainPage">
     <div class="mainBody">
         <div class="mainSection1">

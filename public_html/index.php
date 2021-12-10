@@ -2,8 +2,9 @@
 if (!isset($_SESSION["user_id"])) {
 	header("location: login.php");
 	exit();
-}else{
-	require_once "main.php";
+} else {
+	header("location: main.php");
+	exit();
 }
 ?>
 <!--<div>
@@ -15,5 +16,3 @@ if (!isset($_SESSION["user_id"])) {
 		<li><a href="signup.php">Signup</a></li>
 	</ul>
 </form>-->
-</body>
-</html>
