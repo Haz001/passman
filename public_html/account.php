@@ -1,4 +1,9 @@
-<?php require_once "header.php"; ?>
+<?php require_once "header.php";
+if (!isset($_SESSION["user_id"])) {
+    header("location: index.php");
+    exit;
+}
+?>
 <script src="scripts/accountScript.js"></script>
 <div class="accountDetails">
     <form class="inline-form" action="scripts/accountScript.php" method="post" id="user_details">

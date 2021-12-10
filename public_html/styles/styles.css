@@ -2,6 +2,7 @@
 	padding: 0;
 	margin: 0;
 	font-family: sans-serif;
+	text-decoration: none;
 }
 
 #error {
@@ -89,6 +90,10 @@ button#bugSend:hover {
 
 .navbar {
 	background-color: #092834;
+}
+
+.navbar a h1 {
+	color: white;
 }
 
 #loginIcon {
