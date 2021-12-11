@@ -193,16 +193,16 @@ function keyGen($conn, $password, $user_id)
  * `[4,		"Error caught by try:\n <error>, DBMS rolled back"]`\
  * `[98,	"Error caught by try:\n <error>, Unknown DBMS state"]`\
  * `[98,	"Unknown error, Unknown DBMS state"]`\
- * `[99,	"Catastrophic Failure, DBMS couldn't roll back"]`
+ * `[99,	"Catastrophic Failure, Unknown DBMS stat"]`
  */
 function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
-
 	try{
 		mysqli_autocommit($conn,FALSE);// stops rollbacks
 		
 		mysqli_commit($conn);
 	}catch (Exception $e){
 		return [98, "Error caught by try:\n ".$e.", Unknown DBMS state"];
+		die("Can't change passwrod safely");
 	}
 	try{
 		$resultFromKeyChange = keyPasswordChange($conn,$user_id,$oldPassword,$newPassword); $pswdHash = password_hash($newPassword, PASSWORD_DEFAULT); //hashes the users password before it is stored
@@ -222,7 +222,7 @@ function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
 				if(password_verify($newPassword,$row["master_password"])){
 					mysqli_commit($conn);
 					mysqli_autocommit($conn,TRUE);
-					return [0,"Commited"];
+					return [0,"Success"];
 				}else{
 
 					mysqli_rollback($conn);
@@ -238,7 +238,7 @@ function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
 		}else{
 			mysqli_rollback($conn);
 			mysqli_autocommit($conn,TRUE);
-			return [3,"Failure to change key, DBMS rolled back"];
+			return [3,"Failure to change key, DBMS rolled BACK"];
 		}
 	}catch (Exception $e){
 		try{
@@ -249,6 +249,7 @@ function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
 			return [98, "Error caught by try:\n ".$ee."\n\nAND\n\n".$e.", Unknown DBMS state"];
 		}
 	}
+ 	return [99, "Catastrophic Failure, Unknown DBMS stat"];
 }
 /**
  * This updates the key to new password\
