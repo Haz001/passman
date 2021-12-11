@@ -194,7 +194,6 @@ function keyGen($conn, $password, $user_id)
  * `[98,	"Error caught by try:\n <error>, Unknown DBMS state"]`\
  * `[98,	"Unknown error, Unknown DBMS state"]`\
  * `[99,	"Catastrophic Failure, DBMS couldn't roll back"]`
- * 
  */
 function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
 
@@ -220,9 +219,17 @@ function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
 			mysqli_stmt_execute($stmt); //executes sql query
 			$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
 			if ($row = mysqli_fetch_assoc($stmtresult)) {  // creates an associative array of the sql result
-				password_verify($newPassword,$row["master_password"]);
-				mysqli_autocommit($conn,TRUE);
-				return [0,"Commited"];
+				if(password_verify($newPassword,$row["master_password"])){
+					mysqli_commit($conn);
+					mysqli_autocommit($conn,TRUE);
+					return [0,"Commited"];
+				}else{
+
+					mysqli_rollback($conn);
+					mysqli_autocommit($conn,TRUE);
+					return [2,"Failure to change Passwrod, DBMS rolled back"];
+				}
+
 			} else {
 				mysqli_rollback($conn);
 				mysqli_autocommit($conn,TRUE);
