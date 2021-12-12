@@ -494,6 +494,7 @@ function getPasswordList($conn, $user_identifier, $website_id, $key)
 	}
 	return json_encode($result);
 }
+ 
 
 function response($response, $error = "none")
 {

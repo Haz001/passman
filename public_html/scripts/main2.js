@@ -88,6 +88,11 @@ function grabPasswords(websiteId,callFunc){
 		dataType: "JSON",
 		success: function (data,textstatus,jqxhr) {
 			if(textstatus == "success"){ // checks if success
+				data = data.sort((a,b)=> {
+					var a1 = a["username"].toLowerCase();
+					var b1 = b["username"].toLowerCase();
+					return a1<b1 ?-1:a1> b1? 1 :0;
+				});
 				$("#status").text("Success: Passwords");// tells user it is requesting website
 				passwords = data;//sets global variable to list websites
 				if(typeof callFunc == "function"){
