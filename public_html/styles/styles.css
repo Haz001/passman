@@ -524,12 +524,17 @@ div.overlay > div.btn {
 div.overlay > div.btn > input {
 	width: fit-content;
 }
-
 .status{
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	display: block;
+	background: #092834;
+	color: white;
+	border-color: #092834;
+	border-style: solid;
+	border-width: 0.5rem;
+	border-top-right-radius: 0.5rem;
 }
 .ad button {
 	background-color: red;

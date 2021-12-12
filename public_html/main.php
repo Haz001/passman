@@ -10,6 +10,7 @@ if (!isset($_SESSION["user_id"])) {
             <h1 class="mainSection1Title">Website Name</h1>
             <!--<input type="search" class="mainSearch" value="Search">-->
             <button id="mainAddImport" class="mainAddImport">Add</button>
+			<a onclick="refresh()" href="#">Refresh</a>
             <div id="list">
                 <button class="websiteName">Amazon</button>
             </div>
@@ -43,7 +44,7 @@ if (!isset($_SESSION["user_id"])) {
             </div>
         </div>
     </div>
-	<div class="status"></div>
+	<div id="status" class="status"></div>
 </div>
 <script src="scripts/main2.js"></script>
 <?php

@@ -72,6 +72,6 @@ if (isset($_SESSION["user_id"]) && !isset($_GET["auth_token"])) {
 	$ar = array("1" => "hello");
 	echo json_encode($ar);
 } else {
-	echo "To use Ajax please login with is required";
+	echo "To use Ajax login with is required";
 	http_response_code(401);
 }
