@@ -5,8 +5,8 @@
     <label for="dark_mode">Dark Mode:</label>
     <select name="dark_mode" id="dark_mode">
         <option value="">Select Option</option>
-        <option value="1">On</option>
-        <option value="0">Off</option>
+        <option value="on">On</option>
+        <option value="off">Off</option>
     </select>
     <label for="preferred_language">Language:</label>
     <select name="preferred_language" id="preferred_language">

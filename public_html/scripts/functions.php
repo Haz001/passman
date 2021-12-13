@@ -4,7 +4,7 @@ function emptyFields($toSearch): bool
 {
 	$rt = true;
 	foreach ($toSearch as $value) { //Searches each value in $toSearch and returns false if any empty values are found
-		if (empty($value) && $value != 0) {
+		if (empty($value)) {
 			$rt = false;
 		}
 	}

@@ -27,7 +27,7 @@ $(document).ready(function () {
 		data: { request: "getSettings" },
 		dataType: "json",
 		success: function (response) {
-			if (response["dark_mode"] == 1) {
+			if (response["dark_mode"] == "on") {
 				$("body").css("color", "white");
 				$("body").css("background-color", "#121212");
 			}

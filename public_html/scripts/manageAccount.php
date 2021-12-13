@@ -50,6 +50,11 @@ if (isset($_SESSION["user_id"])) {
     } elseif ($_POST["request"] == "getSettings") {
         $result = getSettings($conn);
         if ($result != false) {
+            if ($result["dark_mode"] == 1) {
+                $result["dark_mode"] = "on";
+            } else {
+                $result["dark_mode"] = "off";
+            }
             echo json_encode($result);
             exit();
         } else {
@@ -58,7 +63,13 @@ if (isset($_SESSION["user_id"])) {
             mysqli_stmt_prepare($stmt, $sql);
             mysqli_stmt_bind_param($stmt, "i", $_SESSION["user_id"]);
             mysqli_stmt_execute($stmt);
-            json_encode(getSettings($conn));
+            $result = getSettings($conn);
+            if ($result["dark_mode"] == 1) {
+                $result["dark_mode"] = "on";
+            } else {
+                $result["dark_mode"] = "off";
+            }
+            json_encode($result);
             exit();
         }
     } elseif ($_POST["request"] == "updateSettings") {
@@ -66,6 +77,11 @@ if (isset($_SESSION["user_id"])) {
         if (!emptyFields($pD)) {
             echo json_encode(array("result" => "error", "error" => "ef"));
             exit();
+        }
+        if ($pD["dark_mode"] == "on") {
+            $pD["dark_mode"] = 1;
+        } else {
+            $pD["dark_mode"] = 0;
         }
         $sql = "UPDATE `user_preference` SET `dark_mode` = ?,  `preferred_language` = ?, `colour_scheme` = ? WHERE `user_id` = ?";
         $stmt = mysqli_stmt_init($conn);
