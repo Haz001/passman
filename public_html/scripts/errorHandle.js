@@ -21,6 +21,18 @@ $(document).ready(function () {
 	$("[class='section2']").blur(function (e) {
 		$("[class='accountDrop']").hide();
 	});
+	$.ajax({
+		type: "POST",
+		url: "scripts/manageAccount.php",
+		data: { request: "getSettings" },
+		dataType: "json",
+		success: function (response) {
+			if (response["dark_mode"] == 1) {
+				$("body").css("color", "white");
+				$("body").css("background-color", "#121212");
+			}
+		},
+	});
 });
 
 function errorMsg($_GET) {

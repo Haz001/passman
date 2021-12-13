@@ -5,6 +5,7 @@ if (!isset($_SESSION["user_id"])) {
 }
 ?>
 <script src="scripts/accountScript.js"></script>
+<h1 style="text-align: center;padding: 0.5em;">Account Details</h1>
 <div class="accountDetails">
     <form class="inline-form" action="scripts/accountScript.php" method="post" id="user_details">
         <input required type="text" name="first_name" placeholder="First Name">

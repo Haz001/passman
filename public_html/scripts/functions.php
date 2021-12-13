@@ -4,7 +4,7 @@ function emptyFields($toSearch): bool
 {
 	$rt = true;
 	foreach ($toSearch as $value) { //Searches each value in $toSearch and returns false if any empty values are found
-		if (empty($value)) {
+		if (empty($value) && $value != 0) {
 			$rt = false;
 		}
 	}
@@ -195,61 +195,62 @@ function keyGen($conn, $password, $user_id)
  * `[98,	"Unknown error, Unknown DBMS state"]`\
  * `[99,	"Catastrophic Failure, Unknown DBMS stat"]`
  */
-function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
-	try{
-		mysqli_autocommit($conn,FALSE);// stops rollbacks
-		
+function changeUserPassword($conn, $oldPassword, $newPassword)
+{
+	try {
+		mysqli_autocommit($conn, FALSE); // stops rollbacks
+
 		mysqli_commit($conn);
-	}catch (Exception $e){
-		return [98, "Error caught by try:\n ".$e.", Unknown DBMS state"];
+	} catch (Exception $e) {
+		return [98, "Error caught by try:\n " . $e . ", Unknown DBMS state"];
 		die("Can't change passwrod safely");
 	}
-	try{
-		$resultFromKeyChange = keyPasswordChange($conn,$user_id,$oldPassword,$newPassword); $pswdHash = password_hash($newPassword, PASSWORD_DEFAULT); //hashes the users password before it is stored
-		if($resultFromKeyChange){
+	try {
+		$resultFromKeyChange = keyPasswordChange($conn, $_SESSION["user_id"], $oldPassword, $newPassword);
+		$pswdHash = password_hash($newPassword, PASSWORD_DEFAULT); //hashes the users password before it is stored
+		if ($resultFromKeyChange) {
 			$sql = "update user set master_password = ? where user_id = ?;";
 			$stmt = mysqli_stmt_init($conn);
 			mysqli_stmt_prepare($stmt, $sql);
-			mysqli_stmt_bind_param($stmt, "si", $pswdHash, $user_id);
+			mysqli_stmt_bind_param($stmt, "si", $pswdHash, $_SESSION["user_id"]);
 			mysqli_stmt_execute($stmt);
 			$sql = "SELECT `master_password` FROM user WHERE user_id =  ?;";
 			$stmt = mysqli_stmt_init($conn);
 			mysqli_stmt_prepare($stmt, $sql);
-			mysqli_stmt_bind_param($stmt, "i",$user_id);
+			mysqli_stmt_bind_param($stmt, "i", $_SESSION["user_id"]);
 			mysqli_stmt_execute($stmt); //executes sql query
 			$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
 			if ($row = mysqli_fetch_assoc($stmtresult)) {  // creates an associative array of the sql result
-				if(password_verify($newPassword,$row["master_password"])){
+				if (password_verify($newPassword, $row["master_password"])) {
 					mysqli_commit($conn);
-					mysqli_autocommit($conn,TRUE);
-					return [0,"Success"];
-				}else{
+					mysqli_autocommit($conn, TRUE);
+					return [0, "Success"];
+				} else {
 
 					mysqli_rollback($conn);
-					mysqli_autocommit($conn,TRUE);
-					return [2,"Failure to change Passwrod, DBMS rolled back"];
+					mysqli_autocommit($conn, TRUE);
+					return [2, "Failure to change Passwrod, DBMS rolled back"];
 				}
-
 			} else {
 				mysqli_rollback($conn);
-				mysqli_autocommit($conn,TRUE);
-				return [2,"Failure to change Passwrod, DBMS rolled back"];
+				mysqli_autocommit($conn, TRUE);
+				return [2, "Failure to change Passwrod, DBMS rolled back"];
 			}
-		}else{
+		} else {
 			mysqli_rollback($conn);
-			mysqli_autocommit($conn,TRUE);
-			return [3,"Failure to change key, DBMS rolled BACK"];
+			mysqli_autocommit($conn, TRUE);
+			return [3, "Failure to change key, DBMS rolled BACK"];
 		}
-	}catch (Exception $e){
-		try{
+	} catch (Exception $e) {
+		try {
 			mysqli_rollback($conn);
-			mysqli_autocommit($conn,TRUE);
-			return [4,"Error Caught By Try: ".$e.", DBMS rolled back"];
-		}catch (Exception $ee){
-			return [98, "Error caught by try:\n ".$ee."\n\nAND\n\n".$e.", Unknown DBMS state"];
+			mysqli_autocommit($conn, TRUE);
+			return [4, "Error Caught By Try: " . $e . ", DBMS rolled back"];
+		} catch (Exception $ee) {
+			return [98, "Error caught by try:\n " . $ee . "\n\nAND\n\n" . $e . ", Unknown DBMS state"];
 		}
 	}
- 	return [99, "Catastrophic Failure, Unknown DBMS stat"];
+	return [99, "Catastrophic Failure, Unknown DBMS stat"];
 }
 /**
  * This updates the key to new password\
@@ -269,8 +270,9 @@ function changeUserPassword($conn,$user_id,$oldPassword,$newPassword){
  *     False - attempt failed, please rollback\
  *     True  - attempt passed, commit
  */
-function keyPasswordChange($conn, $user_id,$oldPassword,$newPassword){
-	try{
+function keyPasswordChange($conn, $user_id, $oldPassword, $newPassword)
+{
+	try {
 		$iv = generateIV(); // genorates iv
 		$key = keyGet($conn, $oldPassword, $user_id);
 		$based_iv = base64_encode($iv); //base64
@@ -280,13 +282,12 @@ function keyPasswordChange($conn, $user_id,$oldPassword,$newPassword){
 		mysqli_stmt_prepare($stmt, $sql);
 		mysqli_stmt_bind_param($stmt, "ssi", $masterkey, $based_iv, $user_id);
 		mysqli_stmt_execute($stmt);
-		if($key == keyGet($conn,$user_id,$newPassword)){
+		if ($key == keyGet($conn, $user_id, $newPassword)) {
 			return TRUE;
-		}else{
+		} else {
 			return FALSE;
 		}
-	}
-	catch (ErrorException $e){
+	} catch (ErrorException $e) {
 		return FALSE;
 	}
 }
@@ -494,7 +495,7 @@ function getPasswordList($conn, $user_identifier, $website_id, $key)
 	}
 	return json_encode($result);
 }
- 
+
 
 function response($response, $error = "none")
 {

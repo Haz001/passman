@@ -27,7 +27,7 @@ session_start(["cookie_domain" => "passman.harrysy.red"]);
 				<img class="headerImage" src="/img/profilePicture.jpeg" alt="profile pic">
 				<div class="accountDrop">
 					<a href="account.php">Account</a>
-					<a href="">Settings</a>
+					<a href="settings.php">Settings</a>
 					<a href="logout.php">Logout</a>
 				</div>
 			</div>

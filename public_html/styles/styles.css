@@ -36,6 +36,45 @@
 	width: 50%;
 	margin: auto;
 }
+/*Inline-Form*/
+.inline-form {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	flex-direction: column;
+}
+.inline-form input {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 80%;
+}
+.inline-form button {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	color: black;
+}
+.inline-form div {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	flex-direction: column;
+}
+.inline-form select {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 80%;
+}
+/*Inline-Form*/
 
 input {
 	width: 80%;
@@ -524,7 +563,7 @@ div.overlay > div.btn {
 div.overlay > div.btn > input {
 	width: fit-content;
 }
-.status{
+.status {
 	position: fixed;
 	bottom: 0;
 	left: 0;

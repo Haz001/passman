@@ -47,10 +47,57 @@ if (isset($_SESSION["user_id"])) {
             echo json_encode(array("result" => "error"));
             exit();
         }
+    } elseif ($_POST["request"] == "getSettings") {
+        $result = getSettings($conn);
+        if ($result != false) {
+            echo json_encode($result);
+            exit();
+        } else {
+            $sql = "INSERT INTO `user_preference` (`user_id`) VALUES(?)";
+            $stmt = mysqli_stmt_init($conn);
+            mysqli_stmt_prepare($stmt, $sql);
+            mysqli_stmt_bind_param($stmt, "i", $_SESSION["user_id"]);
+            mysqli_stmt_execute($stmt);
+            json_encode(getSettings($conn));
+            exit();
+        }
+    } elseif ($_POST["request"] == "updateSettings") {
+        $pD = array_map('htmlentities', $_POST);
+        if (!emptyFields($pD)) {
+            echo json_encode(array("result" => "error", "error" => "ef"));
+            exit();
+        }
+        $sql = "UPDATE `user_preference` SET `dark_mode` = ?,  `preferred_language` = ?, `colour_scheme` = ? WHERE `user_id` = ?";
+        $stmt = mysqli_stmt_init($conn);
+        mysqli_stmt_prepare($stmt, $sql);
+        mysqli_stmt_bind_param($stmt, "issi", $pD["dark_mode"], $pD["preferred_language"], $pD["colour_scheme"], $_SESSION["user_id"]);
+        if (mysqli_stmt_execute($stmt)) {
+            echo json_encode(array("result" => "success"));
+            exit();
+        } else {
+            echo json_encode(array("result" => mysqli_stmt_error($stmt)));
+            exit();
+        }
     } else {
         echo json_encode(array("result" => "error", "error" => "selection not understood"));
         exit();
     }
 } else {
     echo json_encode("error1");
+}
+
+
+function getSettings($conn)
+{
+    $sql = "SELECT `dark_mode`, `preferred_language`, `colour_scheme` FROM `user_preference` WHERE `user_id` = ?";
+    $stmt = mysqli_stmt_init($conn);
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $_SESSION["user_id"]);
+    mysqli_stmt_execute($stmt);
+    $stmtresult = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($stmtresult)) {
+        return $row;
+    } else {
+        return false;
+    }
 }
