@@ -382,7 +382,7 @@ function getWebsiteList($conn, $user_identifier)
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
+	$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ? order by saved_website.website_name";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
@@ -546,7 +546,7 @@ function deleteWebsite($conn, $user_identifier, $website_id)
 	//$sql = "SELECT website_password.* from website_password JOIN (SELECT website_id FROM user JOIN saved_website ON user.user_id = saved_website.user_id where user.user_id = ?) as websites on website_password.website_id = websites.website_id where website_password.website_id = ?";
 	//$sql = "UPDATE website_password as tb set tb.username = ?, tb.password = ?, tb.iv = ? where tb.password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
 	//$sql = "DELETE FROM website_password where password_id = ? AND password_id in (select website_password.password_id from user inner join saved_website on user.user_id = saved_website.user_id inner join website_password on saved_website.website_id = website_password.website_id WHERE user.user_id = ?) ";
-	$sql = "DELETE FROM website_password as wp where wp.website_id = ? AND wp.user_id = ?;";
+	$sql = "DELETE FROM saved_website where website_id = ? AND user_id = ?";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
 	mysqli_stmt_bind_param($stmt, "ii", $website_id, $user_id);

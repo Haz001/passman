@@ -20,9 +20,13 @@ if (!isset($_SESSION["user_id"])) {
         </div>
         <div class="mainSection2" id="mainSection2">
             <div id="mainUserButtons" class="mainUserName">
-
-                <button value="hello" class="name">Refresh</button>
-                <button value="hello" class="name">Username</button>
+				<div id="accounts">
+					<button value="hello" class="name">Username</button>
+				</div>
+				<div style="width:100%;display:flex;">
+					<button onclick="makeOverlayPassword()" class="name">add</button>
+					<button onclick="refresh()" class="name">Refresh</button>
+				</div>
             </div>
             <div class="mainUserDetails" id="mainWebsiteSection">
                 <a id="mainWebsiteLink">

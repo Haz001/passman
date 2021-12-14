@@ -5,13 +5,28 @@ var websites = [];
 var passwords = [];
 var currentWebsite = {"website_id":0};
 var currentPasswordId = 0;
+
+const getRandomID = (length) => {
+	let text = '';
+	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	do
+	{
+		for (let i = 0; i < length; i++){
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+	}
+	while (document.getElementById(text) != null);
+	return text;
+}
+
 /**
  * This is the on ready function
  */
 $(function () {
 	displayWebsites();
 	$("#mainAddImport").on("click", function () {
-		addWebsite();
+		makeOverlayWebsite();
+		
 	});	
 	$("#passwordEdit").on("click", function () {
 		editPasswords();
@@ -20,6 +35,9 @@ $(function () {
 		deletePasswords();
 	});	
 });
+function refresh(){
+	displayWebsites(true);
+}
 function statusUpdate(title,status){
 	let titleTextNode = document.createTextNode("Function: "+title);
 	let statusTextNode = document.createTextNode("Stauts: "+status);
@@ -43,7 +61,7 @@ function grabWebsites(callFunc) {
 			if(textstatus == "success"){ // checks if success
 				$("#status").text("Success: Websites");// tells user it is requesting website
 				websites = data;//sets global variable to list websites
-				if(typeof callFunc == "function"){
+				if((data.length > 0) && (typeof callFunc == "function")){
 					callFunc();
 				}
 			}
@@ -51,7 +69,7 @@ function grabWebsites(callFunc) {
 	});
 }
 /**
- * This function genorates and displays buttons of websits in #list
+ * This function genorates html and displays buttons of websits in #list
  * @param {boolean} forceUpdate - Forces an update of website list
  */
 function displayWebsites(forceUpdate) {
@@ -69,6 +87,14 @@ function displayWebsites(forceUpdate) {
 			});
 			websiteBtn.innerText = w[i]["website_name"];// grabs website name
 			websiteBtn.name = w[i]["web_address"];// grabs website address, css displays this under name
+			let deleteBtn = document.createElement("a");
+			deleteBtn.style="float:right;display:block;";
+			deleteBtn.addEventListener("click",function () {
+				if(confirm("Delete website:\nName:\t\t\""+w[i]["website_name"]+"\"\nAddress:\t\""+w[i]["website_address"]+"\""))
+					deleteWebsite(w[i]["website_id"]);
+			  });
+			deleteBtn.innerText = "🗑️";
+			websiteBtn.appendChild(deleteBtn);
 			list.append(websiteBtn);
 			if(((i == 0)&&(currentWebsite["website_id"] == 0))||(currentWebsite["website_id"] == w[i]["website_id"])){
 				websiteBtn.click();
@@ -76,6 +102,11 @@ function displayWebsites(forceUpdate) {
 		}
 	}
 }
+/**
+ * This function grabs the passwords from database
+ * @param {*} websiteId 
+ * @param {*} callFunc 
+ */
 function grabPasswords(websiteId,callFunc){
 	statusUpdate("grabPasswords","Requesting Password")
 	$.ajax({
@@ -102,13 +133,16 @@ function grabPasswords(websiteId,callFunc){
 		}
 	});
 }
-
+/**
+ * This function genortes buttons for account of websites
+ * @param {*} websiteId 
+ * @param {*} forceUpdate 
+ */
 function displayAccounts(websiteId,forceUpdate) {
 	editPasswords(true);//resets edit button
 	$("#passwordUsername").val("");
 	$("#passwordPassword").val("");
-	let list = $("#mainUserButtons");
-	currentPasswordId = 0;
+	let list = $("#accounts");
 	$("#mainWebsiteTitle").text(currentWebsite["website_name"]);
 	list.empty();
 	if(((typeof forceUpdate == "boolean")&&(forceUpdate))){
@@ -134,9 +168,7 @@ function displayAccounts(websiteId,forceUpdate) {
  * @param {boolean} forceUpdate - Forces an update of website list
  */
 function displayPassword(passwordId) {
-		
 	let p = passwords;
-
 	editPasswords(true);//resets edit button
 	for (let i = 0; i < p.length;i++){
 		if(p[i]["password_id"] == passwordId){
@@ -195,27 +227,17 @@ function editPasswords(reset = false)
 		}
 	}
 }
-function addWebsite(){
-	$("#passwordEdit").on("click", function () {
-		editPasswords();
-	});	
-}
-function addPasswords(step2 = false,website_id = null,username = 0,password = 0){
-	if(step2 == false){
-		if (document.getElementById("mkPwOverlay") == null) {
-			if(website_id == null){
-				website_id = currentWebsite["website_id"];
-			}
+function makeOverlayPassword(){
+			let website_id = currentWebsite["website_id"];
 			let overlay = document.createElement("div");
 			overlay.classList.add("overlay");
 			overlay.id = "mkPwOverlay";
 			let span = document.createElement("span");
-			span.innerText = "Add a new password:";
+			span.innerText = "Add a new password to"+currentWebsite["website_name"]+":";
 			let pwUsername = document.createElement("input");
 			pwUsername.type = "text";
 			pwUsername.placeholder = "Username";
 			pwUsername.name = "pwUsername";
-			pwUsername.value = username;
 			pwUsername.id = overlay.id+">username";
 			let pwPassword = document.createElement("input");
 			pwPassword.type = "password";
@@ -226,7 +248,9 @@ function addPasswords(step2 = false,website_id = null,username = 0,password = 0)
 			wbAddBtn.type = "button";
 			wbAddBtn.value = "Add Password";
 			wbAddBtn.addEventListener("click", function (){
-				addPasswords(true,website_id,pwUsername.value,pwPassword.value)
+				addPasswords(website_id,pwUsername.value,pwPassword.value);
+				document.getElementById("mkPwOverlay").remove();
+
 			});
 			let wbCancBtn = document.createElement("input");
 			wbCancBtn.type = "button";
@@ -240,15 +264,68 @@ function addPasswords(step2 = false,website_id = null,username = 0,password = 0)
 			btnHolder.appendChild(wbCancBtn);
 			btnHolder.appendChild(wbAddBtn);
 			overlay.appendChild(span);
-
 			overlay.appendChild(pwUsername);
 			overlay.appendChild(pwPassword);
-
 			overlay.appendChild(btnHolder);
 			document.body.appendChild(overlay);
-		}
-	}
-	else{
+}
+
+function makeOverlayWebsite(){
+			let overlay = document.createElement("div");
+			overlay.classList.add("overlay");
+			overlay.id = "mkWbOverlay";
+			let span = document.createElement("span");
+			span.innerText = "Add a new website:";
+			let wbName = document.createElement("input");
+			wbName.type = "text";
+			wbName.placeholder = "Name";
+			wbName.name = "wbName";
+			wbName.id = overlay.id+">username";
+			let wbAddress = document.createElement("input");
+			wbAddress.type = "text";
+			wbAddress.placeholder = "Address";
+			wbAddress.name = "wbAddress";
+			wbName.id = overlay.id+">password";
+			let wbAddBtn = document.createElement("input");
+			wbAddBtn.type = "button";
+			wbAddBtn.value = "Add Password";
+			wbAddBtn.addEventListener("click", function (){
+				addWebsite(wbName.value,wbAddress.value);
+				document.getElementById("mkWbOverlay").remove();
+			});
+			let wbCancBtn = document.createElement("input");
+			wbCancBtn.type = "button";
+			wbCancBtn.value = "Cancel";
+			wbCancBtn.name = "pwCancBtn";
+			wbCancBtn.addEventListener("click", function () {
+				document.getElementById("mkWbOverlay").remove();
+			});
+			let btnHolder = document.createElement("div");
+			btnHolder.classList.add("btn");
+			btnHolder.appendChild(wbCancBtn);
+			btnHolder.appendChild(wbAddBtn);
+			overlay.appendChild(span);
+			overlay.appendChild(wbName);
+			overlay.appendChild(wbAddress);
+			overlay.appendChild(btnHolder);
+			document.body.appendChild(overlay);
+}
+function addWebsite(name,address){
+	$.post(
+		"/scripts/ajax.php",
+		{
+			add: "website",
+			website_name: name,
+			website_address: address
+		},
+		function (data, textStatus, jqXHR) {
+			if (data["result"] == 1)
+				displayWebsites(true);
+		},
+		"json"
+	);
+}
+function addPasswords(website_id,username,password){
 	$.post(
 		"/scripts/ajax.php",
 		{
@@ -259,11 +336,10 @@ function addPasswords(step2 = false,website_id = null,username = 0,password = 0)
 		},
 		function (data, textStatus, jqXHR) {
 			if (data["result"] == 1)
-				document.getElementById("mkPwOverlay").remove();
+				displayWebsites(true);
 		},
 		"json"
 	);
-	}
 }
 //done, notTested
 function deletePasswords(){
@@ -289,9 +365,41 @@ function deletePasswords(){
 		success: function (response) {
 			if(response["success"] == 1)
 			{
-				displayWebsites(true);
 				$("#passwordUsername").removeAttr("disabled");
 				$("#passwordPassword").removeAttr("disabled");
+				displayAccounts(currentWebsite["website_id"],true);
+			}
+
+		}
+	});
+}
+function deleteWebsite(website_id){
+	$.ajax({
+		type: "POST",
+		url: "/scripts/ajax.php",
+		data: {
+			delete: "website",
+			website_id: website_id
+		},
+		dataType: "JSON",
+		statusCode: {
+			444: function () {
+				console.log("cant find data");
+			},
+			500: function () {
+				console.log("PHP code error");
+			},
+			401: function () {
+				document.location = "/logout.php";
+			},
+		},
+		success: function (response) {
+			if(response["success"] == 1)
+			{
+				$("#passwordUsername").removeAttr("disabled");
+				$("#passwordPassword").removeAttr("disabled");
+				displayAccounts(currentWebsite["website_id"],true);
+				displayWebsites(true);
 			}
 
 		}
