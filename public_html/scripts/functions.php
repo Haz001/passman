@@ -195,7 +195,7 @@ function keyGen($conn, $password, $user_id)
  * `[98,	"Unknown error, Unknown DBMS state"]`\
  * `[99,	"Catastrophic Failure, Unknown DBMS stat"]`
  */
-function changeUserPassword($conn, $oldPassword, $newPassword)
+function changeUserPassword($conn, $user_id, $oldPassword, $newPassword)
 {
 	try {
 		mysqli_autocommit($conn, FALSE); // stops rollbacks
@@ -206,18 +206,18 @@ function changeUserPassword($conn, $oldPassword, $newPassword)
 		die("Can't change passwrod safely");
 	}
 	try {
-		$resultFromKeyChange = keyPasswordChange($conn, $_SESSION["user_id"], $oldPassword, $newPassword);
+		$resultFromKeyChange = keyPasswordChange($conn, $user_id, $oldPassword, $newPassword);
 		$pswdHash = password_hash($newPassword, PASSWORD_DEFAULT); //hashes the users password before it is stored
 		if ($resultFromKeyChange) {
 			$sql = "update user set master_password = ? where user_id = ?;";
 			$stmt = mysqli_stmt_init($conn);
 			mysqli_stmt_prepare($stmt, $sql);
-			mysqli_stmt_bind_param($stmt, "si", $pswdHash, $_SESSION["user_id"]);
+			mysqli_stmt_bind_param($stmt, "si", $pswdHash, $user_id);
 			mysqli_stmt_execute($stmt);
 			$sql = "SELECT `master_password` FROM user WHERE user_id =  ?;";
 			$stmt = mysqli_stmt_init($conn);
 			mysqli_stmt_prepare($stmt, $sql);
-			mysqli_stmt_bind_param($stmt, "i", $_SESSION["user_id"]);
+			mysqli_stmt_bind_param($stmt, "i", $user_id);
 			mysqli_stmt_execute($stmt); //executes sql query
 			$stmtresult = mysqli_stmt_get_result($stmt); //gets the result of the sql query
 			if ($row = mysqli_fetch_assoc($stmtresult)) {  // creates an associative array of the sql result
@@ -382,7 +382,7 @@ function getWebsiteList($conn, $user_identifier)
 	if ($user_identifier[0] == 0)
 		$user_id = $user_identifier[1];
 	else
-	$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
+		$user_id = getUidWhereAuthCode($conn, $user_identifier[1]);
 	$sql = "SELECT website_id, website_name, web_address from user JOIN saved_website ON user.user_id = saved_website.user_id WHERE user.user_id = ? order by saved_website.website_name";
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
