@@ -12,7 +12,6 @@ if (!isset($_SESSION["user_id"])) {
             <button id="mainAddImport" class="mainAddImport">Add</button>
 			<a onclick="refresh()" href="#">Refresh</a>
             <div id="list">
-                <button class="websiteName">Amazon</button>
             </div>
 
         </div>
@@ -21,7 +20,6 @@ if (!isset($_SESSION["user_id"])) {
         <div class="mainSection2" id="mainSection2">
             <div id="mainUserButtons" class="mainUserName">
 				<div id="accounts">
-					<button value="hello" class="name">Username</button>
 				</div>
 				<div style="width:100%;display:flex;">
 					<button onclick="makeOverlayPassword()" class="name">add</button>
