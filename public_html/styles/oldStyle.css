@@ -1,0 +1,188 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: sans-serif;
+}
+
+#error {
+	color: red;
+	text-align: center;
+}
+
+.containerMain {
+	height: 100vh;
+	background-color: #092834;
+	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.containerMainLeft {
+	flex: 50%;
+	margin: auto;
+}
+
+.containerMainRight {
+	flex: 50%;
+	display: block;
+	margin: auto;
+}
+
+.containerMainRight form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin: auto;
+}
+
+input {
+	width: 80%;
+	padding: 10px 15px;
+	margin: 8px 0px;
+}
+
+button {
+	cursor: pointer;
+	transition: transform 1s;
+	padding: 10px 50px 10px 50px;
+	background-color: lightskyblue;
+	color: white;
+	margin: 10px;
+}
+
+button:hover {
+	transform: scale(1.1);
+}
+
+button#bugSend {
+	color: black;
+	background: white;
+	transition: transform 1s;
+}
+
+button#bugSend:hover {
+	transform: scale(0.5);
+}
+
+.logo {
+	width: fit-content;
+	margin: auto;
+	font-size: 4.5rem;
+	text-align: center;
+}
+
+.logo > span > span {
+	color: #ffb570;
+}
+
+.vl {
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	height: 80%;
+	position: absolute;
+	left: 50%;
+	margin-left: -3px;
+	top: 10%;
+	bottom: 10%;
+}
+
+.navbar {
+	background-color: 092834;
+}
+
+#loginIcon {
+	width: 10%;
+	height: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px auto;
+}
+
+#CreateAccount {
+	font-size: 0.8rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: -5px 0px 10px 0px;
+}
+
+#emailVerifi {
+	font-size: 1rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: auto;
+}
+
+#NewBugReport {
+	font-size: 2.5rem;
+	padding: 15px;
+
+}
+
+.containerReportBug {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	background-color: white;
+	height: 80vh;
+}
+
+.containerReportBug form {
+	background-color: #092834;
+	color: white;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 50%;
+}
+
+.containerReportBug form input {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+.containerReportBug form textarea {
+	height: 150px;
+	box-sizing: border-box;
+	font-size: 16px;
+	resize: none;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+  }
+
+a {
+	text-decoration: none;
+}
+
+
+
+@media screen and (max-width: 600px) {
+	.vl {
+		transform: rotate(90deg);
+		height: 100vw;
+	}
+}
+
+div.overlay{
+	display: block;
+	position: fixed;
+	top: 2rem;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+}

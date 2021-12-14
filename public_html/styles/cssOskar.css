@@ -1,0 +1,326 @@
+/* HEADER */
+
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+.navbar {
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	padding: 30px;
+	background-color: #092834;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+}
+
+.navar h1 {
+	position: absolute;
+	left: 50%;
+}
+
+.navbar h3,
+.navbar img {
+	float: right;
+	padding: 10px;
+	display: inline;
+}
+
+.navbar img {
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	align-self: center;
+}
+
+.section2 {
+	display: flex;
+}
+
+.section2 h3 {
+	align-self: center;
+}
+
+h1 > span {
+	color: #ffb570;
+}
+
+/* FOOTER */
+
+footer {
+	display: flex;
+	justify-content: space-evenly;
+	background-color: #092834;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 4rem;
+	margin-top: 100px;
+}
+footer a {
+	text-decoration: none;
+	color: white;
+}
+
+/* CONTACT */
+
+#message {
+	height: 100px;
+}
+
+.contactTeamTitle,
+.contactFName {
+	margin-top: 20px;
+}
+
+.contactTeamMemeber1 img,
+.contactTeamMemeber3 img {
+	float: left;
+	height: 130px;
+	width: 130px;
+}
+
+#contactMainSection2 {
+	background-color: #092834;
+	color: white;
+	flex: 8;
+}
+
+.contactTeamTitle {
+	font-size: 30px;
+	text-align: center;
+}
+
+.contactTeamMembers {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
+	width: 80%;
+	font-size: 20px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+.contactTeamMemeber1,
+.contactTeamMemeber2,
+.contactTeamMemeber3 {
+	margin: 20px;
+}
+
+.contactTeamMemeber2 img {
+	float: right;
+	height: 130px;
+	width: 130px;
+}
+
+.contactPage,
+.mainPage,
+.main {
+	background-color: #f7f4d4;
+}
+
+#contactMainPage {
+	background-color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
+/* MAIN */
+
+.mainPage {
+	height: 100%;
+	width: 80%;
+	margin: auto;
+	border-radius: 5px;
+}
+
+.mainBody {
+	display: flex;
+	flex-direction: row;
+	margin-top: 5vh;
+	height: 65vh;
+}
+
+.verticalLine {
+	width: 20px;
+	background-color: white;
+	float: 0.4;
+}
+
+.mainSection1,
+.mainSection2 {
+	flex: 10;
+	color: black;
+}
+
+#mainSection2 {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.mainUserName {
+	flex: 0.7;
+	background-color: white;
+}
+
+.mainUserDetails {
+	flex: 2;
+	padding: 10px;
+	border: solid;
+	text-align: center;
+	font-size: 25px;
+}
+
+.mainUserDetails input {
+	padding: 20px;
+}
+
+.mainUserDetailsButtons {
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	width: 40vh;
+}
+
+.editButton {
+	background-color: green;
+}
+
+.deleteButton {
+	background-color: red;
+}
+
+.mainUserName button {
+	width: 100%;
+	margin: auto;
+}
+
+.mainSection1Title,
+.mainSection2Title {
+	text-align: center;
+	margin: 20px;
+	margin-bottom: 35px;
+	font-size: 40px;
+}
+
+.mainUserName,
+.mainUserDetails {
+	border: 3px solid black;
+}
+
+.mainSection2 {
+	background-color: #ccffff;
+}
+
+.name {
+	height: 60px;
+}
+
+#mainWebsiteSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.mainSearch {
+	border-radius: 25px;
+	width: 35%;
+	height: 9%;
+	margin: auto;
+}
+
+.mainAddImport {
+	border-radius: 25px;
+	width: 25%;
+	height: 7%;
+	margin-left: 37%;
+	margin-top: 10px;
+	margin-bottom: 35px;
+}
+
+.mainSection2 hr {
+	width: 100%;
+}
+
+.websiteName {
+	background-color: #b0e3e6;
+	margin-bottom: 35px;
+}
+
+.loadMoreButton {
+	background-color: #0050ef;
+	width: 40%;
+	margin: auto;
+	color: white;
+}
+
+#addMainSection1,
+#addMainSection2 {
+	background-color: #092834;
+	color: white;
+}
+
+.addUpload2,
+.addUpload {
+	width: 150px;
+	height: 60px;
+	margin: auto;
+}
+
+/* INPUT LABEL BUTTON */
+
+input,
+label,
+button {
+	text-align: center;
+	display: block;
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: 25px;
+}
+
+input {
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+/* Overlay For Add Website and Add Password*/
+.addTitle {
+	margin-bottom: 30px;
+}
+div.overlay {
+	display: block;
+	position: fixed;
+	background-color: #092834;
+	border-radius: 1rem;
+	border-width: 1rem;
+	top: calc(2rem + 100px);
+	left: 2rem;
+	right: 2rem;
+	height: fit-content;
+	padding: 2rem 0 2rem 0;
+}
+div.overlay input[type="button"] {
+	margin: auto;
+}
+div.overlay > span {
+	color: white;
+	font-size: 2rem;
+	text-align: center;
+	width: 100%;
+	display: block;
+}
+div.overlay > div.btn {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+}
+div.overlay > div.btn > input {
+	width: fit-content;
+}

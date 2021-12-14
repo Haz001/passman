@@ -1,0 +1,580 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+	text-decoration: none;
+}
+
+#error {
+	color: red;
+	text-align: center;
+}
+
+.containerMain {
+	height: 100vh;
+	background-color: #092834;
+	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.containerMainLeft {
+	flex: 50%;
+	margin: auto;
+}
+
+.containerMainRight {
+	flex: 50%;
+	display: block;
+	margin: auto;
+}
+
+.containerMainRight form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin: auto;
+}
+/*Inline-Form*/
+.inline-form {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	flex-direction: column;
+}
+.inline-form input {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 80%;
+}
+.inline-form button {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	color: black;
+}
+.inline-form div {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	flex-direction: column;
+}
+.inline-form select {
+	vertical-align: middle;
+	margin: 5px 10px 5px 0;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 80%;
+}
+/*Inline-Form*/
+
+input {
+	width: 80%;
+	padding: 10px 15px;
+	margin: 8px 0;
+}
+
+button {
+	cursor: pointer;
+	transition: transform 1s;
+	padding: 10px 50px;
+	background-color: lightskyblue;
+	color: white;
+	margin: 10px;
+}
+
+button:hover {
+	transform: scale(1.1);
+}
+
+button#bugSend {
+	color: black;
+	background: white;
+	transition: transform 1s;
+}
+
+button#bugSend:hover {
+	transform: scale(0.5);
+}
+
+.logo {
+	width: fit-content;
+	margin: auto;
+	font-size: 4.5rem;
+	text-align: center;
+}
+
+.logo > span > span {
+	color: #ffb570;
+}
+
+.vl {
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	height: 80%;
+	position: absolute;
+	left: 50%;
+	margin-left: -3px;
+	top: 10%;
+	bottom: 10%;
+}
+
+.navbar {
+	background-color: #092834;
+}
+
+.navbar a h1 {
+	color: white;
+}
+
+#loginIcon {
+	width: 10%;
+	height: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px auto;
+}
+
+#CreateAccount {
+	font-size: 0.8rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: -5px 0 10px;
+}
+
+#emailVerifi {
+	font-size: 1rem;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	margin: auto;
+}
+
+#NewBugReport {
+	font-size: 2.5rem;
+	padding: 15px;
+}
+
+.containerReportBug {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	background-color: white;
+	height: 80vh;
+}
+
+.containerReportBug form {
+	background-color: #092834;
+	color: white;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 50%;
+}
+
+.containerReportBug form input {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+.containerReportBug form textarea {
+	height: 150px;
+	box-sizing: border-box;
+	font-size: 16px;
+	resize: none;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+a {
+	text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+	.vl {
+		transform: rotate(90deg);
+		height: 100vw;
+	}
+}
+
+div.overlay {
+	display: block;
+	position: fixed;
+	top: 2rem;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+	display: block;
+	position: fixed;
+	background-color: #092834;
+	border-radius: 1rem;
+	border-width: 1rem;
+	top: calc(2rem + 100px);
+	left: 2rem;
+	right: 2rem;
+	height: fit-content;
+	padding: 2rem 0;
+}
+
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+.navbar {
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	padding: 30px;
+	background-color: #092834;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+}
+
+.navar h1 {
+	position: absolute;
+	left: 50%;
+}
+
+.navbar h3,
+.navbar img {
+	float: right;
+	padding: 10px;
+	display: inline;
+}
+
+.navbar img {
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	align-self: center;
+}
+
+.section2 {
+	display: flex;
+	position: relative;
+}
+.section2 a {
+	border-color: grey;
+	padding: 0.5em;
+	border-style: solid;
+	border-width: 1px;
+}
+.section2 a:hover {
+	background-color: #092834;
+	color: white;
+}
+.accountDrop {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	left: 0;
+	top: 100%;
+	width: 100%;
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+.section2 h3 {
+	align-self: center;
+}
+
+.menuContainer {
+	min-height: 65vh;
+}
+
+#passwords {
+	text-align: center;
+}
+
+h1 > span {
+	color: #ffb570;
+}
+
+footer {
+	display: flex;
+	justify-content: space-evenly;
+	background-color: #092834;
+	bottom: 0;
+	width: 100%;
+	height: 4rem;
+	margin-top: 100px;
+}
+
+footer a {
+	text-decoration: none;
+	color: white;
+}
+
+#message {
+	height: 100px;
+}
+
+.contactTeamTitle,
+.contactFName {
+	margin-top: 20px;
+}
+
+.contactTeamMemeber1 img,
+.contactTeamMemeber3 img {
+	float: left;
+	height: 130px;
+	width: 130px;
+}
+
+#contactMainSection2 {
+	background-color: #092834;
+	color: white;
+	flex: 8;
+}
+
+.contactTeamTitle {
+	font-size: 30px;
+	text-align: center;
+}
+
+.contactTeamMembers {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
+	width: 80%;
+	font-size: 20px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+.contactTeamMemeber1,
+.contactTeamMemeber2,
+.contactTeamMemeber3 {
+	margin: 20px;
+}
+
+.contactTeamMemeber2 img {
+	float: right;
+	height: 130px;
+	width: 130px;
+}
+
+.contactPage,
+.mainPage,
+.main {
+	background-color: #f7f4d4;
+}
+
+#contactMainPage {
+	background-color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
+.mainPage {
+	min-height: 100%;
+	margin: auto;
+	border-radius: 5px;
+}
+
+.mainBody {
+	display: flex;
+	flex-direction: column;
+}
+
+.verticalLine {
+	width: 20px;
+	background-color: white;
+	float: 0.4;
+}
+
+.mainSection1,
+.mainSection2 {
+	flex: 10;
+	color: black;
+}
+
+#mainSection2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.mainUserName {
+	flex: 0.7;
+	background-color: white;
+}
+
+.mainUserDetails {
+	flex: 2;
+	padding: 10px;
+	border: solid;
+	text-align: center;
+	font-size: 25px;
+}
+
+.mainUserDetails input {
+	padding: 20px;
+}
+
+.mainUserDetailsButtons {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	width: 40vh;
+	justify-content: space-around;
+}
+.editButton {
+	background-color: green;
+}
+
+.deleteButton {
+	background-color: red;
+}
+
+.mainUserName button {
+	width: 100%;
+	margin: auto;
+}
+
+.mainSection1Title,
+.mainSection2Title {
+	text-align: center;
+	margin: 20px;
+	margin-bottom: 35px;
+	font-size: 40px;
+}
+
+.mainUserName,
+.mainUserDetails {
+	border: 3px solid black;
+}
+
+.mainSection2 {
+	background-color: #ccffff;
+}
+
+.name {
+	height: 60px;
+}
+
+#mainWebsiteSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.mainSearch {
+	border-radius: 25px;
+	width: 35%;
+	height: 9%;
+	margin: auto;
+}
+
+.mainSection2 hr {
+	width: 100%;
+}
+
+.websiteName {
+	background-color: #b0e3e6;
+	margin-bottom: 35px;
+}
+
+.loadMoreButton {
+	background-color: #0050ef;
+	width: 40%;
+	margin: auto;
+	color: white;
+}
+
+#addMainSection1,
+#addMainSection2 {
+	background-color: #092834;
+	color: white;
+}
+
+.addUpload2,
+.addUpload {
+	width: 150px;
+	height: 60px;
+	margin: auto;
+}
+
+input,
+label,
+button {
+	text-align: center;
+	display: block;
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: 25px;
+}
+
+input {
+	margin-bottom: 15px;
+}
+
+.addTitle {
+	margin-bottom: 30px;
+}
+
+div.overlay input[type="button"] {
+	margin: auto;
+}
+
+div.overlay > span {
+	color: white;
+	font-size: 2rem;
+	text-align: center;
+	width: 100%;
+	display: block;
+}
+
+div.overlay > div.btn {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+}
+
+div.overlay > div.btn > input {
+	width: fit-content;
+}
+.status {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	display: block;
+	background: #092834;
+	color: white;
+	border-color: #092834;
+	border-style: solid;
+	border-width: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+.ad button {
+	background-color: red;
+}
