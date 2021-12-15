@@ -226,7 +226,6 @@ function changeUserPassword($conn, $user_id, $oldPassword, $newPassword)
 					mysqli_autocommit($conn, TRUE);
 					return [0, "Success"];
 				} else {
-
 					mysqli_rollback($conn);
 					mysqli_autocommit($conn, TRUE);
 					return [2, "Failure to change Passwrod, DBMS rolled back"];
@@ -282,7 +281,7 @@ function keyPasswordChange($conn, $user_id, $oldPassword, $newPassword)
 		mysqli_stmt_prepare($stmt, $sql);
 		mysqli_stmt_bind_param($stmt, "ssi", $masterkey, $based_iv, $user_id);
 		mysqli_stmt_execute($stmt);
-		if ($key == keyGet($conn, $user_id, $newPassword)) {
+		if ($key == keyGet($conn, $newPassword, $user_id)) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -393,6 +392,21 @@ function getWebsiteList($conn, $user_identifier)
 	mysqli_free_result($stmtresult);
 	return json_encode($result);
 }
+function checkIfExists($conn,$user_id,$wb_address){
+
+	$sql = "SELECT website_id FROM `saved_website` WHERE web_address = ? and user_id = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $wb_address,$user_id);
+	mysqli_stmt_execute($stmt);
+	$stmtresult =  mysqli_stmt_get_result($stmt);
+	$result = mysqli_fetch_all($stmtresult, MYSQLI_ASSOC);
+	if(sizeof($result) >= 1)
+		return $result[0]["webiste_id"];
+	else
+		return 0;
+	
+}
 function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 {
 	$website_name = ($wb_name);
@@ -405,7 +419,7 @@ function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 	$rand = 0;
 	$available = false;
 	do {
-		$rand = rand(0, 999999999);
+		$rand = rand(1, 999999999);
 		$sql = "SELECT 1 as 'exists' from saved_website WHERE website_id = ?";
 		$stmt = mysqli_stmt_init($conn);
 		mysqli_stmt_prepare($stmt, $sql);
@@ -427,7 +441,7 @@ function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 	mysqli_stmt_bind_param($stmt, "iiss", $rand, $user_id, $website_name, $website_address);
 	mysqli_stmt_execute($stmt);
 	$result =  mysqli_stmt_affected_rows($stmt);
-	return json_encode(["result" => $result, "name" => $website_name, "address" => $website_address]);
+	return json_encode(["result" => $result,"website_id" => $rand]);
 }
 function addPassword($conn, $user_identifier, $website_id, $pw_username, $pw_password, $key)
 {
