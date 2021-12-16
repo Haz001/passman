@@ -42,6 +42,29 @@ $(document).ready(function () {
 			});
 		}
 	});
+	$("#switch").click(function (e) {
+		e.preventDefault();
+		$("#user_details").hide();
+		$("#passform").show();
+	});
+	$("#submitPass").click(function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: "scripts/manageAccount.php",
+			data: $("#passform").serialize() + "&request=changePassword",
+			dataType: "json",
+			success: function (response) {
+				console.log(response);
+				if (response["result"] != "errpr") {
+					$("#output").html("Password updated succesfully");
+				} else {
+					$("#output").html("There was an error");
+				}
+				refresh();
+			},
+		});
+	});
 });
 function getDetails() {
 	$.ajax({

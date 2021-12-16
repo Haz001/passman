@@ -168,6 +168,9 @@ button#bugSend:hover {
 	font-size: 2.5rem;
 	padding: 15px;
 }
+#output {
+	text-align: center;
+}
 
 .containerReportBug {
 	display: flex;
@@ -574,6 +577,7 @@ div.overlay > div.btn > input {
 	border-style: solid;
 	border-width: 0.5rem;
 	border-top-right-radius: 0.5rem;
+	visibility: hidden;
 }
 .ad button {
 	background-color: red;

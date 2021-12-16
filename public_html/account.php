@@ -15,6 +15,12 @@ if (!isset($_SESSION["user_id"])) {
         <input required type="date" name="dob" placeholder="Date of Birth">
         <input required type="text" name="mobile" placeholder="Mobile Number">
         <button type="button" name="submit" id="submit">Update Details</button>
+        <button id="switch">Change Password</button>
+    </form>
+    <form class="inline-form" id="passform" style="display: none">
+        <input required type="password" name="oldPassword" placeholder="Current Password">
+        <input required type="password" name="newPassword" placeholder="New Password">
+        <button type="button" id="submitPass">Update Password</button>
     </form>
     <div>
         <p id="output"></p>

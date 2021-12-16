@@ -36,6 +36,7 @@ $(document).ready(function () {
 });
 
 function errorMsg($_GET) {
+	//Gets the error message returned and outputs it
 	switch ($_GET["error"]) {
 		case "ef":
 			displayErrorMsg(

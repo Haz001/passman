@@ -94,6 +94,18 @@ if (isset($_SESSION["user_id"])) {
             echo json_encode(array("result" => mysqli_stmt_error($stmt)));
             exit();
         }
+    } elseif ($_POST["request"] == "changePassword") {
+        $pD = array_map('htmlentities', $_POST);
+        if (!emptyFields($pD)) {
+            echo json_encode(array("result" => "error", "error" => "ef"));
+            exit();
+        }
+        if (!passwordComplex($_POST["newPassword"])) {
+            echo json_encode(array("result" => "error", "error" => "passcomplex"));
+            exit();
+        }
+        echo json_encode(changeUserPassword($conn, $_SESSION["user_id"], $_POST["oldPassword"], $_POST["newPassword"]));
+        exit();
     } else {
         echo json_encode(array("result" => "error", "error" => "selection not understood"));
         exit();
