@@ -10,7 +10,7 @@ if (!isset($_SESSION["user_id"])) {
             <h1 class="mainSection1Title">Website Name</h1>
             <!--<input type="search" class="mainSearch" value="Search">-->
             <button id="mainAddImport" class="mainAddImport">Add</button>
-			<a onclick="refresh()" href="#">Refresh</a>
+			<button onclick="refresh()" href="#">Refresh</button>
             <div id="list">
             </div>
 
