@@ -436,10 +436,12 @@ function addWebsite($conn, $user_identifier, $wb_name, $wb_address)
 		$stmt->close();
 	} while (!$available);
 	$sql = "INSERT INTO saved_website VALUES (?,?,?,?,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
+
 	$stmt = mysqli_stmt_init($conn);
 	mysqli_stmt_prepare($stmt, $sql);
 	mysqli_stmt_bind_param($stmt, "iiss", $rand, $user_id, $website_name, $website_address);
 	mysqli_stmt_execute($stmt);
+	echo mysqli_stmt_error($stmt);
 	$result =  mysqli_stmt_affected_rows($stmt);
 	return json_encode(["result" => $result,"website_id" => $rand]);
 }

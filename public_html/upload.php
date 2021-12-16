@@ -18,13 +18,13 @@ function csvValidator($head){
 }
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$f = file_get_contents($_FILES["passwordCsv"]["tmp_name"]);
-	$s = $_FILES["passwrodCsv"]["size"];
+	$s = 512;
 	/** @var array<array<string,string>> */
 	$array = array_map("str_getcsv", explode("\n", $f));
 	if((sizeof($array)>1) && csvValidator($array[0])){
 		if(536870912 >= $s){
 			$head = $array[0];
-			$noName = in_array("name",$head);
+			$noName = !in_array("name",$head);
 			$tmpPwd = [];
 			for ($i = 1;$i < sizeof($array);$i++){
 				$row = $array[$i];
@@ -47,17 +47,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				if(isset($tmpPwd[$i]["username"]) && isset($tmpPwd[$i]["password"])){
 					$ifExists = checkIfExists($conn,$_SESSION["user_id"],$tmpPwd[$i]["url"]);
 					if($ifExists != 0){
-						addPassword($conn,$_SESSION["user_id"],$ifExists,$tmpPwd[$i]["username"],$tmpPwd[$i]["password"],$_COOKIE["key"]);
-						echo "Added ".$tmpPwd[$i]["username"]." - ".$tmpPwd[$i]["password"].$tmpPwd[$i]["url"];
+						addPassword($conn,[0,$_SESSION["user_id"]],$ifExists,$tmpPwd[$i]["username"],$tmpPwd[$i]["password"],$_COOKIE["key"]);
 					}else{
 						$websiteId = "";
-						if($noName)
-							$websiteId = addWebsite($conn,$_SESSION["user_id"],$tmpPwd[$i]["url"],$tmpPwd[$i]["url"]);
-						else
-							$websiteId = addWebsite($conn,$_SESSION["user_id"],$tmpPwd[$i]["name"],$tmpPwd[$i]["url"]);
-						echo "Added website ".$tmpPwd[$i]["url"];
-						addPassword($conn,$_SESSION["user_id"],$websiteId,$tmpPwd[$i]["username"],$tmpPwd[$i]["password"],$_COOKIE["key"]);
-						echo "Added ".$tmpPwd[$i]["username"]." - ".$tmpPwd[$i]["password"].$tmpPwd[$i]["url"];
+						if($noName){
+							$websiteId = json_decode(addWebsite($conn,[0,$_SESSION["user_id"]],$tmpPwd[$i]["url"],$tmpPwd[$i]["url"]),true)["website_id"];
+						}
+						else{
+							$websiteId = json_decode(addWebsite($conn,[0,$_SESSION["user_id"]],$tmpPwd[$i]["name"],$tmpPwd[$i]["url"]),true)["website_id"];
+						}
+						addPassword($conn,[0,$_SESSION["user_id"]],$websiteId,$tmpPwd[$i]["username"],$tmpPwd[$i]["password"],$_COOKIE["key"]);
 					}
 					$count++;
 				}	
