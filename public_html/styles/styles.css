@@ -168,6 +168,9 @@ button#bugSend:hover {
 	font-size: 2.5rem;
 	padding: 15px;
 }
+#output {
+	text-align: center;
+}
 
 .containerReportBug {
 	display: flex;
